@@ -1,5 +1,5 @@
 @extends('layouts.auth')
-@section('title', 'Login | ' . config('app.name'))
+@section('title', 'Reset Password | ' . config('app.name'))
 
 @section('content')
 <div class="auth-page d-flex min-vh-100 align-items-center justify-content-center">
@@ -8,9 +8,9 @@
       <!-- Login Form -->
       <div class="col-lg-6 d-flex align-items-center justify-content-center">
         <div class="auth-form w-100 p-4 p-md-5 shadow-deep" style="max-width: 420px; border-radius: 12px;">
-          <h3 class="mb-4 text-center fw-semibold">Login</h3>
-
-          <form method="POST" action="{{ route('login') }}">
+          <h3 class="mb-4 text-center fw-semibold">Forgot Password</h3>
+          <p>Enter your email address below and we'll send you a link to reset your password.</p>
+          <form method="POST" action="{{ route('password.reset') }}">
             @csrf
 
             <!-- Email -->
@@ -23,23 +23,7 @@
               @enderror
             </div>
 
-            <!-- Password -->
-            <div class="mb-3 position-relative">
-              <label for="password" class="form-label">Password</label>
-              <input id="password" type="password" name="password" required
-                class="form-control @error('password') is-invalid @enderror" placeholder="Enter password">
-              <span toggle="#password" class="fa fa-eye field-icon toggle-password" style="position:absolute; top:38px; right:15px; cursor:pointer;"></span>
-              @error('password')
-              <span class="invalid-feedback">{{ $message }}</span>
-              @enderror
-            </div>
-
-            <!-- Forgot Password -->
-            @if (Route::has('password.reset'))
-            <div class="mb-3 text-end">
-              <a href="{{ route('password.reset') }}" class="text-decoration-none text-primary small">Forgot Password?</a>
-            </div>
-            @endif
+        
 
             <!-- Submit -->
             <div class="d-grid">

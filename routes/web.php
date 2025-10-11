@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\UserLoginController;
 use App\Http\Controllers\UserRegistrationController;
@@ -32,4 +33,5 @@ Route::middleware('guest')->group(function () {
     Route::post('login', [UserLoginController::class, 'authenticate'])->name('login');
     Route::get('register', [UserRegistrationController::class, 'register'])->name('register');
     Route::post('register', [UserRegistrationController::class, 'create'])->name('register');
+   Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.reset');
 });

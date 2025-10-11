@@ -39,6 +39,4 @@ class UserLoginController extends Controller
         $request->session()->regenerateToken();
         return redirect('/');
     }
-
-    
 }

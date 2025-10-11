@@ -8,13 +8,10 @@
         <div class="col-xl-6 col-md-12">
         <div class="banner__content">
             <h2 class="title">
-            A trusted and secure cryptocurrency exchange.
+            Don't sell your bitcoin. Get a bitcoin-backed loan.
             </h2>
             <p class="fs-20 desc">
-             Experience the freedom of managing your Bitcoin and US 
-                Dollars side by side — all in one secure, seamless app. Grow, 
-                move, and protect your wealth worldwide, without switching platforms
-                 or compromising on security.
+             Collateral is held in custody with ApexCrypto or our trusted institutional USD funding partners. Access cash same day, no credit checks required.
             </p>
              @if (Auth::check())
           <a href="/dashboard" class="btn-action"><span>Dashboard</span></a>
@@ -674,7 +671,7 @@
           <div class="swiper swiper-thumb1">
             <div class="swiper-wrapper list-img">
               <div class="swiper-slide">
-                <img src="{{ asset('assets/images/avt/avt-01.png') }}" alt="client" />
+                <img src="{{ asset('assets/images/avt/avt-04.png') }}" alt="client" />
               </div>
               <div class="swiper-slide">
                 <img src="{{ asset('assets/images/avt/avt-02.png') }}" alt="client" />
@@ -709,7 +706,7 @@
                 </h6>
                 <div class="bottom">
                   <div class="info">
-                    <img src="{{ asset('assets/images/avt/avt-01.png') }}" alt="client" />
+                    <img src="{{ asset('assets/images/avt/avt-04.png') }}" alt="client" />
                     <div class="content">
                       <h6 class="name">Daniel Roberts</h6>
                       <p class="position">Entrepreneur, UK</p>
@@ -771,5 +768,27 @@
     </div>
   </div>
 </section>
-
+ <section class="section-sale">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-7">
+            <div class="block-text">
+              <h4 class="heading">Earn up to $25 worth of crypto</h4>
+              <p class="desc">
+                Discover how digital assets can work for you — explore how ApexCrypto Finance helps you unlock liquidity from your Bitcoin and experience USDT loans in action.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="button">
+              @if (Auth::check())
+                <a href="/dashboard" class="btn-action"><span>Dashboard</span></a>
+              @else
+                <a href="/register" class="btn-action"><span>Get Started</span></a>
+              @endif
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 @endsection
