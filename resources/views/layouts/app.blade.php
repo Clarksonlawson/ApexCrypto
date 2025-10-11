@@ -40,8 +40,6 @@
     <script src="{{ asset('app/js/apexcharts.js') }}"></script>
     <script src="{{ asset('app/js/switchmode.js') }}"></script>
     <script src="{{ asset('app/js/jquery.magnific-popup.min.js') }}"></script>
-
-
     <!-- Swiper JS (external CDN) -->
     <script src="https://unpkg.com/swiper@12.0.2/swiper-bundle.min.js"></script>
     <script src="{{ asset('app/js/swiper.js') }}"></script>
@@ -82,7 +80,12 @@
 
     @stack('scripts')
       <!-- Turbo.js -->
-   
+    <script>
+        document.addEventListener('turbo:load', function() {
+        console.log('Turbo is loaded!');
+        });
+
+    </script>
     <!-- NProgress JS -->
    </body>
 </html>

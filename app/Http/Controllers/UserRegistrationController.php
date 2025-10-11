@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
 
 class UserRegistrationController extends Controller
 {
@@ -44,9 +45,8 @@ class UserRegistrationController extends Controller
             'phone' => $request->phone,
             'password' => Hash::make($request->password),
         ]);
-
+        event(new Registered($user));
         Auth::login($user);
-
         return redirect()->route('auth.dashboard');
     }
 }

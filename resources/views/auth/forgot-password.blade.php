@@ -1,42 +1,48 @@
 @extends('layouts.auth')
-@section('title', 'Reset Password | ' . config('app.name'))
+
+@section('title', 'Register | ApexCrypto Finance LTD')
 
 @section('content')
-<div class="auth-page d-flex min-vh-100 align-items-center justify-content-center">
+<div class="auth-page d-flex min-vh-100 align-items-center justify-content-center bg-light">
   <div class="container-fluid">
     <div class="row justify-content-center">
-      <!-- Login Form -->
+      <!-- Registration Form -->
       <div class="col-lg-6 d-flex align-items-center justify-content-center">
-        <div class="auth-form w-100 p-4 p-md-5 shadow-deep" style="max-width: 420px; border-radius: 12px;">
-          <h3 class="mb-4 text-center fw-semibold">Forgot Password</h3>
-          <p>Enter your email address below and we'll send you a link to reset your password.</p>
+        <div class="auth-form w-100 p-4 p-md-5 bg-white rounded-4 shadow-sm" style="max-width: 420px;">
+          <h4 class="mb-4 text-center fw-semibold">Log In</h4>
+
           <form method="POST" action="{{ route('password.reset') }}">
             @csrf
 
+         
+
             <!-- Email -->
             <div class="mb-3">
-              <label for="email" class="form-label">Email Address</label>
-              <input id="email" type="email" name="email" value="{{ old('email') }}" required
-                class="form-control @error('email') is-invalid @enderror" placeholder="Enter your email">
+              <label for="email" class="form-label fw-medium">Email Address</label>
+              <input
+                id="email"
+                type="email"
+                name="email"
+                value="{{ old('email') }}"
+                required
+                class="form-control custom-input @error('email') is-invalid @enderror"
+                placeholder="Enter your email"
+              >
               @error('email')
               <span class="invalid-feedback">{{ $message }}</span>
               @enderror
             </div>
 
+           
+
+          
         
-
             <!-- Submit -->
-            <div class="d-grid">
-              <button type="submit" class="btn btn-primary btn-lg">Continue</button>
+            <div class="d-grid mt-4">
+              <button type="submit" class="btn btn-dark btn-lg fw-semibold text-white custom-btn">Continue</button>
             </div>
 
-            <!-- Signup Link -->
-            <div class="text-center mt-3">
-              <p class="text-muted mb-0">
-                Don't have an account?
-                <a href="{{ route('register') }}" class="text-decoration-none text-primary">Sign Up</a>
-              </p>
-            </div>
+          
           </form>
         </div>
       </div>
@@ -44,17 +50,22 @@
   </div>
 </div>
 
-<!-- Toggle Password Script -->
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const togglePassword = document.querySelector(".toggle-password");
-    const password = document.querySelector("#password");
+ document.addEventListener('turbo:load', function() {
 
-    togglePassword.addEventListener("click", function () {
-      const type = password.getAttribute("type") === "password" ? "text" : "password";
-      password.setAttribute("type", type);
-      this.classList.toggle("fa-eye-slash");
+    console.log('Turbo is loaded in register page!');
+    document.addEventListener('click', function(e) {
+        const togglePassword = e.target.closest('.toggle-password');
+        if (togglePassword) {
+            const passwordInput = document.querySelector(togglePassword.getAttribute('toggle'));
+            if (passwordInput) {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                togglePassword.classList.toggle('fa-eye-slash');
+            }
+        }
     });
-  });
+});
+
 </script>
 @endsection

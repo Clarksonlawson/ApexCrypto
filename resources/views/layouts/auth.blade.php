@@ -223,76 +223,10 @@
     <!-- Swiper JS (external CDN) -->
     <script src="https://unpkg.com/swiper@12.0.2/swiper-bundle.min.js"></script>
     <script src="{{ asset('app/js/swiper.js') }}"></script>
-     <script>
-        // Configure Turbo progress bar color and delay
-       Turbo.setProgressBarDelay(500);
-
-        // Optional: change bar color to match your theme
-        document.addEventListener("turbo:load", () => {
-            const bar = document.querySelector("turbo-progress-bar");
-                if (bar) bar.style.backgroundColor = "#000"; // black progress bar
-
-                var swiper = new Swiper(".mySwiper", {
-                spaceBetween: 10,
-                slidesPerView: 3,
-                freeMode: true,
-                watchSlidesProgress: true,
-            });
-            var swiper2 = new Swiper(".mySwiper2", {
-                spaceBetween: 10,
-
-                thumbs: {
-                swiper: swiper,
-                },
-            });
-
-            var swiper3 = new Swiper(".swiper-partner", {
-                breakpoints: {
-                0: {
-                    slidesPerView: 2,
-                    spaceBetween: 30,
-                },
-                768: {
-                    slidesPerView: 4,
-                    spaceBetween: 30,
-                },
-                1024: {
-                    slidesPerView: 4,
-                    spaceBetween: 60,
-                },
-                },
-                slidesPerView: 4,
-            });
-
-             const input = document.querySelector("#phone");
-                if (input) {
-                    window.intlTelInput(input, {
-                    initialCountry: "us",
-                    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-                });
-            }
-
-            document.addEventListener('DOMContentLoaded', function () {
-                const termsCheckbox = document.querySelector('#terms');
-                const submitButton = document.querySelector('button[type="submit"]');
-
-                // Initially disable the button
-                if (submitButton) {
-                    submitButton.disabled = true;
-                }
-
-                // Add an event listener to the checkbox
-                if (termsCheckbox) {
-                    termsCheckbox.addEventListener('change', function() {
-                        if (submitButton) {
-                            submitButton.disabled = !this.checked;
-                        }
-                    });
-                }
-            });
-        });
-
-
-    </script>
    </body>
 </html>
+              
+
+             
+
+      

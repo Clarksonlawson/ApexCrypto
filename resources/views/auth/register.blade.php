@@ -55,6 +55,7 @@
                 id="phone"
                 type="tel"
                 name="phone"
+                placeholder=""
                 class="form-control custom-input @error('phone') is-invalid @enderror"
                
               >
@@ -138,65 +139,39 @@
 
 <script>
  document.addEventListener('turbo:load', function() {
-    // Toggle Password Visibility
-    const togglePassword = document.querySelector('.toggle-password');
-    const password = document.querySelector('#password');
 
-    togglePassword.addEventListener('click', function () {
-      const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-      password.setAttribute('type', type);
-      this.classList.toggle('fa-eye-slash');
+    console.log('Turbo is loaded in register page!');
+    var phoneInputField = document.querySelector("#phone");
+    var fullPhoneInputField = document.querySelector("#full_phone");
+
+    document.addEventListener('click', function(e) {
+        const togglePassword = e.target.closest('.toggle-password');
+        if (togglePassword) {
+            const passwordInput = document.querySelector(togglePassword.getAttribute('toggle'));
+            if (passwordInput) {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                togglePassword.classList.toggle('fa-eye-slash');
+            }
+        }
     });
+    console.log(phoneInputField.value);
 
-   const phoneInputField = document.querySelector('#phone');
-  const fullPhoneInput = document.querySelector('#full_phone');
-
-  // Initialize intl-tel-input
-  const iti = window.intlTelInput(phoneInputField, {
-    initialCountry: "us",
-    separateDialCode: true,
-    nationalMode: false,
-    preferredCountries: ["us", "gb", "ng", "ca"],
-    formatOnDisplay: true,
-    autoPlaceholder: "polite",
-    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
-  });
-
-  // --- Function to validate phone ---
-  function validatePhone() {
-    const isValid = iti.isValidNumber();
-
-    if (isValid) {
-      fullPhoneInput.value = iti.getNumber(); // Save the full international number
-      phoneInputField.classList.remove('is-invalid');
-      phoneInputField.classList.add('is-valid');
-    } else {
-      fullPhoneInput.value = '';
-      phoneInputField.classList.remove('is-valid');
-      phoneInputField.classList.add('is-invalid');
-    }
-  }
-
-  // --- Events ---
-  // Validate on blur or when user stops typing
-  phoneInputField.addEventListener('blur', validatePhone);
-  phoneInputField.addEventListener('change', validatePhone);
-  phoneInputField.addEventListener('keyup', () => {
-    phoneInputField.classList.remove('is-valid', 'is-invalid');
-  });
-
-  // Revalidate when the user changes the country
-  phoneInputField.addEventListener('countrychange', validatePhone);
-
-  // Optional: Automatically format while typing
-  phoneInputField.addEventListener('input', function () {
+    var input = document.querySelector("#phone");
+    window.intlTelInput(input, {
+        loadUtils: () => import("https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"),
+    }); 
+    
+    phoneInputField.addEventListener('input', function () {
     try {
-      const formatted = iti.getNumber(intlTelInputUtils.numberFormat.INTERNATIONAL);
-      if (formatted) fullPhoneInput.value = formatted;
+        var formatted = iti.getNumber(intlTelInputUtils.numberFormat.INTERNATIONAL);
+        if (formatted) fullPhoneInputField.value = formatted;
     } catch (e) {
-      fullPhoneInput.value = '';
+        fullPhoneInputField.value = '';
     }
   });
- });
+    console.log(fullPhoneInputField.value);
+});
+
 </script>
 @endsection
