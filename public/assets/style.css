@@ -224,3 +224,35 @@
   margin-left: -1em;
   color: rgb(255, 255, 255);
 }
+
+/* Adjust alignment for intl-tel-input to align with Bootstrap forms */
+.iti {
+    display: block;
+    width: 100%;
+}
+
+/* Apply Bootstrap form control styles to the dropdown */
+.iti__selected-country,
+.iti__country-list {
+    font-family: var(--bs-font-sans-serif);
+    font-size: var(--bs-body-font-size);
+}
+
+.iti__selected-country {
+    padding-left: 10px;
+    padding-right: 6px;
+    height: calc(1.5em + 0.75rem + 2px);
+    border: 1px solid #ced4da;
+    border-right: none;
+    border-radius: 0.375rem 0 0 0.375rem;
+    background-color: #e9ecef;
+}
+
+.iti__flag-container {
+    background-color: transparent;
+}
+
+/* Style the main phone input to match Bootstrap's form-control and align with the flag dropdown */
+.iti__country-list input[type="tel"] {
+    border-radius: 0.375rem;
+}

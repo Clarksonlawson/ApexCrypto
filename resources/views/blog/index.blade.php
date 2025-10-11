@@ -147,7 +147,7 @@
           <div class="col-md-5">
             <div class="button">
               @if (Auth::check()){
-                <a href="{{ route('dashboard') }}" class="btn btn-primary">Dashboard</a>
+                <a href="{{ route('auth.dashboard') }}" class="btn btn-primary">Dashboard</a>
               }
                 @else
                     <a href="{{ route('register') }}" class="btn btn-primary">Register</a>

@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="{{ asset('app/dist/app.css') }}">
     <link rel="stylesheet" href="{{ asset('app/dist/magnific-popup.css') }}">
     <link rel="stylesheet" href="https://unpkg.com/swiper@12.0.2/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.11.3/build/css/intlTelInput.css">
+     <!-- NProgress CSS -->
     <!-- End Style CSS -->
 
     <link rel="shortcut icon" href="{{ asset('assets/images/logo/favicon.png') }}">
@@ -38,6 +40,7 @@
     <script src="{{ asset('app/js/apexcharts.js') }}"></script>
     <script src="{{ asset('app/js/switchmode.js') }}"></script>
     <script src="{{ asset('app/js/jquery.magnific-popup.min.js') }}"></script>
+
 
     <!-- Swiper JS (external CDN) -->
     <script src="https://unpkg.com/swiper@12.0.2/swiper-bundle.min.js"></script>
@@ -75,6 +78,11 @@
             slidesPerView: 4,
         });
         </script>
+        <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@25.11.3/build/js/intlTelInput.min.js"></script>
+
     @stack('scripts')
-</body>
+      <!-- Turbo.js -->
+   
+    <!-- NProgress JS -->
+   </body>
 </html>

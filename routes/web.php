@@ -24,7 +24,7 @@ Route::get('/', [BlogController::class, 'home'])->name('blog.home');
 Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 
 Route::middleware('auth')->group(function () {
-    Route::get('dashboard', function () {return view('dashboard');})->name('dashboard');
+    Route::get('dashboard', function () {return view('auth.dashboard');})->name('auth.dashboard');
     Route::post('logout', [UserLoginController::class, 'logout'])->name('logout');
 });
 

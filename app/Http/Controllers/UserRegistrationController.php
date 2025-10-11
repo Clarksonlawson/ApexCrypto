@@ -21,22 +21,27 @@ class UserRegistrationController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'phone' => 'required|string|max:15',
-            'password' => 'required|string|min:8|confirmed',
-            'password_confirmation' => 'required|string|min:8',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'phone' => 'required|string|max:30',
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'regex:/[a-z]/',      // must contain at least one lowercase letter
+                'regex:/[A-Z]/',      // must contain at least one uppercase letter
+                'regex:/[0-9]/',      // must contain at least one digit
+                'regex:/[@$!%*?&]/',  // must contain a special character
+            ],
+            
+
+            
         ]);
 
-        $filepath= null;
-        if ($request->hasFile('photo')) {
-            $filepath = $request->file('photo')->store('avatars', 'public');
-        }
+       
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
-            'photo' => $filepath,
             'password' => Hash::make($request->password),
         ]);
 

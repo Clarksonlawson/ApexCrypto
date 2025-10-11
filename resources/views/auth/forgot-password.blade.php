@@ -27,7 +27,7 @@
 
             <!-- Submit -->
             <div class="d-grid">
-              <button type="submit" class="btn btn-primary btn-lg">Login</button>
+              <button type="submit" class="btn btn-primary btn-lg">Continue</button>
             </div>
 
             <!-- Signup Link -->
