@@ -24,15 +24,15 @@ Route::get('loan', function () { return view('pages.loan'); })->name('loan');
 Route::get('blogs',[BlogController::class, 'index'])->name('blog.index');
 Route::get('/', [BlogController::class, 'home'])->name('blog.home');
 Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {$request->fulfill();return redirect('/home');})->middleware(['auth', 'signed'])->name('verification.verify');
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {$request->fulfill();return redirect('/dashboard');})->middleware(['auth', 'signed'])->name('verification.verify');
 Route::post('/email/verification-notification', function (Request $request) {$request->user()->sendEmailVerificationNotification();return back()->with('message', 'Verification link sent!');})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 Route::middleware('auth')->group(function () {
     Route::get('/email/verify', function () {return view('auth.verify-email');})->name('verification.notice');
-    Route::get('dashboard', function () {return view('auth.dashboard');})->name('auth.dashboard');
+    
     Route::post('logout', [UserLoginController::class, 'logout'])->name('logout');
 });
-
+Route::middleware(['auth', 'verified'])->get('dashboard', function () {return view('auth.dashboard');})->name('auth.dashboard');
 
 Route::middleware('guest')->group(function () {
     Route::get('login', [UserLoginController::class, 'login'])->name('login');
