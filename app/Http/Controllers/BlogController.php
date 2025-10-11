@@ -44,6 +44,9 @@ class BlogController extends Controller
     public function show($slug)
     {
         $blog = Blog::where('slug', $slug)->firstOrFail();
-        return view('blog.show', compact('blog'));
+         $recentBlogs = Blog::latest()->take(3)->get();
+
+        return view('blog.show', compact('blog', 'recentBlogs'));
     }
+
 }

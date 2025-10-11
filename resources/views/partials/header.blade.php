@@ -36,64 +36,67 @@
                 <div class="left__main">
                   <nav id="main-nav" class="main-nav">
                     <ul id="menu-primary-menu" class="menu">
-                      <li class="menu-item current-menu-item">
+                      <li class="menu-item {{ Request::is('/') ? 'current-menu-item' : '' }}">
                         <a href="/">Home </a>
                       </li>
-                      <li class="menu-item-has-children">
+                      <li class="menu-item-has-children {{ Request::is('transact', 'earn', 'loan') ? 'current-menu-item' : '' }}">
                         <a href="#">Banking</a>
 
                         <ul class="sub-menu">
-                          <li class="menu-item">
+                          <li class="menu-item {{ Request::is('loan') ? 'current-menu-item' : '' }}">
                             <a href="/loan"
                               >Borrow</a
                             >
                           </li>
                           <li class="menu-item">
-                            <a href="/transact"
+                            <a href="/transact {{ Request::is('transact') ? 'current-menu-item' : '' }} "
                               >Transact</a
                             >
                           </li>
                           <li class="menu-item">
-                            <a href="/earn"
+                            <a href="/earn {{ Request::is('earn') ? 'current-menu-item' : '' }}"
                               >Earn</a
                             >
                           </li>
                         </ul>
                       </li>
-                      <li class="menu-item-has-children">
+                       <li class="menu-item {{ Request::is('blogs') || Request::is('blog*') ? 'current-menu-item' : '' }}">
+                            <a href="/blogs">Blog</a>
+                        </li>
+                      <li class="menu-item-has-children {{ Request::is('security-system', 'compliance', 'complaints') ? 'current-menu-item' : '' }}">
                         <a href="#">Security</a>
 
                         <ul class="sub-menu">
-                          <li class="menu-item">
+                          <li class="menu-item {{ Request::is('security-system') ? 'current-menu-item' : '' }} ">
                             <a href="security-system">Our Security System</a>
                           </li>
-                          <li class="menu-item">
+                          <li class="menu-item {{ Request::is('compliance') ? 'current-menu-item' : '' }}">
                             <a href="/compliance"
                               >Compliance</a
                             >
                           </li>
-                          <li class="menu-item">
+                          <li class="menu-item {{ Request::is('complaints') ? 'current-menu-item' : '' }}">
                             <a href="/complaints"
                               >Complaints</a
                             >
                           </li>
                         </ul>
                       </li>
-                      <li class="menu-item-has-children">
+                      <li class="menu-item-has-children {{ Request::is('support', 'faq') ? 'current-menu-item' : '' }}">
                         <a href="#">Resources</a>
 
                         <ul class="sub-menu">
-                          <li class="menu-item">
+                          <li class="menu-item {{ Request::is('support') ? 'current-menu-item' : '' }}">
                             <a href="/support">Support</a>
                           </li>
-                          <li class="menu-item">
+                          <li class="menu-item {{ Request::is('faq') ? 'current-menu-item' : '' }}">
                             <a href="/faq">Faqs</a>
                           </li>
                         
                         </ul>
                       </li>
 
-                      <li class="menu-item">
+                      <li class="menu-item {{ Request::is('exchange') ? 'current-menu-item' : '' }}">
                         <a href="/exchange"
                           >BTCUSDT
                           <svg
@@ -111,18 +114,18 @@
                           </svg>
                         </a>
                       </li>
-                      <li class="menu-item-has-children">
+                      <li class="menu-item-has-children {{ Request::is('our-mission', 'disclosure', 'contact') ? 'current-menu-item' : '' }}">
                         <a href="#"> About Us </a>
                         <ul class="sub-menu">
-                          <li class="menu-item">
+                          <li class="menu-item {{ Request::is('our-mission') ? 'current-menu-item' : '' }}">
                             <a href="/our-mission">Our Mission</a>
                           </li>
 
-                          <li class="menu-item">
+                          <li class="menu-item {{ Request::is('disclosure') ? 'current-menu-item' : '' }}">
                             <a href="/disclosure">Disclosure</a>
                           </li>
                     
-                          <li class="menu-item">
+                          <li class="menu-item {{ Request::is('contact') ? 'current-menu-item' : '' }}">
                             <a href="/contact">Contact Us</a>
                           </li>
                          

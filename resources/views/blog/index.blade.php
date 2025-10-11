@@ -132,4 +132,29 @@
     </div>
   </div>
 </section>
+
+    <section class="section-sale">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-7">
+            <div class="block-text">
+              <h4 class="heading">Earn up to $25 worth of crypto</h4>
+              <p class="desc">
+                Earn up to $25 in crypto when you completer your first loan request.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="button">
+              @if (Auth::check()){
+                <a href="{{ route('dashboard') }}" class="btn btn-primary">Dashboard</a>
+              }
+                @else
+                    <a href="{{ route('register') }}" class="btn btn-primary">Register</a>
+                @endif
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 @endsection

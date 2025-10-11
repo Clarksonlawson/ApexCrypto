@@ -654,5 +654,122 @@
     </div>
   </div>
 </section>
+<section class="testimonials">
+  <div class="container">
+    <div class="row">
+      <!-- Text/Title Section -->
+      <div class="col-xl-6 col-md-12">
+        <div class="block-text">
+          <h3 class="heading">Our Clients Trust ApexCrypto Finance</h3>
+          <h6 class="fs-20">
+            Real people. Real crypto-backed results.
+          </h6>
+          <p>
+            At ApexCrypto Finance LTD, customers from around the world enjoy 
+            seamless BTC-to-USDT loans and secure digital asset management 
+            without selling their crypto. Here’s what a few of them say.
+          </p>
+
+          <!-- Client Thumbnail Swiper -->
+          <div class="swiper swiper-thumb1">
+            <div class="swiper-wrapper list-img">
+              <div class="swiper-slide">
+                <img src="{{ asset('assets/images/avt/avt-01.png') }}" alt="client" />
+              </div>
+              <div class="swiper-slide">
+                <img src="{{ asset('assets/images/avt/avt-02.png') }}" alt="client" />
+              </div>
+              <div class="swiper-slide">
+                <img src="{{ asset('assets/images/avt/avt-03.png') }}" alt="client" />
+              </div>
+            </div>
+          </div>
+
+          <div class="couter">
+            <h6>1,200+</h6>
+            <p class="title">Verified Global Clients</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial Slider -->
+      <div class="col-xl-6 col-md-12">
+        <div class="swiper swiper-testimonial-1">
+          <div class="swiper-wrapper">
+            
+            <!-- Testimonial 1 -->
+            <div class="swiper-slide">
+              <div class="testimonials-box">
+                <span class="icon-quote"></span>
+                <h6 class="text">
+                  “ApexCrypto helped me unlock the value of my Bitcoin 
+                  without selling it. The BTC-to-USDT loan was instant, 
+                  transparent, and the interest rate was better than any 
+                  other platform I’ve tried. Truly professional service.”
+                </h6>
+                <div class="bottom">
+                  <div class="info">
+                    <img src="{{ asset('assets/images/avt/avt-01.png') }}" alt="client" />
+                    <div class="content">
+                      <h6 class="name">Daniel Roberts</h6>
+                      <p class="position">Entrepreneur, UK</p>
+                    </div>
+                  </div>
+                  <img src="{{ asset('assets/images/partner/logo-05.png') }}" alt="client company" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Testimonial 2 -->
+            <div class="swiper-slide">
+              <div class="testimonials-box">
+                <span class="icon-quote"></span>
+                <h6 class="text">
+                  “I used my crypto as collateral for a USDT loan to cover 
+                  short-term expenses. The process was smooth, and my assets 
+                  stayed safe. ApexCrypto’s support team is top-notch.”
+                </h6>
+                <div class="bottom">
+                  <div class="info">
+                    <img src="{{ asset('assets/images/avt/avt-02.png') }}" alt="client" />
+                    <div class="content">
+                      <h6 class="name">Maria Gonzalez</h6>
+                      <p class="position">Financial Analyst, Spain</p>
+                    </div>
+                  </div>
+                  <img src="{{ asset('assets/images/partner/logo-04.png') }}" alt="client company" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Testimonial 3 -->
+            <div class="swiper-slide">
+              <div class="testimonials-box">
+                <span class="icon-quote"></span>
+                <h6 class="text">
+                  “What I love most is the security and clarity. I can 
+                  monitor my collateral, manage repayments, and withdraw 
+                  easily. ApexCrypto is my go-to for BTC-backed lending.”
+                </h6>
+                <div class="bottom">
+                  <div class="info">
+                    <img src="{{ asset('assets/images/avt/avt-03.png') }}" alt="client" />
+                    <div class="content">
+                      <h6 class="name">Kevin Chen</h6>
+                      <p class="position">Blockchain Developer, Singapore</p>
+                    </div>
+                  </div>
+                  <img src="{{ asset('assets/images/partner/logo-02.png') }}" alt="client company" />
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!-- End Testimonial Slider -->
+    </div>
+  </div>
+</section>
 
 @endsection
