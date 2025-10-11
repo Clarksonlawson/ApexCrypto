@@ -17,6 +17,7 @@ class Blog extends Model
         'thumbnail',
         'video_url',
         'excerpt',
+        'content',
     ];
 
     protected static function booted()
