@@ -19,7 +19,8 @@ class UserRegistrationController extends Controller
     }
 
     public function create(Request $request){
-        $request->validate([
+       try {
+         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'phone' => 'required|string|max:30',
@@ -32,9 +33,7 @@ class UserRegistrationController extends Controller
                 'regex:/[0-9]/',      // must contain at least one digit
                 'regex:/[@$!%*?&]/',  // must contain a special character
             ],
-            
-
-            
+             
         ]);
 
        
@@ -45,8 +44,23 @@ class UserRegistrationController extends Controller
             'phone' => $request->phone,
             'password' => Hash::make($request->password),
         ]);
+
         event(new Registered($user));
         Auth::login($user);
-        return redirect()->route('auth.dashboard');
+
+        return redirect()->route('verification.notice')->with([
+            'status' => 'success',
+            'email' => $user->email,
+            'message' => 'Registration successful! Please check your email to verify your account.'
+        ]);
+
+       } catch (\Exception $e) {
+            return redirect()->back()->withInput()->with([
+                'status' => 'error',
+                'message' => 'An error occurred during registration. Please try again.',
+                'error_detail' => $e->getMessage(),
+            ]);
+       }
     }
 }
+

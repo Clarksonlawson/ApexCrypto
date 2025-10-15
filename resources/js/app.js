@@ -1,4 +1,6 @@
 import './bootstrap';
+import Toastify from 'toastify-js'
+import "toastify-js/src/toastify.css"
 // import { Turbo } from "@hotwired/turbo-rails";
 // window.Turbo = Turbo;
 
@@ -23,3 +25,20 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
+// You can create a helper function to use anywhere
+window.toast = (message, type = 'success') => {
+    const background = type === 'success'
+        ? "linear-gradient(to right, #4f46e5, #6366f1)"
+        : "linear-gradient(to right, #dc2626, #ef4444)";
+
+    Toastify({
+        text: message,
+        duration: 3500,
+        close: true,
+        gravity: "top",
+        position: "right",
+        stopOnFocus: true,
+        style: { background },
+    }).showToast();
+};
