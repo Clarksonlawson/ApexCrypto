@@ -36,14 +36,14 @@
                                     </defs>
                                 </svg>
                             </h3>
-                            <div class="sub f12-regular text-GrayDark">Welcome again to our website</div>
+                            <div class="sub f12-regular text-GrayDark">Welcome again to {{config('app.name')}}</div>
                             <div class="sign-in-inner">
                                 <h4>Sign In Here</h4>
                                 <form class="form-login flex flex-column gap24" accept-charset="utf-8" method="POST" action="{{ route('login') }}">
                                     @csrf
                                     <fieldset class="email">
-                                        <div class="f14-regular mb-6">Email here</div>
-                                        <input class="flex-grow" type="email" placeholder="Enter your email address" name="email" tabindex="0" value="keplamdusa@gmail.com" aria-required="true" required="">
+                                        <div class="f14-regular mb-6">Email</div>
+                                        <input class="flex-grow" type="email" placeholder="Enter your email address" name="email" tabindex="0"  aria-required="true" required="">
                                          @error('email')
                                              <div class="box-status bg-LightGray type-red">
                                                     <span class="font-poppins">{{$message}}</span> 
@@ -51,8 +51,8 @@
                                         @enderror
                                     </fieldset>
                                     <fieldset class="password">
-                                        <div class="f14-regular mb-6">Password here</div>
-                                        <input class="password-input" type="password" placeholder="Enter your password" name="password" tabindex="0" value="12345" aria-required="true" required="">
+                                        <div class="f14-regular mb-6">Password</div>
+                                        <input class="password-input" type="password" placeholder="Enter your password" name="password" tabindex="0" aria-required="true" required="">
                                         <span class="show-pass">
                                             <i class="icon-view view"></i>
                                             <i class="icon-hide hide"></i>

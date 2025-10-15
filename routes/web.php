@@ -55,7 +55,6 @@ Route::middleware('auth')->group(function () {
     })->name('verification.notice');
 
     Route::get('/email/verify/success', function () {
-        
         return view('auth.v2.pages.verify-success');
     })->name('verification.success');
 
