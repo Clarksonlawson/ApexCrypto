@@ -78,7 +78,6 @@ Route::middleware('guest')->group(function () {
     Route::get('sign-up', function () { return view('auth.v2.pages.sign-up'); })->name('sign-up');
     Route::post('register', [UserRegistrationController::class, 'create'])->name('register');
     //Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.reset');
-    
     Route::get('/forgot-password', function () {
         return view('auth.v2.pages.forgot-password');
     })->name('password.request');
