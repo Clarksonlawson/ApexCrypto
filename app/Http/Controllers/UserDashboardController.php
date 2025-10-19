@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 class UserDashboardController extends Controller
 {
     public function index(){
-        return view('auth.dashboard');
+        return view('auth.v2.pages.dashboard.index');
     }
 
     

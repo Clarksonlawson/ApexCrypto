@@ -246,15 +246,15 @@
               
                 <div class="mobile-button"><span></span></div>
                 <div class="wallet">
-                  @if (Route::has('login'))
+                  @if (Route::has('sign-in'))
                       @auth
                       
                           <a href="{{ url('/dashboard') }}">Dashboard</a>
                       @else
-                          <a href="{{ route('login') }}" >Log in</a>
+                          <a href="{{ route('sign-in') }}" >Log in</a>
 
-                          @if (Route::has('register'))
-                              <a href="{{ route('register') }}">Register</a>
+                          @if (Route::has('sign-up'))
+                              <a href="{{ route('sign-up') }}">sign-up</a>
                           @endif
                       @endauth
                     @endif

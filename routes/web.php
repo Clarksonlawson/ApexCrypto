@@ -31,7 +31,6 @@ Route::get('loan', function () { return view('pages.loan'); })->name('loan');
 Route::get('blogs',[BlogController::class, 'index'])->name('blog.index');
 Route::get('/', [BlogController::class, 'home'])->name('blog.home');
 Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
-
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
 
     if($request->user()->hasVerifiedEmail()){
@@ -68,7 +67,15 @@ Route::middleware('auth')->group(function () {
     })->name('verification.already');
     Route::post('logout', [UserLoginController::class, 'logout'])->name('logout');
 });
-Route::middleware(['auth', 'verified'])->get('dashboard', function () {return view('auth.dashboard');})->name('auth.dashboard');
+Route::middleware(['auth', 'verified'])->group( function () {
+    
+    Route::get('dashboard', function (){ return view('auth.v2.pages.dashboard.index');})->name('auth.dashboard');
+    Route::get('account', function () {return view('auth.v2.pages.dashboard.account'); })->name('account');
+    Route::get('inbox', function () {return view('auth.v2.pages.dashboard.inbox'); })->name('inbox');
+    Route::get('transaction', function () {return view('auth.v2.pages.dashboard.transaction'); })->name('transaction');
+    Route::get('settings', function () {return view('auth.v2.pages.dashboard.settings'); })->name('settings');
+    Route::get('crypto', function () {return view('auth.v2.pages.dashboard.account'); })->name('crypto');
+});
 
 Route::middleware('guest')->group(function () {
     Route::get('login', [UserLoginController::class, 'login'])->name('login');

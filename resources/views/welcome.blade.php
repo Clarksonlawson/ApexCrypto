@@ -225,7 +225,7 @@
            @if (Auth::check())
           <a href="/dashboard" class="btn-action"><span>Dashboard</span></a>
         @else
-          <a href="/register" class="btn-action"><span>Get Started</span></a>
+          <a href="/sign-up" class="btn-action"><span>Get Started</span></a>
         @endif
         </div>
         </div>
@@ -784,7 +784,7 @@
               @if (Auth::check())
                 <a href="/dashboard" class="btn-action"><span>Dashboard</span></a>
               @else
-                <a href="/register" class="btn-action"><span>Get Started</span></a>
+                <a href="/sign-up" class="btn-action"><span>Get Started</span></a>
               @endif
             </div>
           </div>

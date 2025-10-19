@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 class UserLoginController extends Controller
 {
     public function login(){
-        return view('auth.login');
+        return view('auth.v2.pages.sign-in');
     }
 
     public function authenticate(Request $request){
