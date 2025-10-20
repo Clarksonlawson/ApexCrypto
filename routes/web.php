@@ -109,6 +109,7 @@ Route::middleware('guest')->group(function () {
             'password' => 'required|min:8|confirmed',
         ]);
  
+        
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function (User $user, string $password) {
