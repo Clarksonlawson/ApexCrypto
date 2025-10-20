@@ -2,4 +2,5 @@
 
 @section('content')
 @section('title', 'Dashboard | ApexCrypto Finance LTD')
+
 @endsection

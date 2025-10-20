@@ -71,12 +71,12 @@
 
                     {{-- Crypto --}}
                     <li class="menu-item">
-                        <a href="{{ url('crypto') }}" 
+                        <a href="{{ url('verify') }}" 
                            class="menu-item-button {{ request()->is('crypto') ? 'active' : '' }}">
                             <div class="icon">
                                 <i class="icon-dash1"></i>
                             </div>
-                            <div class="text">Crypto</div>
+                            <div class="text">Verify account</div>
                         </a>
                     </li>
 

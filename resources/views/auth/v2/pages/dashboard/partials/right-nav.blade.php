@@ -171,13 +171,8 @@
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
                             <span class="header-user wg-user">
                                 <span class="image">
-                                    @if ($user && $user->profile_picture && Storage::disk('public')->exists($user->profile_picture))
-                                        {{-- Show uploaded user image --}}
-                                        <img src="{{ asset('storage/' . $user->profile_picture) }}" alt="{{ $user->name }}" class="rounded-circle" width="30" height="20">
-                                    @else
-                                        {{-- Fallback to default --}}
-                                        <img src="https://www.gravatar.com/avatar/" alt="Default Avatar" class="rounded-circle" width="30" height="30">
-                                    @endif
+                                    <img src="{{ Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) : 'https://www.gravatar.com/avatar/' . md5(strtolower(trim(Auth::user()->email))) . '?s=30&d=identicon' }}" alt="User Avatar" class="w-30 h-30 rounded-full mb-4 border-4 border-white">
+                                   
                                 </span>
 
                                 <span class="content flex flex-column">
@@ -210,14 +205,14 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('crypto') }}" class="user-item">
-                                    <div class="body-title-2">Crypto</div>
+                                <a href="{{ route('verify') }}" class="user-item">
+                                    <div class="body-title-2">Verification</div>
                                 </a>
                             </li>
                             <li>
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
-                                    <button type="submit" class="user-item w-100 text-start border-0 bg-transparent">
+                                    <button type="submit" class="user-item">
                                         <div class="body-title-2">Log out</div>
                                     </button>
                                 </form>
