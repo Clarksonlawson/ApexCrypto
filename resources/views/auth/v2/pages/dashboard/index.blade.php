@@ -1,62 +1,10 @@
 @extends('auth.v2.pages.dashboard.layout.dashboard-layout')
 @section('title', 'Dashboard | ApexCrypto Finance LTD')
 @php
- $user = Auth::user();
-$loans = [
-    (object)[
-        'id' => 'LN-001234',
-        'status' => 'Active',
-        'amount_usd' => 15000,
-        'ltv' => 45,
-        'collateral_btc' => 0.42,
-        'ticker' => 'BTC',
-        'start_date' => '2025-05-12',
-        'interest_rate' => 7.5,
-    ],
-    (object)[
-        'id' => 'LN-001234',
-        'status' => 'Active',
-        'amount_usd' => 15000,
-        'ltv' => 45,
-        'collateral_btc' => 0.42,
-        'ticker' => 'BTC',
-        'start_date' => '2025-05-12',
-        'interest_rate' => 7.5,
-    ],
-    (object)[
-        'id' => 'LN-001234',
-        'status' => 'Active',
-        'amount_usd' => 15000,
-        'ltv' => 45,
-        'collateral_btc' => 0.42,
-        'ticker' => 'BTC',
-        'start_date' => '2025-05-12',
-        'interest_rate' => 7.5,
-    ],
-
-    (object)[
-        'id' => 'LN-001234',
-        'status' => 'Active',
-        'amount_usd' => 15000,
-        'ltv' => 45,
-        'collateral_btc' => 0.42,
-        'ticker' => 'BTC',
-        'start_date' => '2025-05-12',
-        'interest_rate' => 7.5,
-    ],
-    (object)[
-        'id' => 'LN-001234',
-        'status' => 'Active',
-        'amount_usd' => 15000,
-        'ltv' => 45,
-        'collateral_btc' => 0.42,
-        'ticker' => 'BTC',
-        'start_date' => '2025-05-12',
-        'interest_rate' => 7.5,
-    ],
-   
-];
-
+use App\Models\Loan;
+use Illuminate\Support\Facades\Auth;
+$user = Auth::user();
+$loans = Loan::where('user_email', Auth::user()->email)->get();
 @endphp
 @section('content')
 <div class="row">
@@ -64,6 +12,7 @@ $loans = [
         <div class="mb-20 flex flex-wrap justify-between gap14 items-center">
             <h6>Hello, {{$user->name}}! </h6>
             <span>{{ \Carbon\Carbon::now()->format('l, F j, Y') }}</span>
+
             <div class="flex items-center flex-wrap gap6">
                 <a href="#" class="tf-button style-4 f12-bold">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -83,7 +32,7 @@ $loans = [
                     <div class="loan-card-header">
                         <div>
                             <div class="loan-status">{{ strtoupper($loan->status) }}</div>
-                            <div class="loan-id">{{ $loan->id }}</div>
+                            <div class="loan-id">{{ $loan->loan_id }}</div>
                         </div>
                         <div class="crypto-icon">
                             <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" alt="BTC">

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\LoanController;
 use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Hash;
@@ -68,7 +69,7 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', [UserLoginController::class, 'logout'])->name('logout');
 });
 Route::middleware(['auth', 'verified'])->group( function () {
-    
+    Route::get('/dashboard/loans', [LoanController::class, 'index'])->name('loans.index');
     Route::get('dashboard', function (){ return view('auth.v2.pages.dashboard.index');})->name('auth.dashboard');
     Route::get('account', function () {return view('auth.v2.pages.dashboard.account'); })->name('account');
     Route::get('inbox', function () {return view('auth.v2.pages.dashboard.inbox'); })->name('inbox');
