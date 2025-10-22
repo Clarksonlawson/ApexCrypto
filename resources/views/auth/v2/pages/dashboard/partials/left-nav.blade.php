@@ -1,3 +1,6 @@
+<@php
+    $user = Auth::user();
+@endphp
 
 <div class="section-menu-left">
     <div class="box-logo">
@@ -32,30 +35,16 @@
                         </a>
                     </li>
 
-                    {{-- My Wallet (Auto Expand) --}}
-                    <li class="menu-item has-children 
-                        {{ request()->is('my-wallet*') || request()->is('account*') ? 'open' : '' }}">
-                        <a href="javascript:void(0);" 
-                           class="menu-item-button {{ request()->is('my-wallet*') || request()->is('account*') ? 'active' : '' }}">
+                    
+                    <li class="menu-item">
+                        <a href="{{route('account')}}" 
+                           class="menu-item-button {{ request()->routeIs('auth.account') ? 'active' : '' }}">
                             <div class="icon">
-                                <i class="icon-wallet"></i>
+                                <i class="icon-person"></i>
                             </div>
-                            <div class="text">My Wallet</div>
+                            <div class="text">My Account</div>
                             <i class="icon-chevron-down ms-auto"></i>
                         </a>
-
-                        <ul class="sub-menu {{ request()->is('my-wallet*') || request()->is('account*') ? 'd-block' : 'd-none' }}">
-                            <li class="sub-menu-item {{ request()->is('my-wallet') ? 'active' : '' }}">
-                                <a href="{{ url('my-wallet') }}">
-                                    <div class="text">My Wallet</div>
-                                </a>
-                            </li>
-                            <li class="sub-menu-item {{ request()->is('account') ? 'active' : '' }}">
-                                <a href="{{ url('account') }}">
-                                    <div class="text">Account</div>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
 
                     {{-- Transaction --}}
@@ -72,11 +61,27 @@
                     {{-- Crypto --}}
                     <li class="menu-item">
                         <a href="{{ url('verify') }}" 
-                           class="menu-item-button {{ request()->is('crypto') ? 'active' : '' }}">
+                           class="menu-item-button {{ request()->is('verify') ? 'active' : '' }}">
                             <div class="icon">
-                                <i class="icon-dash1"></i>
+                                <i class="icon-check"></i>
                             </div>
-                            <div class="text">Verify account</div>
+                           <div class="d-flex align-items-center justify-content-center gap-1">
+                                <div class="text f12-bold">Verify account</div>
+                                @if($user->verification_status === "pending")
+                                    <div class="box-status bg-LightGray type-red d-inline-block px-2 py-0 rounded" style="font-size: 10px; line-height: 1;">
+                                    <span class="font-poppins">PENDING</span>
+                                </div>
+                                @elseif($user->verification_status === "in progress")
+                                  <div class="box-status bg-LightGray d-inline-block px-2 py-0 rounded" style="font-size: 10px; line-height: 1;">
+                                    <span class="font-poppins">IN PROGRESS</span>
+                                  </div>
+                                @else
+                                    <div class="box-status bg-YellowGreen d-inline-block px-2 py-0 rounded" style="font-size: 10px; line-height: 1;">
+                                        <span class="font-poppins">Verified</span>
+                                    </div>
+                                @endif
+                            </div>
+
                         </a>
                     </li>
 
@@ -101,6 +106,7 @@
                             <div class="text">Settings</div>
                         </a>
                     </li>
+                    
                 </ul>
             </div>
         </div>
@@ -111,9 +117,17 @@
                 <img src="{{ asset('auth/images/item/bot.png') }}" alt="">
             </div>
             <div class="content">
-                {{-- <p class="f12-regular text-White">For more features</p>
-                <p class="f12-bold text-White">Upgrade to Pro</p> --}}
-            </div>
+                @if($user->verification_status === "pending")
+                    <p class="f12-regular text-White">For more features</p>
+                    <p class="f12-bold text-White">Verify your account.</p>
+                @elseif($user->verification_status === "in progress")
+                    <p class="f12-regular text-White">Your account verification</p>
+                    <p class="f12-bold text-White"> is in progress.</p>
+                @else
+                    <p class="f12-regular text-White">Your account is </p>
+                    <p class="f12-bold text-White">Verified.</p>
+                @endif
+                </div>
         </div>
     </div>
 </div>
