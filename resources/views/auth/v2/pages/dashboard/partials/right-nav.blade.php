@@ -3,7 +3,7 @@
         <div class="button-show-hide">
             <i class="icon-menu"></i>
         </div>
-        <h6>Dashboard</h6>
+        <h6>@yield('pageHeader')</h6>
         <form class="form-search flex-grow" method="GET">
             @csrf
             <fieldset class="name">

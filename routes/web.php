@@ -76,6 +76,7 @@ Route::middleware(['auth', 'verified'])->group( function () {
     Route::get('transaction', function () {return view('auth.v2.pages.dashboard.transaction'); })->name('transaction');
     Route::get('settings', function () {return view('auth.v2.pages.dashboard.settings'); })->name('settings');
     Route::get('verify', function () {return view('auth.v2.pages.dashboard.verify'); })->name('verify');
+    Route::get('add-collateral', function () {return view('auth.v2.pages.dashboard.add-collateral'); })->name('add-collateral');
 });
 
 Route::middleware('guest')->group(function () {

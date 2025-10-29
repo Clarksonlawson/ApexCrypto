@@ -54,7 +54,7 @@
                             <div class="icon">
                                 <i class="icon-arrow-swap"></i>
                             </div>
-                            <div class="text">Transaction</div>
+                            <div class="text">Collateral Management</div>
                         </a>
                     </li>
 
