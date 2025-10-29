@@ -7,6 +7,7 @@ use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CollateralsController;
 use App\Http\Controllers\UserLoginController;
 use App\Http\Controllers\UserRegistrationController;
 use Illuminate\Routing\Route as RoutingRoute;
@@ -77,6 +78,7 @@ Route::middleware(['auth', 'verified'])->group( function () {
     Route::get('settings', function () {return view('auth.v2.pages.dashboard.settings'); })->name('settings');
     Route::get('verify', function () {return view('auth.v2.pages.dashboard.verify'); })->name('verify');
     Route::get('add-collateral', function () {return view('auth.v2.pages.dashboard.add-collateral'); })->name('add-collateral');
+    Route::post('collateral/create', [CollateralsController::class, 'storeCollateral'])->name('collateral.create');
 });
 
 Route::middleware('guest')->group(function () {

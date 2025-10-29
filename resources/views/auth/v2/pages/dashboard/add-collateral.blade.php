@@ -38,9 +38,29 @@
                     </div>
 
                     <div class="sign-in-inner">
-                       
+                       @if ($errors->any())
+                        <div class="alert alert-danger mb-4">
+                            <ul class="mb-0">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
-                        <form id="collateralForm" class="form-login flex flex-column gap24" method="POST" action="" enctype="multipart/form-data">
+                    @if (session('error'))
+                        <div class="alert alert-danger mb-4">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
+                    @if (session('success'))
+                        <div class="alert alert-success mb-4">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                        <form id="collateralForm" class="form-login flex flex-column gap24" method="POST" action="{{route('collateral.create')}}" enctype="multipart/form-data">
                             @csrf
 
                             @if($hasWallets)
@@ -73,7 +93,7 @@
 
                                     <fieldset class="mb-3">
                                         <div class="f14-regular mb-6">Amount</div>
-                                        <input class="flex-grow bg-Gainsboro" type="number" step="any" placeholder="$5,000" name="amount" required>
+                                        <input class="flex-grow bg-Gainsboro" type="number" step="any" placeholder="$5,000" name="usd_value" required>
                                         <p class="f12-regular text-GrayDark mt-2">Min deposit: $5,000 | Max: $2,000,000</p>
                                     </fieldset>
                                 </div>
@@ -87,7 +107,7 @@
                                     <fieldset class="mb-3">
                                         <div class="f14-regular mb-2 text-GrayDark">Deposit Address</div>
                                         <div class="flex items-center bg-[#2C2940] border border-[#3a3550] rounded-lg px-3 py-2">
-                                            <input type="text" id="walletAddress" readonly name="address" class="bg-transparent text-white flex-grow focus:outline-none">
+                                            <input type="text" id="walletAddress" readonly name="address" class="bg-GrayDark flex-grow focus:outline-none">
                                             <button type="button" onclick="copyAddress()" class="f12-bold text-[#7367F0] ml-2">Copy</button>
                                         </div>
                                     </fieldset>
@@ -106,7 +126,7 @@
 
                                     <fieldset>
                                         <div class="f14-regular mb-2 text-GrayDark">Transaction Screenshot</div>
-                                        <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" name="transaction_proof" type="file" accept="image/*,application/pdf">
+                                        <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" name="proof_of_deposit" type="file" accept="image/*,application/pdf">
                                         <p class="f12-regular text-GrayDark mt-2">Accepted formats: JPG, PNG, PDF | Max size: 5MB</p>
                                     </fieldset>
                                 </div>
@@ -145,8 +165,6 @@
                                     </a>
                                 </div>
                             @endif
-
-                           
                         </form>
                     </div>
                 </div>
@@ -198,7 +216,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let valid = true;
 
         if (stepIndex === 0) {
-            const amountInput = document.querySelector('input[name="amount"]');
+            const amountInput = document.querySelector('input[name="usd_value"]');
             const amountValue = parseFloat(amountInput.value);
 
             if (!collateralSelect.value) {
@@ -211,7 +229,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         if (stepIndex === 2) {
-            const fileInput = document.querySelector('input[name="transaction_proof"]');
+            const fileInput = document.querySelector('input[name="proof_of_deposit"]');
             if (!fileInput.files.length) {
                 alert('Please upload a payment proof.');
                 valid = false;
@@ -227,7 +245,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (currentStep === 0) {
             const selectedOption = collateralSelect.options[collateralSelect.selectedIndex];
             const walletAddress = selectedOption?.dataset.address || 'Not Available';
-            const amount = document.querySelector('input[name="amount"]').value || '0';
+            const amount = document.querySelector('input[name="usd_value"]').value || '0';
             const network = selectedOption?.dataset.network || 'Unknown Network';
 
             walletInput.value = walletAddress;
