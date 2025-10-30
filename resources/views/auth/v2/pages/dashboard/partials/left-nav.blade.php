@@ -6,10 +6,10 @@
     <div class="box-logo">
         <a href="{{ route('auth.dashboard') }}" id="site-logo-inner">
             <img id="logo_header"
-                src="{{ asset('auth/images/logo/logo.svg') }}"
+                src="{{ asset('assets/images/logo/logo.png') }}"
                 alt="Logo"
-                data-light="{{ asset('auth/images/logo/logo.svg') }}"
-                data-dark="{{ asset('auth/images/logo/logo.svg') }}">
+                data-light="{{ asset('assets/images/logo/logo.png') }}"
+                data-dark="{{ asset('assets/images/logo/logo.png') }}">
         </a>
         <div class="button-show-hide">
             <i class="icon-back"></i>
@@ -48,14 +48,26 @@
                     </li>
 
                     {{-- Transaction --}}
-                    <li class="menu-item">
-                        <a href="{{ url('transaction') }}" 
+                    <li class="menu-item has-children">
+                        <a href="#" 
                            class="menu-item-button {{ request()->is('transaction') ? 'active' : '' }}">
                             <div class="icon">
                                 <i class="icon-arrow-swap"></i>
                             </div>
-                            <div class="text">Collateral Management</div>
+                            <div class="text">Collaterals</div>
                         </a>
+                         <ul class="sub-menu">
+                            <li class="sub-menu-item">
+                                <a href="{{ url('add-collateral') }}" class="">
+                                    <div class="text">Add Collateral</div>
+                                </a>
+                            </li>
+                            <li class="sub-menu-item">
+                                <a href="{{ url('view-collateral') }}" class="">
+                                    <div class="text">View Collaterals</div>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
 
                     {{-- Crypto --}}

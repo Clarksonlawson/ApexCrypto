@@ -79,6 +79,7 @@ Route::middleware(['auth', 'verified'])->group( function () {
     Route::get('verify', function () {return view('auth.v2.pages.dashboard.verify'); })->name('verify');
     Route::get('add-collateral', function () {return view('auth.v2.pages.dashboard.add-collateral'); })->name('add-collateral');
     Route::post('collateral/create', [CollateralsController::class, 'storeCollateral'])->name('collateral.create');
+    Route::get('view-collateral', function () {return view('auth.v2.pages.dashboard.view-collaterals'); })->name('view-collateral');
 });
 
 Route::middleware('guest')->group(function () {
