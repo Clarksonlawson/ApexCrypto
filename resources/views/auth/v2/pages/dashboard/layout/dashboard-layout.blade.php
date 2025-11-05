@@ -19,8 +19,8 @@
     <!-- Theme Style -->
     <link rel="stylesheet" type="text/css" href="{{asset('auth/css/animate.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('auth/css/animation.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('auth/css/bootstrap.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('auth/css/bootstrap-select.min.css')}}">
+    {{-- <link rel="stylesheet" type="text/css" href="{{asset('auth/css/bootstrap.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('auth/css/bootstrap-select.min.css')}}"> --}}
     <link rel="stylesheet" type="text/css" href="{{asset('auth/css/swiper-bundle.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('auth/css/styles.css')}}">
 
@@ -195,6 +195,7 @@
 }
 
     </style>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body>
@@ -240,10 +241,10 @@
 
     <!-- Javascript -->
     <script src="{{asset('auth/js/jquery.min.js')}}"></script>
-    <script src="{{asset('auth/js/bootstrap.min.js')}}"></script>
+    {{-- <script src="{{asset('auth/js/bootstrap.min.js')}}"></script> --}}
     <script src="{{asset('auth/js/swiper.js')}}"></script>
     <script src="{{asset('auth/js/carousel.js')}}"></script>
-    <script src="{{asset('auth/js/bootstrap-select.min.js')}}"></script>
+    {{-- <script src="{{asset('auth/js/bootstrap-select.min.js')}}"></script> --}}
     <script src="{{asset('auth/js/apexcharts/apexcharts.js')}}"></script>
     <script src="{{asset('auth/js/apexcharts/candlestick-2.js')}}"></script>
     <script src="{{asset('auth/js/apexcharts/donut-1.js')}}"></script>

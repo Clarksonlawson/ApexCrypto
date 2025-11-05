@@ -61,6 +61,7 @@ class CollateralSeeder extends Seeder
                     'loan_id'       => null,
                     'created_at'    => $now,
                     'updated_at'    => $now,
+                    'collateral_id' => 'COLL-' . strtoupper(fake()->unique()->lexify('??????????')),
                 ];
             }
 

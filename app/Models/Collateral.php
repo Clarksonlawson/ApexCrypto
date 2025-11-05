@@ -72,5 +72,9 @@ class Collateral extends Model
 {
     return static::where('user_id', $userId)->where('status', 'active')->sum('usd_value');
 }
+    public static function getTotalActiveCollaterals($userId)
+    {
+        return static::where('user_id', $userId)->where('status', 'active');
+    }
 
 }

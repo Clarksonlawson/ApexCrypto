@@ -134,7 +134,8 @@ $linkedActiveLoans= Loan::where('user_email', $user->email)->where('status', 'Ac
     </div>
     <table class="list-transaction-content content-sort w-100">
         <tbody>
-           @foreach ($collaterals as $collateral)
+          @if($collaterals->isNotEmpty())
+             @foreach ($collaterals as $collateral)
                 <tr class="tf-table-item checked"
                     data-bs-toggle="modal"
                     data-bs-target="#collateralModal"
@@ -232,10 +233,15 @@ $linkedActiveLoans= Loan::where('user_email', $user->email)->where('status', 'Ac
                             </div>
                     @endswitch
                 </td>
+                
 
             </tr>
            @endforeach
-          
+          @else
+          <tr>
+            <center>No Collaterals Found</center>
+          </tr>
+          @endif
         </tbody>
     </table>
 </div>
@@ -314,161 +320,161 @@ $linkedActiveLoans= Loan::where('user_email', $user->email)->where('status', 'Ac
 
 <!-- ===== Add this CSS to your <style> section ===== -->
 <style>
-:root {
-  --card-bg: #ffffff;
-  --card-border-color: #e0e0e0;
-  --text-color: #333333;
-  --label-color: #888888;
-  --primary-color: #007bff;
-  --primary-accent: #007bff; /* Use your preferred accent color */
-  --secondary-color: #6c757d;
-  --success-color: #28a745;
-}
-
-/* Modern Card Design */
-.modern-card-design {
-  border-radius: 12px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-  background-color: var(--card-bg);
-  color: var(--text-color);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  border: 1px solid var(--card-border-color);
-}
-
-.modal-header {
-  border-bottom: none;
-  padding: 1.5rem 1.5rem 0.5rem;
-}
-
-.modal-title {
-  font-weight: 600;
-  font-size: 1.25rem;
-  color: var(--text-color);
-}
-
-.modal-body {
-  padding: 0.5rem 1.5rem 1.5rem;
-}
-
-.modal-footer {
-  border-top: none;
-  padding: 0 1.5rem 1.5rem;
-}
-
-/* Information Layout */
-.info-group {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.25rem;
-  margin-bottom: 1rem;
-}
-
-.info-item {
-  display: flex;
-  flex-direction: column;
-}
-
-.info-item-full {
-  margin-bottom: 1rem;
-}
-
-.info-label {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--label-color);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 0.25rem;
-}
-
-.info-value {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--text-color);
-}
-
-.info-value-block {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--text-color);
-  word-break: break-all;
-}
-
-/* Status Badge */
-.status-badge {
-  display: inline-block;
-  font-size: 0.8rem;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 50px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: #fff;
-  background-color: #6c757d; /* Default status color */
-}
-/* You can add specific colors based on the status value via JavaScript */
-/* e.g., if status is "Active", add a class `status-active` */
-.status-badge[data-status="active"] {
-  background-color: var(--success-color);
-}
-.status-badge[data-status="pending"] {
-  background-color: var(--secondary-color);
-}
-.status-badge[data-status="closed"] {
-  background-color: #dc3545;
-}
-
-/* Button Styles */
-.btn-secondary {
-  color: var(--text-color);
-  background-color: var(--card-border-color);
-  border: 1px solid var(--card-border-color);
-}
-
-.btn-primary {
-  background-color: var(--primary-color);
-  border: 1px solid var(--primary-color);
-  transition: background-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.btn-primary:hover {
-  background-color: #0056b3;
-}
-
-.btn-close {
-  opacity: 0.5;
-  transition: opacity 0.2s ease;
-}
-
-.btn-close:hover {
-  opacity: 1;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .info-group {
-    grid-template-columns: 1fr;
+  :root {
+    --card-bg: #ffffff;
+    --card-border-color: #e0e0e0;
+    --text-color: #333333;
+    --label-color: #888888;
+    --primary-color: #007bff;
+    --primary-accent: #007bff; /* Use your preferred accent color */
+    --secondary-color: #6c757d;
+    --success-color: #28a745;
   }
-}
+
+  /* Modern Card Design */
+  .modern-card-design {
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    border: 1px solid var(--card-border-color);
+  }
+
+  .modal-header {
+    border-bottom: none;
+    padding: 1.5rem 1.5rem 0.5rem;
+  }
+
+  .modal-title {
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: var(--text-color);
+  }
+
+  .modal-body {
+    padding: 0.5rem 1.5rem 1.5rem;
+  }
+
+  .modal-footer {
+    border-top: none;
+    padding: 0 1.5rem 1.5rem;
+  }
+
+  /* Information Layout */
+  .info-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .info-item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .info-item-full {
+    margin-bottom: 1rem;
+  }
+
+  .info-label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--label-color);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.25rem;
+  }
+
+  .info-value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-color);
+  }
+
+  .info-value-block {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    word-break: break-all;
+  }
+
+  /* Status Badge */
+  .status-badge {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #fff;
+    background-color: #6c757d; /* Default status color */
+  }
+  /* You can add specific colors based on the status value via JavaScript */
+  /* e.g., if status is "Active", add a class `status-active` */
+  .status-badge[data-status="active"] {
+    background-color: var(--success-color);
+  }
+  .status-badge[data-status="pending"] {
+    background-color: var(--secondary-color);
+  }
+  .status-badge[data-status="closed"] {
+    background-color: #dc3545;
+  }
+
+  /* Button Styles */
+  .btn-secondary {
+    color: var(--text-color);
+    background-color: var(--card-border-color);
+    border: 1px solid var(--card-border-color);
+  }
+
+  .btn-primary {
+    background-color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+
+  .btn-close {
+    opacity: 0.5;
+    transition: opacity 0.2s ease;
+  }
+
+  .btn-close:hover {
+    opacity: 1;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .info-group {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>
 
 <!-- ===== Script to Populate Modal Dynamically ===== -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const modal = document.getElementById('collateralModal');
-    modal.addEventListener('show.bs.modal', function(event) {
-        const button = event.relatedTarget;
-        document.getElementById('modalCollateralId').textContent = button.getAttribute('data-id');
-        document.getElementById('modalAsset').textContent = button.getAttribute('data-asset');
-        document.getElementById('modalAmount').textContent = "$" + button.getAttribute('data-amount');
-        document.getElementById('modalStatus').textContent = button.getAttribute('data-status');
-        document.getElementById('walletAddress').textContent = button.getAttribute('data-wallet-address') || 'N/A';
-        document.getElementById('CmodalDate').textContent = button.getAttribute('data-created-date');
-        document.getElementById('CmodalTime').textContent = button.getAttribute('data-created-time');
-        document.getElementById('modalAmountPending').textContent = "$" + button.getAttribute('data-amount-pending');
-        document.getElementById('modalDate').textContent = button.getAttribute('data-date');
-        document.getElementById('modalTime').textContent = button.getAttribute('data-time');
-    });
-});
+  document.addEventListener('DOMContentLoaded', function() {
+      const modal = document.getElementById('collateralModal');
+      modal.addEventListener('show.bs.modal', function(event) {
+          const button = event.relatedTarget;
+          document.getElementById('modalCollateralId').textContent = button.getAttribute('data-id');
+          document.getElementById('modalAsset').textContent = button.getAttribute('data-asset');
+          document.getElementById('modalAmount').textContent = "$" + button.getAttribute('data-amount');
+          document.getElementById('modalStatus').textContent = button.getAttribute('data-status');
+          document.getElementById('walletAddress').textContent = button.getAttribute('data-wallet-address') || 'N/A';
+          document.getElementById('CmodalDate').textContent = button.getAttribute('data-created-date');
+          document.getElementById('CmodalTime').textContent = button.getAttribute('data-created-time');
+          document.getElementById('modalAmountPending').textContent = "$" + button.getAttribute('data-amount-pending');
+          document.getElementById('modalDate').textContent = button.getAttribute('data-date');
+          document.getElementById('modalTime').textContent = button.getAttribute('data-time');
+      });
+  });
 </script>
 @endsection

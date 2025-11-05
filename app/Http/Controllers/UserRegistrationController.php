@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
+use App\Mail\VerifyCodeMail;
+use Illuminate\Support\Facades\Mail;
 
 class UserRegistrationController extends Controller
 {
@@ -23,6 +25,8 @@ class UserRegistrationController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'phone' => 'required|string|max:30',
+            'country' => 'required|string|max:100',
+            
             'password' => [
                 'required',
                 'string',
@@ -36,22 +40,22 @@ class UserRegistrationController extends Controller
         ]);
 
        
-
+        $code = random_int(100000, 999999);
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
+            'country' => $request->country,
+            'code' => $code,
+            'expires_at' => now()->addMinutes(10),
             'password' => Hash::make($request->password),
         ]);
-
-        event(new Registered($user));
+        Mail::to($user->email)->send(new VerifyCodeMail($code));
         Auth::login($user);
+        
 
-        return redirect()->route('verification.notice')->with([
-            'status' => 'success',
-            'email' => $user->email,
-            'message' => 'Registration successful! Please check your email to verify your account.'
-        ]);
+    return redirect()->route('verification.enter', ['email' => $user->email])
+        ->with('status', 'We’ve sent a 6-digit code to your email. Please enter it below to verify.');
     
     }
 }

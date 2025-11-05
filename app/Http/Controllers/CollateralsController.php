@@ -12,7 +12,7 @@ class CollateralsController extends Controller
 {
     public function storeCollateral(Request $request)
     {
-         $request->validate([
+        $request->validate([
             'user_id' => 'required|exists:users,id',
             'asset_name' => 'required|string',
             'usd_value' => 'required|numeric|min:5000|max:2000000',
@@ -29,18 +29,18 @@ class CollateralsController extends Controller
                 ->where('asset_symbol', $request->asset_name)
                 ->first();
 
-          
+
             $collateral->increment('pending_usd_value', $request->usd_value);
-            
+
             if ($proofPath) {
                 $collateral->update([
                     'proof_of_deposit' => $proofPath,
-                    
+
                 ]);
-           }
+            }
         });
 
-         Transactions::create([
+        Transactions::create([
             'user_id' => $request->user_id,
             'asset_symbol' => $request->asset_name,
             'network' => $request->network,
@@ -53,7 +53,20 @@ class CollateralsController extends Controller
 
         return back()->with('success', 'Deposit submitted successfully and pending verification.');
     }
-        
+    public function viewCollaterals()
+    {
+        $user = Auth::user();
+        $collaterals = Collateral::where('user_id', $user->id)->get();
 
-   
+        return view('auth.v3.dashboard.collaterals', compact('collaterals'));
+    }
+
+    public function getCollateralBalance($userId, $assetSymbol)
+    {
+        $collateral = Collateral::where('user_id', $userId)
+            ->where('asset_symbol', $assetSymbol)
+            ->first();
+
+        return $collateral ? $collateral->locked_usd_value : 0;
+    }
 }

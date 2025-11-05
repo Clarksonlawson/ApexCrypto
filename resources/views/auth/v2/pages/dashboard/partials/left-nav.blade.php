@@ -34,17 +34,27 @@
                             <div class="text">Dashboard</div>
                         </a>
                     </li>
-
-                    
-                    <li class="menu-item">
-                        <a href="{{route('account')}}" 
-                           class="menu-item-button {{ request()->routeIs('auth.account') ? 'active' : '' }}">
+                    {{-- Wallets --}}
+                    <li class="menu-item has-children">
+                        <a href="#" 
+                           class="menu-item-button {{ request()->is('transaction') ? 'active' : '' }}">
                             <div class="icon">
-                                <i class="icon-person"></i>
+                                <i class="icon-wallet1"></i>
                             </div>
-                            <div class="text">My Account</div>
-                            <i class="icon-chevron-down ms-auto"></i>
+                            <div class="text">My Wallet</div>
                         </a>
+                         <ul class="sub-menu">
+                            <li class="sub-menu-item">
+                                <a href="{{ url('wallet/generate') }}" class="">
+                                    <div class="text">Generate Wallet</div>
+                                </a>
+                            </li>
+                            <li class="sub-menu-item">
+                                <a href="{{ url('wallet/view') }}" class="">
+                                    <div class="text">View Wallets</div>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
 
                     {{-- Transaction --}}
@@ -69,8 +79,17 @@
                             </li>
                         </ul>
                     </li>
-
-                    {{-- Crypto --}}
+                    <li class="menu-item">
+                        <a href="{{route('account')}}" 
+                           class="menu-item-button {{ request()->routeIs('auth.account') ? 'active' : '' }}">
+                            <div class="icon">
+                                <i class="icon-person"></i>
+                            </div>
+                            <div class="text">My Account</div>
+                            <i class="icon-chevron-down ms-auto"></i>
+                        </a>
+                    </li>
+                    {{-- Verify --}}
                     <li class="menu-item">
                         <a href="{{ url('verify') }}" 
                            class="menu-item-button {{ request()->is('verify') ? 'active' : '' }}">

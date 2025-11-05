@@ -254,7 +254,7 @@
                           <a href="{{ route('sign-in') }}" >Log in</a>
 
                           @if (Route::has('sign-up'))
-                              <a href="{{ route('sign-up') }}">sign-up</a>
+                              <a href="{{ route('sign-up') }}">Sign up</a>
                           @endif
                       @endauth
                     @endif
