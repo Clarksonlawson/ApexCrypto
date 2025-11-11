@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CollateralsController;
+use App\Http\Controllers\TransactionsController;
+use App\Http\Controllers\UserAccountController;
 use App\Http\Controllers\UserLoginController;
 use App\Http\Controllers\UserRegistrationController;
 use Illuminate\Routing\Route as RoutingRoute;
@@ -19,6 +21,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 use App\Http\Controllers\UserVerificationController;
 use App\Http\Controllers\UserDashboardController;
+use App\Http\Controllers\WalletsController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -90,9 +93,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return view('auth.v2.pages.dashboard.index');
     })->name('auth.dashboard');
-    Route::get('account', function () {
-        return view('auth.v2.pages.dashboard.account');
-    })->name('account');
+
+    Route::get('user/dashboard/account', [UserAccountController::class, 'index'])->name('account');
+    Route::post('user/dashboard/account/update-user-metadata', [UserAccountController::class, 'updateUserMeta'])->name('update.user.metadata');
+    Route::post('user/dashboard/account/update-user-info', [UserAccountController::class, 'updateUserInfo'])->name('update.user.info');
     Route::get('inbox', function () {
         return view('auth.v2.pages.dashboard.inbox');
     })->name('inbox');
@@ -115,15 +119,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('user/dashboard/loan/apply', function () {
         return view('auth.v3.dashboard.apply-loan');
     })->name('loans.apply');
-    Route::get('user/dashboard/wallets', function () {
-        return view('auth.v3.dashboard.wallets');
-    })->name('wallets');
+    Route::get('user/dashboard/wallets', [WalletsController::class, 'index'])->name('wallets');
     Route::get('user/dashboard/verfication', function () {
         return view('auth.v3.dashboard.verification');
     })->name('verification');
-    Route::get('user/dashboard/transactions', function () {
-        return view('auth.v3.dashboard.transactions');
-    })->name('transactions');
+    Route::get('user/dashboard/transactions', [TransactionsController::class, 'index'])->name('transactions');
     Route::get('user/dashboard/settings', function () {
         return view('auth.v3.dashboard.settings');
     })->name('settings');
