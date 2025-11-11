@@ -14,4 +14,10 @@ class TransactionsController extends Controller
             ->take($limit)
             ->get();
     }
+
+    public static function all_transactions($userID){
+        return Transactions::where('user_id', $userID)
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
 }

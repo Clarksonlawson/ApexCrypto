@@ -3,6 +3,9 @@
 @php
     use App\Models\Loan;
     use Carbon\Carbon;
+    use App\Services\CoinMarketCapService;
+
+    $service = new CoinMarketCapService();
 @endphp
 @section('content')
     <div class="RZmKBZs1E1eXw8vkE6jY">
@@ -411,7 +414,7 @@
 
                                     <td
                                         class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 ezMFUVl744lvw6ht0lFe __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">
-                                        $</td>
+                                        $ {{ number_format($collateral->usd_value, 2) }}</td>
                                     <td
                                         class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 ezMFUVl744lvw6ht0lFe __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">
                                         ${{ number_format($collateral->usd_value, 2) }} </td>
@@ -647,7 +650,7 @@
                     id="myTabContent">
                     <div id="buy" role="tabpanel" aria-labelledby="buy-tab">
                         <div class="_Vb9igHms0hI1PQcvp_S Q_jg_EPdNf9eDMn1mLI2 UYOSZJ1_pv3B5nt1ujCP">
-                            <form action="{{ route('') }}" method="POST">
+                            <form action="{{ route('loan.request') }}" method="POST">
                                 @csrf
                                 <div class="YajDCE_nRj_FDIevNpsd t6gkcSf0Bt4MLItXvDJ_ uv4ZnT9l0TZhdd_Ia_EC">
                                     <label for="from-input"
@@ -711,9 +714,6 @@
                             class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ icxWjIgUd9_dzYucx1nx Nm7xMnguzOx6J5Ao7yCU Q_jg_EPdNf9eDMn1mLI2 mveJTCIb2WII7J4sY22F pXhVRBC8yaUNllmIWxln qUWbS_LTZujDB4XCd11V _Ybd3WwuTVljUT4vEaM3 _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe __9sbu0yrzdhGIkLWNXl _7KA5gD55t2lxf9Jkj20 YXx9oZ15oLXSCG32YPBT xKUZEM163cLLvNnDh2ZN BkIbg_JwkgiyRW804Hhu _dylIDxYTN3qgvD4U597 XGQIxPVjm_m7D0aLHB7Y Mmx5lX7HVdrWCgh3EpTP _1jTZ8KXRZul60S6czNi XIIs8ZOri3wm8Wnj9N_y OPrb_iG5WDy_7F05BDOX dMTOiA3mf3FTjlHu6DqW yChACvAr1v8czJ2VO22j">
                             Preview
                         </button>
-                        {{-- <button type="submit" id="submitbtnLoan" class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 Nm7xMnguzOx6J5Ao7yCU mveJTCIb2WII7J4sY22F g40_g3BQzYCOX5eZADgY _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j ijrOHNoSVGATsWYKl4Id c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe y6GKdvUrd7vp_pxsFb57 YoPCmQ0E_V5W0GGmSIdm BkIbg_JwkgiyRW804Hhu _dylIDxYTN3qgvD4U597 KmgKPWh7pHX4ztLneO0T d8_fVOcgDmbt7UdpfeLK WuKugQzwTT7o1wwBck2R _ZsTMX_gz275093orLWM icxWjIgUd9_dzYucx1nx">
-                      Process
-                  </button> --}}
                         <!-- Preview Loan modal -->
                         <div id="editKeyModal" tabindex="-1" aria-hidden="true"
                             class="fixed inset-0 z-50 hidden overflow-y-auto overflow-x-hidden bg-black/60 backdrop-blur-sm">
@@ -792,132 +792,7 @@
                     </div>
                 </div>
             </div>
-            <div
-                class="mveJTCIb2WII7J4sY22F _Ybd3WwuTVljUT4vEaM3 _wYiJGbRZyFZeCc8y7Sf mngKhi_Rv06PF57lblDI _1jTZ8KXRZul60S6czNi LSIxp7RSuOKhsg28v_u3">
-                <div class="hD0sTTDgbxakubcHVW2X YRrCJSr_j5nopfm4duUc _7_AEkSp_Gi6KH9ZW6st sJNGKHxFYdN5Nzml5J2j">
-                    <div>
-                        <button id="coinSelectButton" data-dropdown-toggle="coinSelectDropdown"
-                            data-dropdown-placement="bottom"
-                            class="TR_P65x9ie7j6uxFo_Cs _k0lTW0vvzboctTxDi2R Q_jg_EPdNf9eDMn1mLI2 ijrOHNoSVGATsWYKl4Id ezMFUVl744lvw6ht0lFe __9sbu0yrzdhGIkLWNXl ZnBoTVi7VOJdCLSSU62n OyABRrnTV_kvHV7dJ0uE dMTOiA3mf3FTjlHu6DqW"
-                            type="button">
-                            Bitcoin
-                            <svg class="UwVmaTmxbsmvnpCB2B1K _o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="m19 9-7 7-7-7"></path>
-                            </svg>
-                        </button>
-                        <!-- Dropdown menu -->
-                        <div id="coinSelectDropdown"
-                            class="QhmQ_v3mmDFIP9VaVOfb _SmdlCf6eUKB_V9S5IDj nUVQqdd_RQjvvOrcRIpD Zy1Pypi71Xu6guex6urN z30cepEEBLSTPSvWeVPH mveJTCIb2WII7J4sY22F _Ybd3WwuTVljUT4vEaM3 mngKhi_Rv06PF57lblDI jqg6J89cvxmDiFpnV56r">
-                            <ul class="FJRldeiG2gFGZfuKgp88 c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe PeR2JZ9BZHYIH8Ea3F36 XIIs8ZOri3wm8Wnj9N_y"
-                                aria-labelledby="coinSelectButton">
-                                <li>
-                                    <button type="button"
-                                        class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j _7KA5gD55t2lxf9Jkj20 ZnBoTVi7VOJdCLSSU62n RzANcaqunVvlLrO6_tal dMTOiA3mf3FTjlHu6DqW">Bitcoin
-                                        (BTC)</button>
-                                </li>
-                                <li>
-                                    <button type="button"
-                                        class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j _7KA5gD55t2lxf9Jkj20 ZnBoTVi7VOJdCLSSU62n RzANcaqunVvlLrO6_tal dMTOiA3mf3FTjlHu6DqW">Ethereum
-                                        (ETH)</button>
-                                </li>
-                                <li>
-                                    <button type="button"
-                                        class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j _7KA5gD55t2lxf9Jkj20 ZnBoTVi7VOJdCLSSU62n RzANcaqunVvlLrO6_tal dMTOiA3mf3FTjlHu6DqW">Binance
-                                        Coin (BNB)</button>
-                                </li>
-                                <li>
-                                    <button type="button"
-                                        class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j _7KA5gD55t2lxf9Jkj20 ZnBoTVi7VOJdCLSSU62n RzANcaqunVvlLrO6_tal dMTOiA3mf3FTjlHu6DqW">Solana
-                                        (SOL)</button>
-                                </li>
-                                <li>
-                                    <button type="button"
-                                        class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j _7KA5gD55t2lxf9Jkj20 ZnBoTVi7VOJdCLSSU62n RzANcaqunVvlLrO6_tal dMTOiA3mf3FTjlHu6DqW">Dodge
-                                        Coin (DODGE)</button>
-                                </li>
-                                <li>
-                                    <button type="button"
-                                        class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j _7KA5gD55t2lxf9Jkj20 ZnBoTVi7VOJdCLSSU62n RzANcaqunVvlLrO6_tal dMTOiA3mf3FTjlHu6DqW">Avalanche
-                                        (AVAX)</button>
-                                </li>
-                            </ul>
-                        </div>
-                        <h2 class="vyo_A8gnQD1QWDPglr3h IOPhczRgtphv6NdNBDjj __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">
-                            $66,756</h2>
-                    </div>
-                    <span
-                        class="C_aqJ70iNmOTNL788uQu YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2 yM_AorRf2jSON3pDsdrz _slPOgYG58UZfxi9teaV sh9_WSzIEMjMvUiGrRaF">
-                        <svg class="rxe6apEJoEk8r75xaVNG ADSeKHR1DvUUA48Chci_" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 6v13m0-13 4 4m-4-4-4 4"></path>
-                        </svg>
-                        7%
-                    </span>
-                </div>
-                <div id="coin-chart"></div>
-                <div
-                    class="xCPtuxM4_gihvpPwv9bX Nu4HUn5EQpnNJ1itNkrd Q_jg_EPdNf9eDMn1mLI2 sJNGKHxFYdN5Nzml5J2j pVSXSlnJdgskzP7BxPBe qUWbS_LTZujDB4XCd11V _fGhMnSfYmaGrv7DvZ00">
-                    <div class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2 sJNGKHxFYdN5Nzml5J2j LVS5VhNiuUNp2iESGVfr">
-                        <!-- Button -->
-                        <button id="totalDeliveriesButton" data-dropdown-toggle="totalDeliveriesDropdown"
-                            data-dropdown-placement="bottom"
-                            class="_k0lTW0vvzboctTxDi2R Q_jg_EPdNf9eDMn1mLI2 ijrOHNoSVGATsWYKl4Id c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe PeR2JZ9BZHYIH8Ea3F36 ZnBoTVi7VOJdCLSSU62n XIIs8ZOri3wm8Wnj9N_y dMTOiA3mf3FTjlHu6DqW"
-                            type="button">
-                            Last 7 days
-                            <svg class="UwVmaTmxbsmvnpCB2B1K _o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="m19 9-7 7-7-7"></path>
-                            </svg>
-                        </button>
-                        <!-- Dropdown menu -->
-                        <div id="totalDeliveriesDropdown"
-                            class="QhmQ_v3mmDFIP9VaVOfb _SmdlCf6eUKB_V9S5IDj _07uZcLokMvX7uULfRPY Zy1Pypi71Xu6guex6urN z30cepEEBLSTPSvWeVPH mveJTCIb2WII7J4sY22F _Ybd3WwuTVljUT4vEaM3 mngKhi_Rv06PF57lblDI jqg6J89cvxmDiFpnV56r">
-                            <ul class="FJRldeiG2gFGZfuKgp88 c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe PeR2JZ9BZHYIH8Ea3F36 XIIs8ZOri3wm8Wnj9N_y"
-                                aria-labelledby="totalTrucksButton">
-                                <li>
-                                    <button type="button"
-                                        class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j _7KA5gD55t2lxf9Jkj20 ZnBoTVi7VOJdCLSSU62n RzANcaqunVvlLrO6_tal dMTOiA3mf3FTjlHu6DqW">Yesterday</button>
-                                </li>
-                                <li>
-                                    <button type="button"
-                                        class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j _7KA5gD55t2lxf9Jkj20 ZnBoTVi7VOJdCLSSU62n RzANcaqunVvlLrO6_tal dMTOiA3mf3FTjlHu6DqW">Today</button>
-                                </li>
-                                <li>
-                                    <button type="button"
-                                        class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j _7KA5gD55t2lxf9Jkj20 ZnBoTVi7VOJdCLSSU62n RzANcaqunVvlLrO6_tal dMTOiA3mf3FTjlHu6DqW">Last
-                                        7 days</button>
-                                </li>
-                                <li>
-                                    <button type="button"
-                                        class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j _7KA5gD55t2lxf9Jkj20 ZnBoTVi7VOJdCLSSU62n RzANcaqunVvlLrO6_tal dMTOiA3mf3FTjlHu6DqW">Last
-                                        30 days</button>
-                                </li>
-                                <li>
-                                    <button type="button"
-                                        class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j _7KA5gD55t2lxf9Jkj20 ZnBoTVi7VOJdCLSSU62n RzANcaqunVvlLrO6_tal dMTOiA3mf3FTjlHu6DqW">Last
-                                        90 days</button>
-                                </li>
-                            </ul>
-                        </div>
-                        <a href="#"
-                            class="_k0lTW0vvzboctTxDi2R Q_jg_EPdNf9eDMn1mLI2 mveJTCIb2WII7J4sY22F _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j c8dCx6gnV43hTOLV6ks5 yM_AorRf2jSON3pDsdrz sdSaZcRa4_We5kKaX4pf OQflBVxALl1Ntbyc2J2_ _7KA5gD55t2lxf9Jkj20 _fGhMnSfYmaGrv7DvZ00 lWggu7HhYcktZVJ7_V7A OPrb_iG5WDy_7F05BDOX yChACvAr1v8czJ2VO22j">
-                            Full report
-                            <svg class="cZGr4DL6HOaMXQmjciUj UwVmaTmxbsmvnpCB2B1K _o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc _oMLPqquxUE25nEAshY6"
-                                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="m9 5 7 7-7 7"></path>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
+
         </div>
         <!-- Table Widget -->
         <div
@@ -927,26 +802,14 @@
                     <div class="YRrCJSr_j5nopfm4duUc pjVv_HvtzX_QkbymyvoG Q_jg_EPdNf9eDMn1mLI2 sJNGKHxFYdN5Nzml5J2j">
                         <h5
                             class="vyo_A8gnQD1QWDPglr3h IOPhczRgtphv6NdNBDjj wgkxUJNDca22__ptDPRh __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">
-                            Open orders</h5>
-                        <div
-                            class="YRrCJSr_j5nopfm4duUc _VPh6kIywCMfXFfQLas4 e8VqoQNK0mbkRFDL3LMV _7_AEkSp_Gi6KH9ZW6st tI6ZVpHcCWxY_MKHSQWC MX_rT_HfQMh3dDrqOQ_i _Z3zYoo8SAGYZcCAB_mb SNt2jJ6mOxoWkDWNP3rs xr7CqaTHxTvDOrwAH2SW IQJ537EIO6dxb_gGB1jN">
-                            <button type="button"
-                                class="_k0lTW0vvzboctTxDi2R _VPh6kIywCMfXFfQLas4 Q_jg_EPdNf9eDMn1mLI2 Nm7xMnguzOx6J5Ao7yCU mveJTCIb2WII7J4sY22F pXhVRBC8yaUNllmIWxln qUWbS_LTZujDB4XCd11V _Ybd3WwuTVljUT4vEaM3 _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe __9sbu0yrzdhGIkLWNXl _7KA5gD55t2lxf9Jkj20 YXx9oZ15oLXSCG32YPBT xKUZEM163cLLvNnDh2ZN BkIbg_JwkgiyRW804Hhu _dylIDxYTN3qgvD4U597 XGQIxPVjm_m7D0aLHB7Y Mmx5lX7HVdrWCgh3EpTP _1jTZ8KXRZul60S6czNi XIIs8ZOri3wm8Wnj9N_y OPrb_iG5WDy_7F05BDOX dMTOiA3mf3FTjlHu6DqW yChACvAr1v8czJ2VO22j">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                    class="_6aYwdjzDCvXK0bVJQOb _o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc"
-                                    aria-hidden="true">
-                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M11.828 2.25c-.916 0-1.699.663-1.85 1.567l-.091.549a.798.798 0 01-.517.608 7.45 7.45 0 00-.478.198.798.798 0 01-.796-.064l-.453-.324a1.875 1.875 0 00-2.416.2l-.243.243a1.875 1.875 0 00-.2 2.416l.324.453a.798.798 0 01.064.796 7.448 7.448 0 00-.198.478.798.798 0 01-.608.517l-.55.092a1.875 1.875 0 00-1.566 1.849v.344c0 .916.663 1.699 1.567 1.85l.549.091c.281.047.508.25.608.517.06.162.127.321.198.478a.798.798 0 01-.064.796l-.324.453a1.875 1.875 0 00.2 2.416l.243.243c.648.648 1.67.733 2.416.2l.453-.324a.798.798 0 01.796-.064c.157.071.316.137.478.198.267.1.47.327.517.608l.092.55c.15.903.932 1.566 1.849 1.566h.344c.916 0 1.699-.663 1.85-1.567l.091-.549a.798.798 0 01.517-.608 7.52 7.52 0 00.478-.198.798.798 0 01.796.064l.453.324a1.875 1.875 0 002.416-.2l.243-.243c.648-.648.733-1.67.2-2.416l-.324-.453a.798.798 0 01-.064-.796c.071-.157.137-.316.198-.478.1-.267.327-.47.608-.517l.55-.091a1.875 1.875 0 001.566-1.85v-.344c0-.916-.663-1.699-1.567-1.85l-.549-.091a.798.798 0 01-.608-.517 7.507 7.507 0 00-.198-.478.798.798 0 01.064-.796l.324-.453a1.875 1.875 0 00-.2-2.416l-.243-.243a1.875 1.875 0 00-2.416-.2l-.453.324a.798.798 0 01-.796.064 7.462 7.462 0 00-.478-.198.798.798 0 01-.517-.608l-.091-.55a1.875 1.875 0 00-1.85-1.566h-.344zM12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z">
-                                    </path>
-                                </svg>
-                                Table settings
-                            </button>
-                        </div>
+                            History
+                        </h5>
                     </div>
                     <div
                         class="YRrCJSr_j5nopfm4duUc e8VqoQNK0mbkRFDL3LMV RL7uPEoqj_KRubJO6Kau sJNGKHxFYdN5Nzml5J2j UYOSZJ1_pv3B5nt1ujCP p_2EXc_a2sDA_h41l8QU tuEYdQFQ7IyWJ8f7A6Ss hhVyfLYO5HBNKAsXwK1v IfjsJ_KBYZ_X91Cj395g eVEHKvmQTgrcFfcnBoRJ">
                         <div class="t6gkcSf0Bt4MLItXvDJ_">
-                            <form class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2">
+                            <form class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2" method="GET">
+                                @csrf
                                 <label for="simple-search" class="_DVAfiyo21kM68EUVzEQ">Search</label>
                                 <div class="ahOqFrhzLjivRe8a1kX_ t6gkcSf0Bt4MLItXvDJ_">
                                     <div
@@ -974,7 +837,7 @@
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                         stroke-width="2" d="M5 12h14m-7 7V5"></path>
                                 </svg>
-                                Add new order
+                                New Transaction
                             </button>
                             <button id="filterDropdownButton" data-dropdown-toggle="filterDropdown"
                                 class="YRrCJSr_j5nopfm4duUc t6gkcSf0Bt4MLItXvDJ_ _VPh6kIywCMfXFfQLas4 Q_jg_EPdNf9eDMn1mLI2 Nm7xMnguzOx6J5Ao7yCU mveJTCIb2WII7J4sY22F pXhVRBC8yaUNllmIWxln qUWbS_LTZujDB4XCd11V _Ybd3WwuTVljUT4vEaM3 RZmKBZs1E1eXw8vkE6jY b9aD6g2qw84oyZNsMO8j c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe __9sbu0yrzdhGIkLWNXl _7KA5gD55t2lxf9Jkj20 YXx9oZ15oLXSCG32YPBT xKUZEM163cLLvNnDh2ZN BkIbg_JwkgiyRW804Hhu _dylIDxYTN3qgvD4U597 XGQIxPVjm_m7D0aLHB7Y Mmx5lX7HVdrWCgh3EpTP _1jTZ8KXRZul60S6czNi XIIs8ZOri3wm8Wnj9N_y OPrb_iG5WDy_7F05BDOX dMTOiA3mf3FTjlHu6DqW yChACvAr1v8czJ2VO22j icxWjIgUd9_dzYucx1nx _f8XqZvYJf7DNydLmFyI"
@@ -1112,7 +975,7 @@
                             <th scope="col"
                                 class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 yM_AorRf2jSON3pDsdrz">
                                 <div class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2">
-                                    Order Type
+                                    Type
                                     <svg class="c2LzVf9SsdSEMBrRjNwS VPGGthdu3cy_ZP7AL7dt bHAdXFPNFeidKlaOkKvl nXHmt07_6T25v6kTjTzf"
                                         fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
                                         aria-hidden="true">
@@ -1132,1033 +995,430 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="EpUSgjHdM6oyMXUiK_8_ _7KA5gD55t2lxf9Jkj20 _fGhMnSfYmaGrv7DvZ00 OPrb_iG5WDy_7F05BDOX">
-                            <td class="E9GV5sZJIbfO_GEQ_moc RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7">
-                                <div class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2">
-                                    <input id="checkbox-table-search-1" type="checkbox" onclick="event.stopPropagation()"
-                                        class="_o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc Y3FxyuXtj2gecrGXvLEI vpDN1VEJLu5FmLkr5WCk _9dH7mrOkzM4RTmidHTs _6MyV8SXoSWq_PQ6KWI6 _q0p_O8QLU1paqtuqmI2 GdTcGtoKP5_bET3syLDl Mmx5lX7HVdrWCgh3EpTP jqg6J89cvxmDiFpnV56r _GL8_lXmAgroY9ZBWGLH BO8JrKgx4qkHG27c4wVR">
-                                    <label for="checkbox-table-search-1" class="_DVAfiyo21kM68EUVzEQ">checkbox</label>
-                                </div>
-                            </td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 _43MO1gcdi2Y0RJW1uHL __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">
-                                Order sent to <span class="ezMFUVl744lvw6ht0lFe">Binance</span></td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 PeR2JZ9BZHYIH8Ea3F36 XIIs8ZOri3wm8Wnj9N_y">
-                                Oct 31 ,2025</td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 yM_AorRf2jSON3pDsdrz __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">
-                                0.2746593BTC</td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 ezMFUVl744lvw6ht0lFe _slPOgYG58UZfxi9teaV sh9_WSzIEMjMvUiGrRaF">
-                                Buy</td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 ezMFUVl744lvw6ht0lFe Wz8P4aylnNebbmktt9TH dc1ZvnXYavhnPynbasI1">
-                                <span
-                                    class="Y3FxyuXtj2gecrGXvLEI k1sFscPcBz_oMeiTaKv8 St_AVDyTHE88JaawJoRQ Zs2BLzUMh0_yTpU6xCcU gMXmdpOPfqG_3CKkL0VD ezMFUVl744lvw6ht0lFe gxqPdw4EewWD7Ph9huFn a0oEzk8_ILhkMVanM4oU Ve5b1Uj_g0EE28J7Z_Ka">In
-                                    progress</span>
-                            </td>
-                            <td class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7">
-                                <button id="order-1-dropdown-button" type="button"
-                                    data-dropdown-toggle="order-1-dropdown"
-                                    class="_k0lTW0vvzboctTxDi2R Q_jg_EPdNf9eDMn1mLI2 mveJTCIb2WII7J4sY22F sQaK4IH7BIQSgBTGX8Pe ijrOHNoSVGATsWYKl4Id c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe PeR2JZ9BZHYIH8Ea3F36 lBgPGkku8NiP5ReH09_2 ZnBoTVi7VOJdCLSSU62n BkIbg_JwkgiyRW804Hhu XIIs8ZOri3wm8Wnj9N_y OPrb_iG5WDy_7F05BDOX dMTOiA3mf3FTjlHu6DqW">
-                                    <svg class="rxe6apEJoEk8r75xaVNG ADSeKHR1DvUUA48Chci_" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="4"
-                                            d="M6 12h0m6 0h0m6 0h0"></path>
-                                    </svg>
-                                </button>
-                                <div id="order-1-dropdown"
-                                    class="QhmQ_v3mmDFIP9VaVOfb _SmdlCf6eUKB_V9S5IDj fScvmu_bLBCkoXb3Xml3 Zy1Pypi71Xu6guex6urN z30cepEEBLSTPSvWeVPH mveJTCIb2WII7J4sY22F _Ybd3WwuTVljUT4vEaM3 mngKhi_Rv06PF57lblDI PoeKYEQfG4WfmL9xM6vu jqg6J89cvxmDiFpnV56r">
-                                    <ul class="FJRldeiG2gFGZfuKgp88 c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe PeR2JZ9BZHYIH8Ea3F36 XIIs8ZOri3wm8Wnj9N_y"
-                                        aria-labelledby="order-1-dropdown-button">
-                                        <li>
-                                            <a href="../../e-commerce/transaction/index.html"
-                                                class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j _7KA5gD55t2lxf9Jkj20 ZnBoTVi7VOJdCLSSU62n RzANcaqunVvlLrO6_tal dMTOiA3mf3FTjlHu6DqW">
-                                                <svg class="IRKzgyPj4qWOh2vq2xBg _o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc"
-                                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                    fill="currentColor" viewBox="0 0 24 24">
-                                                    <path fill-rule="evenodd"
-                                                        d="M5 7.8C6.7 6.3 9.2 5 12 5s5.3 1.3 7 2.8a12.7 12.7 0 0 1 2.7 3.2c.2.2.3.6.3 1s-.1.8-.3 1a2 2 0 0 1-.6 1 12.7 12.7 0 0 1-9.1 5c-2.8 0-5.3-1.3-7-2.8A12.7 12.7 0 0 1 2.3 13c-.2-.2-.3-.6-.3-1s.1-.8.3-1c.1-.4.3-.7.6-1 .5-.7 1.2-1.5 2.1-2.2Zm7 7.2a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
-                                                        clip-rule="evenodd"></path>
+                        @foreach ($transactions as $transaction)
+                            <tr
+                                class="EpUSgjHdM6oyMXUiK_8_ _7KA5gD55t2lxf9Jkj20 _fGhMnSfYmaGrv7DvZ00 OPrb_iG5WDy_7F05BDOX">
+                                <td class="E9GV5sZJIbfO_GEQ_moc RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7">
+                                    <div class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2">
+                                        <input id="checkbox-table-search-1" type="checkbox"
+                                            onclick="event.stopPropagation()"
+                                            class="_o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc Y3FxyuXtj2gecrGXvLEI vpDN1VEJLu5FmLkr5WCk _9dH7mrOkzM4RTmidHTs _6MyV8SXoSWq_PQ6KWI6 _q0p_O8QLU1paqtuqmI2 GdTcGtoKP5_bET3syLDl Mmx5lX7HVdrWCgh3EpTP jqg6J89cvxmDiFpnV56r _GL8_lXmAgroY9ZBWGLH BO8JrKgx4qkHG27c4wVR">
+                                        <label for="checkbox-table-search-1" class="_DVAfiyo21kM68EUVzEQ">checkbox</label>
+                                    </div>
+                                </td>
+                                <td
+                                    class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 _43MO1gcdi2Y0RJW1uHL __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">
+                                    {{ $transaction->description }}</td>
+                                <td
+                                    class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 PeR2JZ9BZHYIH8Ea3F36 XIIs8ZOri3wm8Wnj9N_y">
+                                    {{ Carbon::parse($transaction->updated_at)->format('M d, Y H:i a') }}</td>
+                                <td
+                                    class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 yM_AorRf2jSON3pDsdrz __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">
+                                    {{ $transaction->crypto_amount }} {{ $transaction->asset_symbol }} </td>
+                                @switch($transaction->transaction_type)
+                                    @case('Deposit')
+                                        <td
+                                            class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 ezMFUVl744lvw6ht0lFe _slPOgYG58UZfxi9teaV sh9_WSzIEMjMvUiGrRaF">
+                                            {{ $transaction->transaction_type }}</td>
+                                    @break
+
+                                    @case('Transfer')
+                                        <td
+                                            class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 ezMFUVl744lvw6ht0lFe m_WzesDEb91pTPmX64rt Sz97zU8r72z_pjE9zQnR">
+                                            {{ $transaction->transaction_type }}</td>
+                                    @break
+
+                                    @default
+                                @endswitch
+
+                                <td
+                                    class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 ezMFUVl744lvw6ht0lFe Wz8P4aylnNebbmktt9TH dc1ZvnXYavhnPynbasI1">
+                                    @switch($transaction->status)
+                                        @case('verified')
+                                            <span
+                                                class="Y3FxyuXtj2gecrGXvLEI Dnqe3vvw22y12_oWDYvR St_AVDyTHE88JaawJoRQ Zs2BLzUMh0_yTpU6xCcU gMXmdpOPfqG_3CKkL0VD ezMFUVl744lvw6ht0lFe UptwuMAvsdRjvAaYNP6r pI9ZemAPEselrh3XVsBm nsxYwRasy6VBGnh2oIHS">Completed</span>
+                                        </td>
+                                    @break
+
+                                    @case('pending')
+                                        <span
+                                            class="Y3FxyuXtj2gecrGXvLEI k1sFscPcBz_oMeiTaKv8 St_AVDyTHE88JaawJoRQ Zs2BLzUMh0_yTpU6xCcU gMXmdpOPfqG_3CKkL0VD ezMFUVl744lvw6ht0lFe gxqPdw4EewWD7Ph9huFn a0oEzk8_ILhkMVanM4oU Ve5b1Uj_g0EE28J7Z_Ka">In
+                                            progress</span>
+                                    @break
+
+                                    @case('rejected')
+                                        <span
+                                            class="Y3FxyuXtj2gecrGXvLEI __CUdK3mSkcMQpxc1Lod St_AVDyTHE88JaawJoRQ Zs2BLzUMh0_yTpU6xCcU gMXmdpOPfqG_3CKkL0VD ezMFUVl744lvw6ht0lFe ZN_OBnKt2VQjvkKnCO6j _GlwOcA9YuerMlQx_c88 _XapmO5DQjdm9xWcSSv9">Cancelled</span>
+
+                                        @default
+                                    @endswitch
+                                    </td>
+                                    <td class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7">
+                                        <button id="order-{{ $transaction->id }}-dropdown-button" type="button"
+                                            data-dropdown-toggle="order-{{ $transaction->id }}-dropdown"
+                                            class="_k0lTW0vvzboctTxDi2R Q_jg_EPdNf9eDMn1mLI2 mveJTCIb2WII7J4sY22F sQaK4IH7BIQSgBTGX8Pe ijrOHNoSVGATsWYKl4Id c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe PeR2JZ9BZHYIH8Ea3F36 lBgPGkku8NiP5ReH09_2 ZnBoTVi7VOJdCLSSU62n BkIbg_JwkgiyRW804Hhu XIIs8ZOri3wm8Wnj9N_y OPrb_iG5WDy_7F05BDOX dMTOiA3mf3FTjlHu6DqW">
+                                            <svg class="rxe6apEJoEk8r75xaVNG ADSeKHR1DvUUA48Chci_" aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-width="4"
+                                                    d="M6 12h0m6 0h0m6 0h0"></path>
+                                            </svg>
+                                        </button>
+                                        <div id="order-{{ $transaction->id }}-dropdown"
+                                            class="QhmQ_v3mmDFIP9VaVOfb _SmdlCf6eUKB_V9S5IDj fScvmu_bLBCkoXb3Xml3 Zy1Pypi71Xu6guex6urN z30cepEEBLSTPSvWeVPH mveJTCIb2WII7J4sY22F _Ybd3WwuTVljUT4vEaM3 mngKhi_Rv06PF57lblDI PoeKYEQfG4WfmL9xM6vu jqg6J89cvxmDiFpnV56r">
+                                            <ul class="FJRldeiG2gFGZfuKgp88 c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe PeR2JZ9BZHYIH8Ea3F36 XIIs8ZOri3wm8Wnj9N_y"
+                                                aria-labelledby="order-1-dropdown-button">
+                                                <li>
+                                                    <a href="../../e-commerce/transaction/index.html"
+                                                        class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j _7KA5gD55t2lxf9Jkj20 ZnBoTVi7VOJdCLSSU62n RzANcaqunVvlLrO6_tal dMTOiA3mf3FTjlHu6DqW">
+                                                        <svg class="IRKzgyPj4qWOh2vq2xBg _o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc"
+                                                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                            fill="currentColor" viewBox="0 0 24 24">
+                                                            <path fill-rule="evenodd"
+                                                                d="M5 7.8C6.7 6.3 9.2 5 12 5s5.3 1.3 7 2.8a12.7 12.7 0 0 1 2.7 3.2c.2.2.3.6.3 1s-.1.8-.3 1a2 2 0 0 1-.6 1 12.7 12.7 0 0 1-9.1 5c-2.8 0-5.3-1.3-7-2.8A12.7 12.7 0 0 1 2.3 13c-.2-.2-.3-.6-.3-1s.1-.8.3-1c.1-.4.3-.7.6-1 .5-.7 1.2-1.5 2.1-2.2Zm7 7.2a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
+                                                                clip-rule="evenodd"></path>
+                                                        </svg>
+                                                        Details
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <button type="button" id="deleteOrderButton"
+                                                        data-modal-target="deleteOrderModal"
+                                                        data-modal-toggle="deleteOrderModal"
+                                                        class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe m_WzesDEb91pTPmX64rt _7KA5gD55t2lxf9Jkj20 Sz97zU8r72z_pjE9zQnR RzANcaqunVvlLrO6_tal">
+                                                        <svg class="IRKzgyPj4qWOh2vq2xBg _o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc"
+                                                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                            fill="currentColor" viewBox="0 0 24 24">
+                                                            <path fill-rule="evenodd"
+                                                                d="M8.6 2.6A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4c0-.5.2-1 .6-1.4ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z"
+                                                                clip-rule="evenodd"></path>
+                                                        </svg>
+                                                        Delete
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- Delete order modal -->
+                                <div id="deleteOrderModal" tabindex="-1" aria-hidden="true"
+                                    class="_LPVUrp9Uina5fcERqWC TYmpscr1PwuC1dpYXDpM ZjE1E_5ejL_PlLNIq3MM uQByIGHtHssL9HoPQXR4 Jq3rRDG6Hsr3eAZ0KJeH _SmdlCf6eUKB_V9S5IDj _dZO1Z7EjPZTzv7NappG D5X3kHheOzrTNzgpkKYX t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 Nm7xMnguzOx6J5Ao7yCU _lTTGxW9MVI40FyDCtmr LQrvJzHhtGuotyv_EF_N k6hbvxXxe_du942IR0vX">
+                                    <div
+                                        class="ahOqFrhzLjivRe8a1kX_ D5X3kHheOzrTNzgpkKYX t6gkcSf0Bt4MLItXvDJ_ uv4ZnT9l0TZhdd_Ia_EC _wYiJGbRZyFZeCc8y7Sf">
+                                        <!-- Modal content -->
+                                        <div
+                                            class="ahOqFrhzLjivRe8a1kX_ mveJTCIb2WII7J4sY22F _Ybd3WwuTVljUT4vEaM3 _wYiJGbRZyFZeCc8y7Sf mngKhi_Rv06PF57lblDI _1jTZ8KXRZul60S6czNi _aDtgllJkTzUlILozHgX">
+                                            <button type="button"
+                                                class="pq2JRWtiWcwYnw3xueNl g11v7hv2nftKJig5bsCt tUrUahyB6juka_LhwvrY LAjAGvS_n5tUL9Q_7i85 _k0lTW0vvzboctTxDi2R Q_jg_EPdNf9eDMn1mLI2 mveJTCIb2WII7J4sY22F mW4LfSTbez3WHPeTDguY Z4DH5a4vmjReSFRBpPgz c8dCx6gnV43hTOLV6ks5 _JmTNv5EiHqK2A1jcQSf _7KA5gD55t2lxf9Jkj20 ZnBoTVi7VOJdCLSSU62n RzANcaqunVvlLrO6_tal dMTOiA3mf3FTjlHu6DqW"
+                                                data-modal-toggle="deleteOrderModal">
+                                                <svg class="ADSeKHR1DvUUA48Chci_ rxe6apEJoEk8r75xaVNG" aria-hidden="true"
+                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    fill="none" viewBox="0 0 24 24">
+                                                    <path stroke="currentColor" stroke-linecap="round"
+                                                        stroke-linejoin="round" stroke-width="2"
+                                                        d="M6 18 17.94 6M18 18 6.06 6"></path>
                                                 </svg>
-                                                Details
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <button type="button" id="deleteOrderButton"
-                                                data-modal-target="deleteOrderModal" data-modal-toggle="deleteOrderModal"
-                                                class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe m_WzesDEb91pTPmX64rt _7KA5gD55t2lxf9Jkj20 Sz97zU8r72z_pjE9zQnR RzANcaqunVvlLrO6_tal">
-                                                <svg class="IRKzgyPj4qWOh2vq2xBg _o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc"
-                                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                    fill="currentColor" viewBox="0 0 24 24">
-                                                    <path fill-rule="evenodd"
-                                                        d="M8.6 2.6A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4c0-.5.2-1 .6-1.4ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-                                                Delete
+                                                <span class="_DVAfiyo21kM68EUVzEQ">Close modal</span>
                                             </button>
-                                        </li>
-                                    </ul>
+                                            <h3
+                                                class="Z3N7I2IDDsoXK6xJ1cSW y0nOgdpiqOUaFDbjAxwD yM_AorRf2jSON3pDsdrz __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">
+                                                Are you sure?</h3>
+                                            <p class="hD0sTTDgbxakubcHVW2X PeR2JZ9BZHYIH8Ea3F36 XIIs8ZOri3wm8Wnj9N_y">The
+                                                following transaction will be
+                                                permanently deleted and cannot be restored:</p>
+                                            <ul role="list"
+                                                class="hD0sTTDgbxakubcHVW2X TVHgSaRh3muGJct_epr9 upQp7iWehfaU8VTbfx_w ezMFUVl744lvw6ht0lFe __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE N4SFnsqiVKm1oFHmSTyG">
+                                                <li class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2 EU43bH15DCmsqkGyVBGj">
+                                                    <svg aria-hidden="true"
+                                                        class="_o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc VQS2tmQ_zFyBOC2tkmto _JmTNv5EiHqK2A1jcQSf qIT6vrYn0Fr1U3wlPXaS"
+                                                        fill="currentColor" viewBox="0 0 20 20"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path fill-rule="evenodd"
+                                                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                                            clip-rule="evenodd"></path>
+                                                    </svg>
+                                                    <span>{{$transaction->description}} - {{$transaction->crypto_amount}} {{$transaction->asset_symbol}}</span>
+                                                </li>
+                                            </ul>
+                                            <div class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2 d4louhNic5PFgJGRKqn6">
+                                                <button data-modal-toggle="deleteTransactionModal" type="button"
+                                                    class="mveJTCIb2WII7J4sY22F pXhVRBC8yaUNllmIWxln qUWbS_LTZujDB4XCd11V _Ybd3WwuTVljUT4vEaM3 _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe __9sbu0yrzdhGIkLWNXl _7KA5gD55t2lxf9Jkj20 YXx9oZ15oLXSCG32YPBT xKUZEM163cLLvNnDh2ZN BkIbg_JwkgiyRW804Hhu _dylIDxYTN3qgvD4U597 XGQIxPVjm_m7D0aLHB7Y Mmx5lX7HVdrWCgh3EpTP _1jTZ8KXRZul60S6czNi XIIs8ZOri3wm8Wnj9N_y OPrb_iG5WDy_7F05BDOX dMTOiA3mf3FTjlHu6DqW yChACvAr1v8czJ2VO22j">
+                                                    Cancel
+                                                </button>
+                                                <button type="submit"
+                                                    class="_k0lTW0vvzboctTxDi2R Q_jg_EPdNf9eDMn1mLI2 mveJTCIb2WII7J4sY22F SdPDrbResNmgnA0L4Iki _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j ijrOHNoSVGATsWYKl4Id c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe y6GKdvUrd7vp_pxsFb57 w8mVIEFJVQG7skDEVVw8 BkIbg_JwkgiyRW804Hhu _dylIDxYTN3qgvD4U597 wGCv_lBIef6dPW_LgqPQ g0psQAXAFirvUBcDyMSb">
+                                                    <svg aria-hidden="true"
+                                                        class="ZEPNZzATe5nPnS0shmrF C_aqJ70iNmOTNL788uQu _o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc"
+                                                        fill="currentColor" viewBox="0 0 20 20"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path fill-rule="evenodd"
+                                                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                                            clip-rule="evenodd"></path>
+                                                    </svg>
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </td>
-                        </tr>
-                        <tr class="EpUSgjHdM6oyMXUiK_8_ _7KA5gD55t2lxf9Jkj20 _fGhMnSfYmaGrv7DvZ00 OPrb_iG5WDy_7F05BDOX">
-                            <td class="E9GV5sZJIbfO_GEQ_moc RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7">
-                                <div class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2">
-                                    <input id="checkbox-table-search-2" type="checkbox" onclick="event.stopPropagation()"
-                                        class="_o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc Y3FxyuXtj2gecrGXvLEI vpDN1VEJLu5FmLkr5WCk _9dH7mrOkzM4RTmidHTs _6MyV8SXoSWq_PQ6KWI6 _q0p_O8QLU1paqtuqmI2 GdTcGtoKP5_bET3syLDl Mmx5lX7HVdrWCgh3EpTP jqg6J89cvxmDiFpnV56r _GL8_lXmAgroY9ZBWGLH BO8JrKgx4qkHG27c4wVR">
-                                    <label for="checkbox-table-search-2" class="_DVAfiyo21kM68EUVzEQ">checkbox</label>
-                                </div>
-                            </td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 _43MO1gcdi2Y0RJW1uHL __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">
-                                Order sent to <span class="ezMFUVl744lvw6ht0lFe">ExchangeBTC</span></td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 PeR2JZ9BZHYIH8Ea3F36 XIIs8ZOri3wm8Wnj9N_y">
-                                Oct 23 ,2025</td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 yM_AorRf2jSON3pDsdrz __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">
-                                1.33467 BTC</td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 ezMFUVl744lvw6ht0lFe _slPOgYG58UZfxi9teaV sh9_WSzIEMjMvUiGrRaF">
-                                Buy</td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 ezMFUVl744lvw6ht0lFe Wz8P4aylnNebbmktt9TH dc1ZvnXYavhnPynbasI1">
-                                <span
-                                    class="Y3FxyuXtj2gecrGXvLEI Dnqe3vvw22y12_oWDYvR St_AVDyTHE88JaawJoRQ Zs2BLzUMh0_yTpU6xCcU gMXmdpOPfqG_3CKkL0VD ezMFUVl744lvw6ht0lFe UptwuMAvsdRjvAaYNP6r pI9ZemAPEselrh3XVsBm nsxYwRasy6VBGnh2oIHS">Completed</span>
-                            </td>
-                            <td class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7">
-                                <button id="order-2-dropdown-button" type="button"
-                                    data-dropdown-toggle="order-2-dropdown"
-                                    class="_k0lTW0vvzboctTxDi2R Q_jg_EPdNf9eDMn1mLI2 mveJTCIb2WII7J4sY22F sQaK4IH7BIQSgBTGX8Pe ijrOHNoSVGATsWYKl4Id c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe PeR2JZ9BZHYIH8Ea3F36 lBgPGkku8NiP5ReH09_2 ZnBoTVi7VOJdCLSSU62n BkIbg_JwkgiyRW804Hhu XIIs8ZOri3wm8Wnj9N_y OPrb_iG5WDy_7F05BDOX dMTOiA3mf3FTjlHu6DqW">
-                                    <svg class="rxe6apEJoEk8r75xaVNG ADSeKHR1DvUUA48Chci_" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="4"
-                                            d="M6 12h0m6 0h0m6 0h0"></path>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <div
+                    class="ahOqFrhzLjivRe8a1kX_ wBVMFkIGfrKshbvi2gS1 rPhC6E4mbGlFBOJnsyEg pVSXSlnJdgskzP7BxPBe qUWbS_LTZujDB4XCd11V p_2EXc_a2sDA_h41l8QU _fGhMnSfYmaGrv7DvZ00 WoJnkQmBGtEPqYedyh7V">
+                    <nav class="YRrCJSr_j5nopfm4duUc e8VqoQNK0mbkRFDL3LMV _7_AEkSp_Gi6KH9ZW6st sJNGKHxFYdN5Nzml5J2j UYOSZJ1_pv3B5nt1ujCP MX_rT_HfQMh3dDrqOQ_i _Z3zYoo8SAGYZcCAB_mb xr7CqaTHxTvDOrwAH2SW"
+                        aria-label="Table navigation">
+                        <span class="c8dCx6gnV43hTOLV6ks5 _43MO1gcdi2Y0RJW1uHL PeR2JZ9BZHYIH8Ea3F36 XIIs8ZOri3wm8Wnj9N_y">
+                            Showing
+                            <span class="yM_AorRf2jSON3pDsdrz __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">1-10</span>
+                            of
+                            <span class="yM_AorRf2jSON3pDsdrz __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">1000</span>
+                        </span>
+                        <ul class="_k0lTW0vvzboctTxDi2R RL7uPEoqj_KRubJO6Kau EVsptO6LmMeSj8z3lntE">
+                            <li>
+                                <a href="#"
+                                    class="CoXBDf_LlsdMbiNfGE67 YRrCJSr_j5nopfm4duUc uLPch_bqyJDXwe5tynMV Q_jg_EPdNf9eDMn1mLI2 Nm7xMnguzOx6J5Ao7yCU Zbcg0Bjzm_C_64FAwnE3 pXhVRBC8yaUNllmIWxln vpDN1VEJLu5FmLkr5WCk _Ybd3WwuTVljUT4vEaM3 _Cj_M6jt2eLjDgkBBNgI Qkdk47eO_FsOcXfaC9zb PeR2JZ9BZHYIH8Ea3F36 _7KA5gD55t2lxf9Jkj20 n2xFO60c4M2k5KjGtElq _fGhMnSfYmaGrv7DvZ00 _1jTZ8KXRZul60S6czNi XIIs8ZOri3wm8Wnj9N_y OPrb_iG5WDy_7F05BDOX dMTOiA3mf3FTjlHu6DqW">
+                                    <span class="_DVAfiyo21kM68EUVzEQ">Previous</span>
+                                    <svg class="E9GV5sZJIbfO_GEQ_moc _o2IXcpM0qnG3JPReKus" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                        viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="m15 19-7-7 7-7"></path>
                                     </svg>
-                                </button>
-                                <div id="order-2-dropdown"
-                                    class="QhmQ_v3mmDFIP9VaVOfb _SmdlCf6eUKB_V9S5IDj fScvmu_bLBCkoXb3Xml3 Zy1Pypi71Xu6guex6urN z30cepEEBLSTPSvWeVPH mveJTCIb2WII7J4sY22F _Ybd3WwuTVljUT4vEaM3 mngKhi_Rv06PF57lblDI PoeKYEQfG4WfmL9xM6vu jqg6J89cvxmDiFpnV56r">
-                                    <ul class="FJRldeiG2gFGZfuKgp88 c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe PeR2JZ9BZHYIH8Ea3F36 XIIs8ZOri3wm8Wnj9N_y"
-                                        aria-labelledby="order-2-dropdown-button">
-                                        <li>
-                                            <a href="../../e-commerce/transaction/index.html"
-                                                class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j _7KA5gD55t2lxf9Jkj20 ZnBoTVi7VOJdCLSSU62n RzANcaqunVvlLrO6_tal dMTOiA3mf3FTjlHu6DqW">
-                                                <svg class="IRKzgyPj4qWOh2vq2xBg _o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc"
-                                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                    fill="currentColor" viewBox="0 0 24 24">
-                                                    <path fill-rule="evenodd"
-                                                        d="M5 7.8C6.7 6.3 9.2 5 12 5s5.3 1.3 7 2.8a12.7 12.7 0 0 1 2.7 3.2c.2.2.3.6.3 1s-.1.8-.3 1a2 2 0 0 1-.6 1 12.7 12.7 0 0 1-9.1 5c-2.8 0-5.3-1.3-7-2.8A12.7 12.7 0 0 1 2.3 13c-.2-.2-.3-.6-.3-1s.1-.8.3-1c.1-.4.3-.7.6-1 .5-.7 1.2-1.5 2.1-2.2Zm7 7.2a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-                                                Details
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <button type="button" id="deleteOrderButton"
-                                                data-modal-target="deleteOrderModal" data-modal-toggle="deleteOrderModal"
-                                                class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe m_WzesDEb91pTPmX64rt _7KA5gD55t2lxf9Jkj20 Sz97zU8r72z_pjE9zQnR RzANcaqunVvlLrO6_tal">
-                                                <svg class="IRKzgyPj4qWOh2vq2xBg _o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc"
-                                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                    fill="currentColor" viewBox="0 0 24 24">
-                                                    <path fill-rule="evenodd"
-                                                        d="M8.6 2.6A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4c0-.5.2-1 .6-1.4ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-                                                Delete
-                                            </button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="EpUSgjHdM6oyMXUiK_8_ _7KA5gD55t2lxf9Jkj20 _fGhMnSfYmaGrv7DvZ00 OPrb_iG5WDy_7F05BDOX">
-                            <td class="E9GV5sZJIbfO_GEQ_moc RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7">
-                                <div class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2">
-                                    <input id="checkbox-table-search-3" type="checkbox" onclick="event.stopPropagation()"
-                                        class="_o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc Y3FxyuXtj2gecrGXvLEI vpDN1VEJLu5FmLkr5WCk _9dH7mrOkzM4RTmidHTs _6MyV8SXoSWq_PQ6KWI6 _q0p_O8QLU1paqtuqmI2 GdTcGtoKP5_bET3syLDl Mmx5lX7HVdrWCgh3EpTP jqg6J89cvxmDiFpnV56r _GL8_lXmAgroY9ZBWGLH BO8JrKgx4qkHG27c4wVR">
-                                    <label for="checkbox-table-search-3" class="_DVAfiyo21kM68EUVzEQ">checkbox</label>
-                                </div>
-                            </td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 _43MO1gcdi2Y0RJW1uHL __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">
-                                Order sent to <span class="ezMFUVl744lvw6ht0lFe">Binance</span></td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 PeR2JZ9BZHYIH8Ea3F36 XIIs8ZOri3wm8Wnj9N_y">
-                                Aug 18, 2025</td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 yM_AorRf2jSON3pDsdrz __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">
-                                3.274635ETH</td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 ezMFUVl744lvw6ht0lFe m_WzesDEb91pTPmX64rt Sz97zU8r72z_pjE9zQnR">
-                                Sell</td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 ezMFUVl744lvw6ht0lFe Wz8P4aylnNebbmktt9TH dc1ZvnXYavhnPynbasI1">
-                                <span
-                                    class="Y3FxyuXtj2gecrGXvLEI __CUdK3mSkcMQpxc1Lod St_AVDyTHE88JaawJoRQ Zs2BLzUMh0_yTpU6xCcU gMXmdpOPfqG_3CKkL0VD ezMFUVl744lvw6ht0lFe ZN_OBnKt2VQjvkKnCO6j _GlwOcA9YuerMlQx_c88 _XapmO5DQjdm9xWcSSv9">Cancelled</span>
-                            </td>
-                            <td class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7">
-                                <button id="order-3-dropdown-button" type="button"
-                                    data-dropdown-toggle="order-3-dropdown"
-                                    class="_k0lTW0vvzboctTxDi2R Q_jg_EPdNf9eDMn1mLI2 mveJTCIb2WII7J4sY22F sQaK4IH7BIQSgBTGX8Pe ijrOHNoSVGATsWYKl4Id c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe PeR2JZ9BZHYIH8Ea3F36 lBgPGkku8NiP5ReH09_2 ZnBoTVi7VOJdCLSSU62n BkIbg_JwkgiyRW804Hhu XIIs8ZOri3wm8Wnj9N_y OPrb_iG5WDy_7F05BDOX dMTOiA3mf3FTjlHu6DqW">
-                                    <svg class="rxe6apEJoEk8r75xaVNG ADSeKHR1DvUUA48Chci_" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="4"
-                                            d="M6 12h0m6 0h0m6 0h0"></path>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                    class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2 Nm7xMnguzOx6J5Ao7yCU pXhVRBC8yaUNllmIWxln vpDN1VEJLu5FmLkr5WCk _Ybd3WwuTVljUT4vEaM3 _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j c8dCx6gnV43hTOLV6ks5 OXyBmUnmaFHYN14c7Giu PeR2JZ9BZHYIH8Ea3F36 _7KA5gD55t2lxf9Jkj20 n2xFO60c4M2k5KjGtElq _fGhMnSfYmaGrv7DvZ00 _1jTZ8KXRZul60S6czNi XIIs8ZOri3wm8Wnj9N_y OPrb_iG5WDy_7F05BDOX dMTOiA3mf3FTjlHu6DqW">1</a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                    class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2 Nm7xMnguzOx6J5Ao7yCU pXhVRBC8yaUNllmIWxln vpDN1VEJLu5FmLkr5WCk _Ybd3WwuTVljUT4vEaM3 _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j c8dCx6gnV43hTOLV6ks5 OXyBmUnmaFHYN14c7Giu PeR2JZ9BZHYIH8Ea3F36 _7KA5gD55t2lxf9Jkj20 n2xFO60c4M2k5KjGtElq _fGhMnSfYmaGrv7DvZ00 _1jTZ8KXRZul60S6czNi XIIs8ZOri3wm8Wnj9N_y OPrb_iG5WDy_7F05BDOX dMTOiA3mf3FTjlHu6DqW">2</a>
+                            </li>
+                            <li>
+                                <a href="#" aria-current="page"
+                                    class="QhmQ_v3mmDFIP9VaVOfb YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2 Nm7xMnguzOx6J5Ao7yCU pXhVRBC8yaUNllmIWxln XQGFRdlxLbhbEMzeaRuO OHD_pMp_ehzJj42EmDyF _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j c8dCx6gnV43hTOLV6ks5 OXyBmUnmaFHYN14c7Giu _6MyV8SXoSWq_PQ6KWI6 M7HoUYpjoEdw_y87xeWn YXx9oZ15oLXSCG32YPBT _fGhMnSfYmaGrv7DvZ00 jqg6J89cvxmDiFpnV56r OyABRrnTV_kvHV7dJ0uE">3</a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                    class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2 Nm7xMnguzOx6J5Ao7yCU pXhVRBC8yaUNllmIWxln vpDN1VEJLu5FmLkr5WCk _Ybd3WwuTVljUT4vEaM3 _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j c8dCx6gnV43hTOLV6ks5 OXyBmUnmaFHYN14c7Giu PeR2JZ9BZHYIH8Ea3F36 _7KA5gD55t2lxf9Jkj20 n2xFO60c4M2k5KjGtElq _fGhMnSfYmaGrv7DvZ00 _1jTZ8KXRZul60S6czNi XIIs8ZOri3wm8Wnj9N_y OPrb_iG5WDy_7F05BDOX dMTOiA3mf3FTjlHu6DqW">...</a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                    class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2 Nm7xMnguzOx6J5Ao7yCU pXhVRBC8yaUNllmIWxln vpDN1VEJLu5FmLkr5WCk _Ybd3WwuTVljUT4vEaM3 _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j c8dCx6gnV43hTOLV6ks5 OXyBmUnmaFHYN14c7Giu PeR2JZ9BZHYIH8Ea3F36 _7KA5gD55t2lxf9Jkj20 n2xFO60c4M2k5KjGtElq _fGhMnSfYmaGrv7DvZ00 _1jTZ8KXRZul60S6czNi XIIs8ZOri3wm8Wnj9N_y OPrb_iG5WDy_7F05BDOX dMTOiA3mf3FTjlHu6DqW">100</a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                    class="YRrCJSr_j5nopfm4duUc uLPch_bqyJDXwe5tynMV Q_jg_EPdNf9eDMn1mLI2 Nm7xMnguzOx6J5Ao7yCU _McrmMbFrEkc_sTK9IC8 pXhVRBC8yaUNllmIWxln vpDN1VEJLu5FmLkr5WCk _Ybd3WwuTVljUT4vEaM3 _Cj_M6jt2eLjDgkBBNgI Qkdk47eO_FsOcXfaC9zb OXyBmUnmaFHYN14c7Giu PeR2JZ9BZHYIH8Ea3F36 _7KA5gD55t2lxf9Jkj20 n2xFO60c4M2k5KjGtElq _fGhMnSfYmaGrv7DvZ00 _1jTZ8KXRZul60S6czNi XIIs8ZOri3wm8Wnj9N_y OPrb_iG5WDy_7F05BDOX dMTOiA3mf3FTjlHu6DqW">
+                                    <span class="_DVAfiyo21kM68EUVzEQ">Next</span>
+                                    <svg class="E9GV5sZJIbfO_GEQ_moc _o2IXcpM0qnG3JPReKus" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                        viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="m9 5 7 7-7 7"></path>
                                     </svg>
-                                </button>
-                                <div id="order-3-dropdown"
-                                    class="QhmQ_v3mmDFIP9VaVOfb _SmdlCf6eUKB_V9S5IDj fScvmu_bLBCkoXb3Xml3 Zy1Pypi71Xu6guex6urN z30cepEEBLSTPSvWeVPH mveJTCIb2WII7J4sY22F _Ybd3WwuTVljUT4vEaM3 mngKhi_Rv06PF57lblDI PoeKYEQfG4WfmL9xM6vu jqg6J89cvxmDiFpnV56r">
-                                    <ul class="FJRldeiG2gFGZfuKgp88 c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe PeR2JZ9BZHYIH8Ea3F36 XIIs8ZOri3wm8Wnj9N_y"
-                                        aria-labelledby="order-3-dropdown-button">
-                                        <li>
-                                            <a href="../../e-commerce/transaction/index.html"
-                                                class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j _7KA5gD55t2lxf9Jkj20 ZnBoTVi7VOJdCLSSU62n RzANcaqunVvlLrO6_tal dMTOiA3mf3FTjlHu6DqW">
-                                                <svg class="IRKzgyPj4qWOh2vq2xBg _o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc"
-                                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                    fill="currentColor" viewBox="0 0 24 24">
-                                                    <path fill-rule="evenodd"
-                                                        d="M5 7.8C6.7 6.3 9.2 5 12 5s5.3 1.3 7 2.8a12.7 12.7 0 0 1 2.7 3.2c.2.2.3.6.3 1s-.1.8-.3 1a2 2 0 0 1-.6 1 12.7 12.7 0 0 1-9.1 5c-2.8 0-5.3-1.3-7-2.8A12.7 12.7 0 0 1 2.3 13c-.2-.2-.3-.6-.3-1s.1-.8.3-1c.1-.4.3-.7.6-1 .5-.7 1.2-1.5 2.1-2.2Zm7 7.2a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-                                                Details
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <button type="button" id="deleteOrderButton"
-                                                data-modal-target="deleteOrderModal" data-modal-toggle="deleteOrderModal"
-                                                class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe m_WzesDEb91pTPmX64rt _7KA5gD55t2lxf9Jkj20 Sz97zU8r72z_pjE9zQnR RzANcaqunVvlLrO6_tal">
-                                                <svg class="IRKzgyPj4qWOh2vq2xBg _o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc"
-                                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                    fill="currentColor" viewBox="0 0 24 24">
-                                                    <path fill-rule="evenodd"
-                                                        d="M8.6 2.6A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4c0-.5.2-1 .6-1.4ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-                                                Delete
-                                            </button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="EpUSgjHdM6oyMXUiK_8_ _7KA5gD55t2lxf9Jkj20 _fGhMnSfYmaGrv7DvZ00 OPrb_iG5WDy_7F05BDOX">
-                            <td class="E9GV5sZJIbfO_GEQ_moc RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7">
-                                <div class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2">
-                                    <input id="checkbox-table-search-4" type="checkbox" onclick="event.stopPropagation()"
-                                        class="_o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc Y3FxyuXtj2gecrGXvLEI vpDN1VEJLu5FmLkr5WCk _9dH7mrOkzM4RTmidHTs _6MyV8SXoSWq_PQ6KWI6 _q0p_O8QLU1paqtuqmI2 GdTcGtoKP5_bET3syLDl Mmx5lX7HVdrWCgh3EpTP jqg6J89cvxmDiFpnV56r _GL8_lXmAgroY9ZBWGLH BO8JrKgx4qkHG27c4wVR">
-                                    <label for="checkbox-table-search-4" class="_DVAfiyo21kM68EUVzEQ">checkbox</label>
-                                </div>
-                            </td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 _43MO1gcdi2Y0RJW1uHL __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">
-                                Order sent to <span class="ezMFUVl744lvw6ht0lFe">ExchangeBTC</span></td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 PeR2JZ9BZHYIH8Ea3F36 XIIs8ZOri3wm8Wnj9N_y">
-                                Aug 18, 2025</td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 yM_AorRf2jSON3pDsdrz __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">
-                                12.7344459 ETH</td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 ezMFUVl744lvw6ht0lFe _slPOgYG58UZfxi9teaV sh9_WSzIEMjMvUiGrRaF">
-                                Buy</td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 ezMFUVl744lvw6ht0lFe Wz8P4aylnNebbmktt9TH dc1ZvnXYavhnPynbasI1">
-                                <span
-                                    class="fhCwost7CSNRc2WSHLFW Y3FxyuXtj2gecrGXvLEI Dnqe3vvw22y12_oWDYvR St_AVDyTHE88JaawJoRQ Zs2BLzUMh0_yTpU6xCcU gMXmdpOPfqG_3CKkL0VD ezMFUVl744lvw6ht0lFe UptwuMAvsdRjvAaYNP6r pI9ZemAPEselrh3XVsBm nsxYwRasy6VBGnh2oIHS">Completed</span>
-                            </td>
-                            <td class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7">
-                                <button id="order-4-dropdown-button" type="button"
-                                    data-dropdown-toggle="order-4-dropdown"
-                                    class="_k0lTW0vvzboctTxDi2R Q_jg_EPdNf9eDMn1mLI2 mveJTCIb2WII7J4sY22F sQaK4IH7BIQSgBTGX8Pe ijrOHNoSVGATsWYKl4Id c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe PeR2JZ9BZHYIH8Ea3F36 lBgPGkku8NiP5ReH09_2 ZnBoTVi7VOJdCLSSU62n BkIbg_JwkgiyRW804Hhu XIIs8ZOri3wm8Wnj9N_y OPrb_iG5WDy_7F05BDOX dMTOiA3mf3FTjlHu6DqW">
-                                    <svg class="rxe6apEJoEk8r75xaVNG ADSeKHR1DvUUA48Chci_" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="4"
-                                            d="M6 12h0m6 0h0m6 0h0"></path>
-                                    </svg>
-                                </button>
-                                <div id="order-4-dropdown"
-                                    class="QhmQ_v3mmDFIP9VaVOfb _SmdlCf6eUKB_V9S5IDj fScvmu_bLBCkoXb3Xml3 Zy1Pypi71Xu6guex6urN z30cepEEBLSTPSvWeVPH mveJTCIb2WII7J4sY22F _Ybd3WwuTVljUT4vEaM3 mngKhi_Rv06PF57lblDI PoeKYEQfG4WfmL9xM6vu jqg6J89cvxmDiFpnV56r">
-                                    <ul class="FJRldeiG2gFGZfuKgp88 c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe PeR2JZ9BZHYIH8Ea3F36 XIIs8ZOri3wm8Wnj9N_y"
-                                        aria-labelledby="order-4-dropdown-button">
-                                        <li>
-                                            <a href="../../e-commerce/transaction/index.html"
-                                                class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j _7KA5gD55t2lxf9Jkj20 ZnBoTVi7VOJdCLSSU62n RzANcaqunVvlLrO6_tal dMTOiA3mf3FTjlHu6DqW">
-                                                <svg class="IRKzgyPj4qWOh2vq2xBg _o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc"
-                                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                    fill="currentColor" viewBox="0 0 24 24">
-                                                    <path fill-rule="evenodd"
-                                                        d="M5 7.8C6.7 6.3 9.2 5 12 5s5.3 1.3 7 2.8a12.7 12.7 0 0 1 2.7 3.2c.2.2.3.6.3 1s-.1.8-.3 1a2 2 0 0 1-.6 1 12.7 12.7 0 0 1-9.1 5c-2.8 0-5.3-1.3-7-2.8A12.7 12.7 0 0 1 2.3 13c-.2-.2-.3-.6-.3-1s.1-.8.3-1c.1-.4.3-.7.6-1 .5-.7 1.2-1.5 2.1-2.2Zm7 7.2a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-                                                Details
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <button type="button" id="deleteOrderButton"
-                                                data-modal-target="deleteOrderModal" data-modal-toggle="deleteOrderModal"
-                                                class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe m_WzesDEb91pTPmX64rt _7KA5gD55t2lxf9Jkj20 Sz97zU8r72z_pjE9zQnR RzANcaqunVvlLrO6_tal">
-                                                <svg class="IRKzgyPj4qWOh2vq2xBg _o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc"
-                                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                    fill="currentColor" viewBox="0 0 24 24">
-                                                    <path fill-rule="evenodd"
-                                                        d="M8.6 2.6A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4c0-.5.2-1 .6-1.4ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-                                                Delete
-                                            </button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="EpUSgjHdM6oyMXUiK_8_ _7KA5gD55t2lxf9Jkj20 _fGhMnSfYmaGrv7DvZ00 OPrb_iG5WDy_7F05BDOX">
-                            <td class="E9GV5sZJIbfO_GEQ_moc RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7">
-                                <div class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2">
-                                    <input id="checkbox-table-search-5" type="checkbox"
-                                        onclick="event.stopPropagation()"
-                                        class="_o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc Y3FxyuXtj2gecrGXvLEI vpDN1VEJLu5FmLkr5WCk _9dH7mrOkzM4RTmidHTs _6MyV8SXoSWq_PQ6KWI6 _q0p_O8QLU1paqtuqmI2 GdTcGtoKP5_bET3syLDl Mmx5lX7HVdrWCgh3EpTP jqg6J89cvxmDiFpnV56r _GL8_lXmAgroY9ZBWGLH BO8JrKgx4qkHG27c4wVR">
-                                    <label for="checkbox-table-search-5" class="_DVAfiyo21kM68EUVzEQ">checkbox</label>
-                                </div>
-                            </td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 _43MO1gcdi2Y0RJW1uHL __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">
-                                Order sent to <span class="ezMFUVl744lvw6ht0lFe">Binance</span></td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 PeR2JZ9BZHYIH8Ea3F36 XIIs8ZOri3wm8Wnj9N_y">
-                                Aug 18, 2025</td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 yM_AorRf2jSON3pDsdrz __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">
-                                40 DOGE</td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 ezMFUVl744lvw6ht0lFe m_WzesDEb91pTPmX64rt Sz97zU8r72z_pjE9zQnR">
-                                Sell</td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 ezMFUVl744lvw6ht0lFe Wz8P4aylnNebbmktt9TH dc1ZvnXYavhnPynbasI1">
-                                <span
-                                    class="Y3FxyuXtj2gecrGXvLEI __CUdK3mSkcMQpxc1Lod St_AVDyTHE88JaawJoRQ Zs2BLzUMh0_yTpU6xCcU gMXmdpOPfqG_3CKkL0VD ezMFUVl744lvw6ht0lFe ZN_OBnKt2VQjvkKnCO6j _GlwOcA9YuerMlQx_c88 _XapmO5DQjdm9xWcSSv9">Cancelled</span>
-                            </td>
-                            <td class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7">
-                                <button id="order-5-dropdown-button" type="button"
-                                    data-dropdown-toggle="order-5-dropdown"
-                                    class="_k0lTW0vvzboctTxDi2R Q_jg_EPdNf9eDMn1mLI2 mveJTCIb2WII7J4sY22F sQaK4IH7BIQSgBTGX8Pe ijrOHNoSVGATsWYKl4Id c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe PeR2JZ9BZHYIH8Ea3F36 lBgPGkku8NiP5ReH09_2 ZnBoTVi7VOJdCLSSU62n BkIbg_JwkgiyRW804Hhu XIIs8ZOri3wm8Wnj9N_y OPrb_iG5WDy_7F05BDOX dMTOiA3mf3FTjlHu6DqW">
-                                    <svg class="rxe6apEJoEk8r75xaVNG ADSeKHR1DvUUA48Chci_" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="4"
-                                            d="M6 12h0m6 0h0m6 0h0"></path>
-                                    </svg>
-                                </button>
-                                <div id="order-5-dropdown"
-                                    class="QhmQ_v3mmDFIP9VaVOfb _SmdlCf6eUKB_V9S5IDj fScvmu_bLBCkoXb3Xml3 Zy1Pypi71Xu6guex6urN z30cepEEBLSTPSvWeVPH mveJTCIb2WII7J4sY22F _Ybd3WwuTVljUT4vEaM3 mngKhi_Rv06PF57lblDI PoeKYEQfG4WfmL9xM6vu jqg6J89cvxmDiFpnV56r">
-                                    <ul class="FJRldeiG2gFGZfuKgp88 c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe PeR2JZ9BZHYIH8Ea3F36 XIIs8ZOri3wm8Wnj9N_y"
-                                        aria-labelledby="order-5-dropdown-button">
-                                        <li>
-                                            <a href="../../e-commerce/transaction/index.html"
-                                                class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j _7KA5gD55t2lxf9Jkj20 ZnBoTVi7VOJdCLSSU62n RzANcaqunVvlLrO6_tal dMTOiA3mf3FTjlHu6DqW">
-                                                <svg class="IRKzgyPj4qWOh2vq2xBg _o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc"
-                                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                    fill="currentColor" viewBox="0 0 24 24">
-                                                    <path fill-rule="evenodd"
-                                                        d="M5 7.8C6.7 6.3 9.2 5 12 5s5.3 1.3 7 2.8a12.7 12.7 0 0 1 2.7 3.2c.2.2.3.6.3 1s-.1.8-.3 1a2 2 0 0 1-.6 1 12.7 12.7 0 0 1-9.1 5c-2.8 0-5.3-1.3-7-2.8A12.7 12.7 0 0 1 2.3 13c-.2-.2-.3-.6-.3-1s.1-.8.3-1c.1-.4.3-.7.6-1 .5-.7 1.2-1.5 2.1-2.2Zm7 7.2a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-                                                Details
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <button type="button" id="deleteOrderButton"
-                                                data-modal-target="deleteOrderModal"
-                                                data-modal-toggle="deleteOrderModal"
-                                                class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe m_WzesDEb91pTPmX64rt _7KA5gD55t2lxf9Jkj20 Sz97zU8r72z_pjE9zQnR RzANcaqunVvlLrO6_tal">
-                                                <svg class="IRKzgyPj4qWOh2vq2xBg _o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc"
-                                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                    fill="currentColor" viewBox="0 0 24 24">
-                                                    <path fill-rule="evenodd"
-                                                        d="M8.6 2.6A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4c0-.5.2-1 .6-1.4ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-                                                Delete
-                                            </button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="EpUSgjHdM6oyMXUiK_8_ _7KA5gD55t2lxf9Jkj20 _fGhMnSfYmaGrv7DvZ00 OPrb_iG5WDy_7F05BDOX">
-                            <td class="E9GV5sZJIbfO_GEQ_moc RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7">
-                                <div class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2">
-                                    <input id="checkbox-table-search-6" type="checkbox"
-                                        onclick="event.stopPropagation()"
-                                        class="_o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc Y3FxyuXtj2gecrGXvLEI vpDN1VEJLu5FmLkr5WCk _9dH7mrOkzM4RTmidHTs _6MyV8SXoSWq_PQ6KWI6 _q0p_O8QLU1paqtuqmI2 GdTcGtoKP5_bET3syLDl Mmx5lX7HVdrWCgh3EpTP jqg6J89cvxmDiFpnV56r _GL8_lXmAgroY9ZBWGLH BO8JrKgx4qkHG27c4wVR">
-                                    <label for="checkbox-table-search-6" class="_DVAfiyo21kM68EUVzEQ">checkbox</label>
-                                </div>
-                            </td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 _43MO1gcdi2Y0RJW1uHL __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">
-                                Order sent to <span class="ezMFUVl744lvw6ht0lFe">ExchangeBTC</span></td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 PeR2JZ9BZHYIH8Ea3F36 XIIs8ZOri3wm8Wnj9N_y">
-                                Aug 15 ,2025</td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 yM_AorRf2jSON3pDsdrz __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">
-                                0.0375693 BTC</td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 ezMFUVl744lvw6ht0lFe _slPOgYG58UZfxi9teaV sh9_WSzIEMjMvUiGrRaF">
-                                Buy</td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 ezMFUVl744lvw6ht0lFe Wz8P4aylnNebbmktt9TH dc1ZvnXYavhnPynbasI1">
-                                <span
-                                    class="Y3FxyuXtj2gecrGXvLEI Dnqe3vvw22y12_oWDYvR St_AVDyTHE88JaawJoRQ Zs2BLzUMh0_yTpU6xCcU gMXmdpOPfqG_3CKkL0VD ezMFUVl744lvw6ht0lFe UptwuMAvsdRjvAaYNP6r pI9ZemAPEselrh3XVsBm nsxYwRasy6VBGnh2oIHS">Completed</span>
-                            </td>
-                            <td class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7">
-                                <button id="order-6-dropdown-button" type="button"
-                                    data-dropdown-toggle="order-6-dropdown"
-                                    class="_k0lTW0vvzboctTxDi2R Q_jg_EPdNf9eDMn1mLI2 mveJTCIb2WII7J4sY22F sQaK4IH7BIQSgBTGX8Pe ijrOHNoSVGATsWYKl4Id c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe PeR2JZ9BZHYIH8Ea3F36 lBgPGkku8NiP5ReH09_2 ZnBoTVi7VOJdCLSSU62n BkIbg_JwkgiyRW804Hhu XIIs8ZOri3wm8Wnj9N_y OPrb_iG5WDy_7F05BDOX dMTOiA3mf3FTjlHu6DqW">
-                                    <svg class="rxe6apEJoEk8r75xaVNG ADSeKHR1DvUUA48Chci_" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="4"
-                                            d="M6 12h0m6 0h0m6 0h0"></path>
-                                    </svg>
-                                </button>
-                                <div id="order-6-dropdown"
-                                    class="QhmQ_v3mmDFIP9VaVOfb _SmdlCf6eUKB_V9S5IDj fScvmu_bLBCkoXb3Xml3 Zy1Pypi71Xu6guex6urN z30cepEEBLSTPSvWeVPH mveJTCIb2WII7J4sY22F _Ybd3WwuTVljUT4vEaM3 mngKhi_Rv06PF57lblDI PoeKYEQfG4WfmL9xM6vu jqg6J89cvxmDiFpnV56r">
-                                    <ul class="FJRldeiG2gFGZfuKgp88 c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe PeR2JZ9BZHYIH8Ea3F36 XIIs8ZOri3wm8Wnj9N_y"
-                                        aria-labelledby="order-6-dropdown-button">
-                                        <li>
-                                            <a href="../../e-commerce/transaction/index.html"
-                                                class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j _7KA5gD55t2lxf9Jkj20 ZnBoTVi7VOJdCLSSU62n RzANcaqunVvlLrO6_tal dMTOiA3mf3FTjlHu6DqW">
-                                                <svg class="IRKzgyPj4qWOh2vq2xBg _o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc"
-                                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                    fill="currentColor" viewBox="0 0 24 24">
-                                                    <path fill-rule="evenodd"
-                                                        d="M5 7.8C6.7 6.3 9.2 5 12 5s5.3 1.3 7 2.8a12.7 12.7 0 0 1 2.7 3.2c.2.2.3.6.3 1s-.1.8-.3 1a2 2 0 0 1-.6 1 12.7 12.7 0 0 1-9.1 5c-2.8 0-5.3-1.3-7-2.8A12.7 12.7 0 0 1 2.3 13c-.2-.2-.3-.6-.3-1s.1-.8.3-1c.1-.4.3-.7.6-1 .5-.7 1.2-1.5 2.1-2.2Zm7 7.2a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-                                                Details
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <button type="button" id="deleteOrderButton"
-                                                data-modal-target="deleteOrderModal"
-                                                data-modal-toggle="deleteOrderModal"
-                                                class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe m_WzesDEb91pTPmX64rt _7KA5gD55t2lxf9Jkj20 Sz97zU8r72z_pjE9zQnR RzANcaqunVvlLrO6_tal">
-                                                <svg class="IRKzgyPj4qWOh2vq2xBg _o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc"
-                                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                    fill="currentColor" viewBox="0 0 24 24">
-                                                    <path fill-rule="evenodd"
-                                                        d="M8.6 2.6A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4c0-.5.2-1 .6-1.4ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-                                                Delete
-                                            </button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="EpUSgjHdM6oyMXUiK_8_ _7KA5gD55t2lxf9Jkj20 _fGhMnSfYmaGrv7DvZ00 OPrb_iG5WDy_7F05BDOX">
-                            <td class="E9GV5sZJIbfO_GEQ_moc RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7">
-                                <div class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2">
-                                    <input id="checkbox-table-search-7" type="checkbox"
-                                        onclick="event.stopPropagation()"
-                                        class="_o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc Y3FxyuXtj2gecrGXvLEI vpDN1VEJLu5FmLkr5WCk _9dH7mrOkzM4RTmidHTs _6MyV8SXoSWq_PQ6KWI6 _q0p_O8QLU1paqtuqmI2 GdTcGtoKP5_bET3syLDl Mmx5lX7HVdrWCgh3EpTP jqg6J89cvxmDiFpnV56r _GL8_lXmAgroY9ZBWGLH BO8JrKgx4qkHG27c4wVR">
-                                    <label for="checkbox-table-search-7" class="_DVAfiyo21kM68EUVzEQ">checkbox</label>
-                                </div>
-                            </td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 _43MO1gcdi2Y0RJW1uHL __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">
-                                Order sent to <span class="ezMFUVl744lvw6ht0lFe">MetaverseExchange</span></td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 PeR2JZ9BZHYIH8Ea3F36 XIIs8ZOri3wm8Wnj9N_y">
-                                Jun 05 ,2025</td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 yM_AorRf2jSON3pDsdrz __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">
-                                8.64 BTC</td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 ezMFUVl744lvw6ht0lFe _slPOgYG58UZfxi9teaV sh9_WSzIEMjMvUiGrRaF">
-                                Buy</td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 ezMFUVl744lvw6ht0lFe Wz8P4aylnNebbmktt9TH dc1ZvnXYavhnPynbasI1">
-                                <span
-                                    class="Y3FxyuXtj2gecrGXvLEI Dnqe3vvw22y12_oWDYvR St_AVDyTHE88JaawJoRQ Zs2BLzUMh0_yTpU6xCcU gMXmdpOPfqG_3CKkL0VD ezMFUVl744lvw6ht0lFe UptwuMAvsdRjvAaYNP6r pI9ZemAPEselrh3XVsBm nsxYwRasy6VBGnh2oIHS">Completed</span>
-                            </td>
-                            <td class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7">
-                                <button id="order-7-dropdown-button" type="button"
-                                    data-dropdown-toggle="order-7-dropdown"
-                                    class="_k0lTW0vvzboctTxDi2R Q_jg_EPdNf9eDMn1mLI2 mveJTCIb2WII7J4sY22F sQaK4IH7BIQSgBTGX8Pe ijrOHNoSVGATsWYKl4Id c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe PeR2JZ9BZHYIH8Ea3F36 lBgPGkku8NiP5ReH09_2 ZnBoTVi7VOJdCLSSU62n BkIbg_JwkgiyRW804Hhu XIIs8ZOri3wm8Wnj9N_y OPrb_iG5WDy_7F05BDOX dMTOiA3mf3FTjlHu6DqW">
-                                    <svg class="rxe6apEJoEk8r75xaVNG ADSeKHR1DvUUA48Chci_" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="4"
-                                            d="M6 12h0m6 0h0m6 0h0"></path>
-                                    </svg>
-                                </button>
-                                <div id="order-7-dropdown"
-                                    class="QhmQ_v3mmDFIP9VaVOfb _SmdlCf6eUKB_V9S5IDj fScvmu_bLBCkoXb3Xml3 Zy1Pypi71Xu6guex6urN z30cepEEBLSTPSvWeVPH mveJTCIb2WII7J4sY22F _Ybd3WwuTVljUT4vEaM3 mngKhi_Rv06PF57lblDI PoeKYEQfG4WfmL9xM6vu jqg6J89cvxmDiFpnV56r">
-                                    <ul class="FJRldeiG2gFGZfuKgp88 c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe PeR2JZ9BZHYIH8Ea3F36 XIIs8ZOri3wm8Wnj9N_y"
-                                        aria-labelledby="order-7-dropdown-button">
-                                        <li>
-                                            <a href="../../e-commerce/transaction/index.html"
-                                                class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j _7KA5gD55t2lxf9Jkj20 ZnBoTVi7VOJdCLSSU62n RzANcaqunVvlLrO6_tal dMTOiA3mf3FTjlHu6DqW">
-                                                <svg class="IRKzgyPj4qWOh2vq2xBg _o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc"
-                                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                    fill="currentColor" viewBox="0 0 24 24">
-                                                    <path fill-rule="evenodd"
-                                                        d="M5 7.8C6.7 6.3 9.2 5 12 5s5.3 1.3 7 2.8a12.7 12.7 0 0 1 2.7 3.2c.2.2.3.6.3 1s-.1.8-.3 1a2 2 0 0 1-.6 1 12.7 12.7 0 0 1-9.1 5c-2.8 0-5.3-1.3-7-2.8A12.7 12.7 0 0 1 2.3 13c-.2-.2-.3-.6-.3-1s.1-.8.3-1c.1-.4.3-.7.6-1 .5-.7 1.2-1.5 2.1-2.2Zm7 7.2a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-                                                Details
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <button type="button" id="deleteOrderButton"
-                                                data-modal-target="deleteOrderModal"
-                                                data-modal-toggle="deleteOrderModal"
-                                                class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe m_WzesDEb91pTPmX64rt _7KA5gD55t2lxf9Jkj20 Sz97zU8r72z_pjE9zQnR RzANcaqunVvlLrO6_tal">
-                                                <svg class="IRKzgyPj4qWOh2vq2xBg _o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc"
-                                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                    fill="currentColor" viewBox="0 0 24 24">
-                                                    <path fill-rule="evenodd"
-                                                        d="M8.6 2.6A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4c0-.5.2-1 .6-1.4ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-                                                Delete
-                                            </button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="EpUSgjHdM6oyMXUiK_8_ _7KA5gD55t2lxf9Jkj20 _fGhMnSfYmaGrv7DvZ00 OPrb_iG5WDy_7F05BDOX">
-                            <td class="E9GV5sZJIbfO_GEQ_moc RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7">
-                                <div class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2">
-                                    <input id="checkbox-table-search-8" type="checkbox"
-                                        onclick="event.stopPropagation()"
-                                        class="_o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc Y3FxyuXtj2gecrGXvLEI vpDN1VEJLu5FmLkr5WCk _9dH7mrOkzM4RTmidHTs _6MyV8SXoSWq_PQ6KWI6 _q0p_O8QLU1paqtuqmI2 GdTcGtoKP5_bET3syLDl Mmx5lX7HVdrWCgh3EpTP jqg6J89cvxmDiFpnV56r _GL8_lXmAgroY9ZBWGLH BO8JrKgx4qkHG27c4wVR">
-                                    <label for="checkbox-table-search-8" class="_DVAfiyo21kM68EUVzEQ">checkbox</label>
-                                </div>
-                            </td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 _43MO1gcdi2Y0RJW1uHL __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">
-                                Order sent to <span class="ezMFUVl744lvw6ht0lFe">Binance</span></td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 PeR2JZ9BZHYIH8Ea3F36 XIIs8ZOri3wm8Wnj9N_y">
-                                May 27 ,2025</td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 yM_AorRf2jSON3pDsdrz __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">
-                                2.0375 DAI</td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 ezMFUVl744lvw6ht0lFe _slPOgYG58UZfxi9teaV sh9_WSzIEMjMvUiGrRaF">
-                                Buy</td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 ezMFUVl744lvw6ht0lFe Wz8P4aylnNebbmktt9TH dc1ZvnXYavhnPynbasI1">
-                                <span
-                                    class="Y3FxyuXtj2gecrGXvLEI Dnqe3vvw22y12_oWDYvR St_AVDyTHE88JaawJoRQ Zs2BLzUMh0_yTpU6xCcU gMXmdpOPfqG_3CKkL0VD ezMFUVl744lvw6ht0lFe UptwuMAvsdRjvAaYNP6r pI9ZemAPEselrh3XVsBm nsxYwRasy6VBGnh2oIHS">Completed</span>
-                            </td>
-                            <td class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7">
-                                <button id="order-8-dropdown-button" type="button"
-                                    data-dropdown-toggle="order-8-dropdown"
-                                    class="_k0lTW0vvzboctTxDi2R Q_jg_EPdNf9eDMn1mLI2 mveJTCIb2WII7J4sY22F sQaK4IH7BIQSgBTGX8Pe ijrOHNoSVGATsWYKl4Id c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe PeR2JZ9BZHYIH8Ea3F36 lBgPGkku8NiP5ReH09_2 ZnBoTVi7VOJdCLSSU62n BkIbg_JwkgiyRW804Hhu XIIs8ZOri3wm8Wnj9N_y OPrb_iG5WDy_7F05BDOX dMTOiA3mf3FTjlHu6DqW">
-                                    <svg class="rxe6apEJoEk8r75xaVNG ADSeKHR1DvUUA48Chci_" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="4"
-                                            d="M6 12h0m6 0h0m6 0h0"></path>
-                                    </svg>
-                                </button>
-                                <div id="order-8-dropdown"
-                                    class="QhmQ_v3mmDFIP9VaVOfb _SmdlCf6eUKB_V9S5IDj fScvmu_bLBCkoXb3Xml3 Zy1Pypi71Xu6guex6urN z30cepEEBLSTPSvWeVPH mveJTCIb2WII7J4sY22F _Ybd3WwuTVljUT4vEaM3 mngKhi_Rv06PF57lblDI PoeKYEQfG4WfmL9xM6vu jqg6J89cvxmDiFpnV56r">
-                                    <ul class="FJRldeiG2gFGZfuKgp88 c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe PeR2JZ9BZHYIH8Ea3F36 XIIs8ZOri3wm8Wnj9N_y"
-                                        aria-labelledby="order-8-dropdown-button">
-                                        <li>
-                                            <a href="../../e-commerce/transaction/index.html"
-                                                class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j _7KA5gD55t2lxf9Jkj20 ZnBoTVi7VOJdCLSSU62n RzANcaqunVvlLrO6_tal dMTOiA3mf3FTjlHu6DqW">
-                                                <svg class="IRKzgyPj4qWOh2vq2xBg _o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc"
-                                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                    fill="currentColor" viewBox="0 0 24 24">
-                                                    <path fill-rule="evenodd"
-                                                        d="M5 7.8C6.7 6.3 9.2 5 12 5s5.3 1.3 7 2.8a12.7 12.7 0 0 1 2.7 3.2c.2.2.3.6.3 1s-.1.8-.3 1a2 2 0 0 1-.6 1 12.7 12.7 0 0 1-9.1 5c-2.8 0-5.3-1.3-7-2.8A12.7 12.7 0 0 1 2.3 13c-.2-.2-.3-.6-.3-1s.1-.8.3-1c.1-.4.3-.7.6-1 .5-.7 1.2-1.5 2.1-2.2Zm7 7.2a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-                                                Details
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <button type="button" id="deleteOrderButton"
-                                                data-modal-target="deleteOrderModal"
-                                                data-modal-toggle="deleteOrderModal"
-                                                class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe m_WzesDEb91pTPmX64rt _7KA5gD55t2lxf9Jkj20 Sz97zU8r72z_pjE9zQnR RzANcaqunVvlLrO6_tal">
-                                                <svg class="IRKzgyPj4qWOh2vq2xBg _o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc"
-                                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                    fill="currentColor" viewBox="0 0 24 24">
-                                                    <path fill-rule="evenodd"
-                                                        d="M8.6 2.6A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4c0-.5.2-1 .6-1.4ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-                                                Delete
-                                            </button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="EpUSgjHdM6oyMXUiK_8_ _7KA5gD55t2lxf9Jkj20 _fGhMnSfYmaGrv7DvZ00 OPrb_iG5WDy_7F05BDOX">
-                            <td class="E9GV5sZJIbfO_GEQ_moc RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7">
-                                <div class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2">
-                                    <input id="checkbox-table-search-9" type="checkbox"
-                                        onclick="event.stopPropagation()"
-                                        class="_o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc Y3FxyuXtj2gecrGXvLEI vpDN1VEJLu5FmLkr5WCk _9dH7mrOkzM4RTmidHTs _6MyV8SXoSWq_PQ6KWI6 _q0p_O8QLU1paqtuqmI2 GdTcGtoKP5_bET3syLDl Mmx5lX7HVdrWCgh3EpTP jqg6J89cvxmDiFpnV56r _GL8_lXmAgroY9ZBWGLH BO8JrKgx4qkHG27c4wVR">
-                                    <label for="checkbox-table-search-9" class="_DVAfiyo21kM68EUVzEQ">checkbox</label>
-                                </div>
-                            </td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 _43MO1gcdi2Y0RJW1uHL __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">
-                                Order sent to <span class="ezMFUVl744lvw6ht0lFe">BinanceExc</span></td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 PeR2JZ9BZHYIH8Ea3F36 XIIs8ZOri3wm8Wnj9N_y">
-                                May 27 ,2025</td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 yM_AorRf2jSON3pDsdrz __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">
-                                0.0375693 BTC</td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 ezMFUVl744lvw6ht0lFe m_WzesDEb91pTPmX64rt Sz97zU8r72z_pjE9zQnR">
-                                Sell</td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 ezMFUVl744lvw6ht0lFe Wz8P4aylnNebbmktt9TH dc1ZvnXYavhnPynbasI1">
-                                <span
-                                    class="Y3FxyuXtj2gecrGXvLEI Dnqe3vvw22y12_oWDYvR St_AVDyTHE88JaawJoRQ Zs2BLzUMh0_yTpU6xCcU gMXmdpOPfqG_3CKkL0VD ezMFUVl744lvw6ht0lFe UptwuMAvsdRjvAaYNP6r pI9ZemAPEselrh3XVsBm nsxYwRasy6VBGnh2oIHS">Completed</span>
-                            </td>
-                            <td class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7">
-                                <button id="order-9-dropdown-button" type="button"
-                                    data-dropdown-toggle="order-9-dropdown"
-                                    class="_k0lTW0vvzboctTxDi2R Q_jg_EPdNf9eDMn1mLI2 mveJTCIb2WII7J4sY22F sQaK4IH7BIQSgBTGX8Pe ijrOHNoSVGATsWYKl4Id c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe PeR2JZ9BZHYIH8Ea3F36 lBgPGkku8NiP5ReH09_2 ZnBoTVi7VOJdCLSSU62n BkIbg_JwkgiyRW804Hhu XIIs8ZOri3wm8Wnj9N_y OPrb_iG5WDy_7F05BDOX dMTOiA3mf3FTjlHu6DqW">
-                                    <svg class="rxe6apEJoEk8r75xaVNG ADSeKHR1DvUUA48Chci_" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="4"
-                                            d="M6 12h0m6 0h0m6 0h0"></path>
-                                    </svg>
-                                </button>
-                                <div id="order-9-dropdown"
-                                    class="QhmQ_v3mmDFIP9VaVOfb _SmdlCf6eUKB_V9S5IDj fScvmu_bLBCkoXb3Xml3 Zy1Pypi71Xu6guex6urN z30cepEEBLSTPSvWeVPH mveJTCIb2WII7J4sY22F _Ybd3WwuTVljUT4vEaM3 mngKhi_Rv06PF57lblDI PoeKYEQfG4WfmL9xM6vu jqg6J89cvxmDiFpnV56r">
-                                    <ul class="FJRldeiG2gFGZfuKgp88 c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe PeR2JZ9BZHYIH8Ea3F36 XIIs8ZOri3wm8Wnj9N_y"
-                                        aria-labelledby="order-9-dropdown-button">
-                                        <li>
-                                            <a href="../../e-commerce/transaction/index.html"
-                                                class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j _7KA5gD55t2lxf9Jkj20 ZnBoTVi7VOJdCLSSU62n RzANcaqunVvlLrO6_tal dMTOiA3mf3FTjlHu6DqW">
-                                                <svg class="IRKzgyPj4qWOh2vq2xBg _o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc"
-                                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                    fill="currentColor" viewBox="0 0 24 24">
-                                                    <path fill-rule="evenodd"
-                                                        d="M5 7.8C6.7 6.3 9.2 5 12 5s5.3 1.3 7 2.8a12.7 12.7 0 0 1 2.7 3.2c.2.2.3.6.3 1s-.1.8-.3 1a2 2 0 0 1-.6 1 12.7 12.7 0 0 1-9.1 5c-2.8 0-5.3-1.3-7-2.8A12.7 12.7 0 0 1 2.3 13c-.2-.2-.3-.6-.3-1s.1-.8.3-1c.1-.4.3-.7.6-1 .5-.7 1.2-1.5 2.1-2.2Zm7 7.2a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-                                                Details
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <button type="button" id="deleteOrderButton"
-                                                data-modal-target="deleteOrderModal"
-                                                data-modal-toggle="deleteOrderModal"
-                                                class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe m_WzesDEb91pTPmX64rt _7KA5gD55t2lxf9Jkj20 Sz97zU8r72z_pjE9zQnR RzANcaqunVvlLrO6_tal">
-                                                <svg class="IRKzgyPj4qWOh2vq2xBg _o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc"
-                                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                    fill="currentColor" viewBox="0 0 24 24">
-                                                    <path fill-rule="evenodd"
-                                                        d="M8.6 2.6A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4c0-.5.2-1 .6-1.4ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-                                                Delete
-                                            </button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="_7KA5gD55t2lxf9Jkj20 iIDqXVKz6wdYnAVfRsN2">
-                            <td class="E9GV5sZJIbfO_GEQ_moc RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7">
-                                <div class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2">
-                                    <input id="checkbox-table-search-10" type="checkbox"
-                                        onclick="event.stopPropagation()"
-                                        class="_o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc Y3FxyuXtj2gecrGXvLEI vpDN1VEJLu5FmLkr5WCk _9dH7mrOkzM4RTmidHTs _6MyV8SXoSWq_PQ6KWI6 _q0p_O8QLU1paqtuqmI2 GdTcGtoKP5_bET3syLDl Mmx5lX7HVdrWCgh3EpTP jqg6J89cvxmDiFpnV56r _GL8_lXmAgroY9ZBWGLH BO8JrKgx4qkHG27c4wVR">
-                                    <label for="checkbox-table-search-10" class="_DVAfiyo21kM68EUVzEQ">checkbox</label>
-                                </div>
-                            </td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 _43MO1gcdi2Y0RJW1uHL __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">
-                                Order sent to <span class="ezMFUVl744lvw6ht0lFe">Binance</span></td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 PeR2JZ9BZHYIH8Ea3F36 XIIs8ZOri3wm8Wnj9N_y">
-                                Apr 11 ,2025</td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 yM_AorRf2jSON3pDsdrz __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">
-                                0.8375 DAI</td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 ezMFUVl744lvw6ht0lFe m_WzesDEb91pTPmX64rt Sz97zU8r72z_pjE9zQnR">
-                                Sell</td>
-                            <td
-                                class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7 ezMFUVl744lvw6ht0lFe Wz8P4aylnNebbmktt9TH dc1ZvnXYavhnPynbasI1">
-                                <span
-                                    class="Y3FxyuXtj2gecrGXvLEI Dnqe3vvw22y12_oWDYvR St_AVDyTHE88JaawJoRQ Zs2BLzUMh0_yTpU6xCcU gMXmdpOPfqG_3CKkL0VD ezMFUVl744lvw6ht0lFe UptwuMAvsdRjvAaYNP6r pI9ZemAPEselrh3XVsBm nsxYwRasy6VBGnh2oIHS">Completed</span>
-                            </td>
-                            <td class="BHrWGjM1Iab_fAz0_91H RZmKBZs1E1eXw8vkE6jY i8v96MUlFwGv9qJUkAx7">
-                                <button id="order-10-dropdown-button" type="button"
-                                    data-dropdown-toggle="order-10-dropdown"
-                                    class="_k0lTW0vvzboctTxDi2R Q_jg_EPdNf9eDMn1mLI2 mveJTCIb2WII7J4sY22F sQaK4IH7BIQSgBTGX8Pe ijrOHNoSVGATsWYKl4Id c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe PeR2JZ9BZHYIH8Ea3F36 lBgPGkku8NiP5ReH09_2 ZnBoTVi7VOJdCLSSU62n BkIbg_JwkgiyRW804Hhu XIIs8ZOri3wm8Wnj9N_y OPrb_iG5WDy_7F05BDOX dMTOiA3mf3FTjlHu6DqW">
-                                    <svg class="rxe6apEJoEk8r75xaVNG ADSeKHR1DvUUA48Chci_" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="4"
-                                            d="M6 12h0m6 0h0m6 0h0"></path>
-                                    </svg>
-                                </button>
-                                <div id="order-10-dropdown"
-                                    class="QhmQ_v3mmDFIP9VaVOfb _SmdlCf6eUKB_V9S5IDj fScvmu_bLBCkoXb3Xml3 Zy1Pypi71Xu6guex6urN z30cepEEBLSTPSvWeVPH mveJTCIb2WII7J4sY22F _Ybd3WwuTVljUT4vEaM3 mngKhi_Rv06PF57lblDI PoeKYEQfG4WfmL9xM6vu jqg6J89cvxmDiFpnV56r">
-                                    <ul class="FJRldeiG2gFGZfuKgp88 c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe PeR2JZ9BZHYIH8Ea3F36 XIIs8ZOri3wm8Wnj9N_y"
-                                        aria-labelledby="order-10-dropdown-button">
-                                        <li>
-                                            <a href="../../e-commerce/transaction/index.html"
-                                                class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j _7KA5gD55t2lxf9Jkj20 ZnBoTVi7VOJdCLSSU62n RzANcaqunVvlLrO6_tal dMTOiA3mf3FTjlHu6DqW">
-                                                <svg class="IRKzgyPj4qWOh2vq2xBg _o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc"
-                                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                    fill="currentColor" viewBox="0 0 24 24">
-                                                    <path fill-rule="evenodd"
-                                                        d="M5 7.8C6.7 6.3 9.2 5 12 5s5.3 1.3 7 2.8a12.7 12.7 0 0 1 2.7 3.2c.2.2.3.6.3 1s-.1.8-.3 1a2 2 0 0 1-.6 1 12.7 12.7 0 0 1-9.1 5c-2.8 0-5.3-1.3-7-2.8A12.7 12.7 0 0 1 2.3 13c-.2-.2-.3-.6-.3-1s.1-.8.3-1c.1-.4.3-.7.6-1 .5-.7 1.2-1.5 2.1-2.2Zm7 7.2a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-                                                Details
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <button type="button" id="deleteOrderButton"
-                                                data-modal-target="deleteOrderModal"
-                                                data-modal-toggle="deleteOrderModal"
-                                                class="_k0lTW0vvzboctTxDi2R t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 W5n_NSFnC6y2nqoHw_5x _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe m_WzesDEb91pTPmX64rt _7KA5gD55t2lxf9Jkj20 Sz97zU8r72z_pjE9zQnR RzANcaqunVvlLrO6_tal">
-                                                <svg class="IRKzgyPj4qWOh2vq2xBg _o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc"
-                                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                    fill="currentColor" viewBox="0 0 24 24">
-                                                    <path fill-rule="evenodd"
-                                                        d="M8.6 2.6A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4c0-.5.2-1 .6-1.4ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-                                                Delete
-                                            </button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
+        </div>
+
+
+
+        <!-- Change status modal -->
+        <div id="changeStatusModal" tabindex="-1" aria-hidden="true"
+            class="_LPVUrp9Uina5fcERqWC TYmpscr1PwuC1dpYXDpM ZjE1E_5ejL_PlLNIq3MM uQByIGHtHssL9HoPQXR4 Jq3rRDG6Hsr3eAZ0KJeH _SmdlCf6eUKB_V9S5IDj _dZO1Z7EjPZTzv7NappG D5X3kHheOzrTNzgpkKYX t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 Nm7xMnguzOx6J5Ao7yCU _lTTGxW9MVI40FyDCtmr LQrvJzHhtGuotyv_EF_N k6hbvxXxe_du942IR0vX">
             <div
-                class="ahOqFrhzLjivRe8a1kX_ wBVMFkIGfrKshbvi2gS1 rPhC6E4mbGlFBOJnsyEg pVSXSlnJdgskzP7BxPBe qUWbS_LTZujDB4XCd11V p_2EXc_a2sDA_h41l8QU _fGhMnSfYmaGrv7DvZ00 WoJnkQmBGtEPqYedyh7V">
-                <nav class="YRrCJSr_j5nopfm4duUc e8VqoQNK0mbkRFDL3LMV _7_AEkSp_Gi6KH9ZW6st sJNGKHxFYdN5Nzml5J2j UYOSZJ1_pv3B5nt1ujCP MX_rT_HfQMh3dDrqOQ_i _Z3zYoo8SAGYZcCAB_mb xr7CqaTHxTvDOrwAH2SW"
-                    aria-label="Table navigation">
-                    <span class="c8dCx6gnV43hTOLV6ks5 _43MO1gcdi2Y0RJW1uHL PeR2JZ9BZHYIH8Ea3F36 XIIs8ZOri3wm8Wnj9N_y">
-                        Showing
-                        <span class="yM_AorRf2jSON3pDsdrz __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">1-10</span>
-                        of
-                        <span class="yM_AorRf2jSON3pDsdrz __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">1000</span>
-                    </span>
-                    <ul class="_k0lTW0vvzboctTxDi2R RL7uPEoqj_KRubJO6Kau EVsptO6LmMeSj8z3lntE">
-                        <li>
-                            <a href="#"
-                                class="CoXBDf_LlsdMbiNfGE67 YRrCJSr_j5nopfm4duUc uLPch_bqyJDXwe5tynMV Q_jg_EPdNf9eDMn1mLI2 Nm7xMnguzOx6J5Ao7yCU Zbcg0Bjzm_C_64FAwnE3 pXhVRBC8yaUNllmIWxln vpDN1VEJLu5FmLkr5WCk _Ybd3WwuTVljUT4vEaM3 _Cj_M6jt2eLjDgkBBNgI Qkdk47eO_FsOcXfaC9zb PeR2JZ9BZHYIH8Ea3F36 _7KA5gD55t2lxf9Jkj20 n2xFO60c4M2k5KjGtElq _fGhMnSfYmaGrv7DvZ00 _1jTZ8KXRZul60S6czNi XIIs8ZOri3wm8Wnj9N_y OPrb_iG5WDy_7F05BDOX dMTOiA3mf3FTjlHu6DqW">
-                                <span class="_DVAfiyo21kM68EUVzEQ">Previous</span>
-                                <svg class="E9GV5sZJIbfO_GEQ_moc _o2IXcpM0qnG3JPReKus" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                    viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="m15 19-7-7 7-7"></path>
-                                </svg>
-                            </a>
+                class="ahOqFrhzLjivRe8a1kX_ D5X3kHheOzrTNzgpkKYX t6gkcSf0Bt4MLItXvDJ_ uv4ZnT9l0TZhdd_Ia_EC _wYiJGbRZyFZeCc8y7Sf">
+                <!-- Modal content -->
+                <div
+                    class="ahOqFrhzLjivRe8a1kX_ mveJTCIb2WII7J4sY22F _Ybd3WwuTVljUT4vEaM3 _wYiJGbRZyFZeCc8y7Sf mngKhi_Rv06PF57lblDI _1jTZ8KXRZul60S6czNi _aDtgllJkTzUlILozHgX">
+                    <button type="button"
+                        class="pq2JRWtiWcwYnw3xueNl g11v7hv2nftKJig5bsCt tUrUahyB6juka_LhwvrY LAjAGvS_n5tUL9Q_7i85 _k0lTW0vvzboctTxDi2R Q_jg_EPdNf9eDMn1mLI2 mveJTCIb2WII7J4sY22F mW4LfSTbez3WHPeTDguY Z4DH5a4vmjReSFRBpPgz c8dCx6gnV43hTOLV6ks5 _JmTNv5EiHqK2A1jcQSf _7KA5gD55t2lxf9Jkj20 ZnBoTVi7VOJdCLSSU62n RzANcaqunVvlLrO6_tal dMTOiA3mf3FTjlHu6DqW"
+                        data-modal-toggle="changeStatusModal">
+                        <svg class="ADSeKHR1DvUUA48Chci_ rxe6apEJoEk8r75xaVNG" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                            viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18 17.94 6M18 18 6.06 6"></path>
+                        </svg>
+                        <span class="_DVAfiyo21kM68EUVzEQ">Close modal</span>
+                    </button>
+                    <h3
+                        class="Z3N7I2IDDsoXK6xJ1cSW y0nOgdpiqOUaFDbjAxwD yM_AorRf2jSON3pDsdrz __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">
+                        Change status</h3>
+                    <p class="hD0sTTDgbxakubcHVW2X PeR2JZ9BZHYIH8Ea3F36 XIIs8ZOri3wm8Wnj9N_y">Select a new status and apply
+                        the update to these orders to keep them up to date.</p>
+                    <ul role="list"
+                        class="aJF41JQLhtfw_MCGt5Th TVHgSaRh3muGJct_epr9 upQp7iWehfaU8VTbfx_w ezMFUVl744lvw6ht0lFe __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">
+                        <li class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2 EU43bH15DCmsqkGyVBGj">
+                            <svg aria-hidden="true"
+                                class="_o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc VQS2tmQ_zFyBOC2tkmto _JmTNv5EiHqK2A1jcQSf qIT6vrYn0Fr1U3wlPXaS"
+                                fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span>Order to Binance - 0.2746593BTC</span>
                         </li>
-                        <li>
-                            <a href="#"
-                                class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2 Nm7xMnguzOx6J5Ao7yCU pXhVRBC8yaUNllmIWxln vpDN1VEJLu5FmLkr5WCk _Ybd3WwuTVljUT4vEaM3 _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j c8dCx6gnV43hTOLV6ks5 OXyBmUnmaFHYN14c7Giu PeR2JZ9BZHYIH8Ea3F36 _7KA5gD55t2lxf9Jkj20 n2xFO60c4M2k5KjGtElq _fGhMnSfYmaGrv7DvZ00 _1jTZ8KXRZul60S6czNi XIIs8ZOri3wm8Wnj9N_y OPrb_iG5WDy_7F05BDOX dMTOiA3mf3FTjlHu6DqW">1</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2 Nm7xMnguzOx6J5Ao7yCU pXhVRBC8yaUNllmIWxln vpDN1VEJLu5FmLkr5WCk _Ybd3WwuTVljUT4vEaM3 _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j c8dCx6gnV43hTOLV6ks5 OXyBmUnmaFHYN14c7Giu PeR2JZ9BZHYIH8Ea3F36 _7KA5gD55t2lxf9Jkj20 n2xFO60c4M2k5KjGtElq _fGhMnSfYmaGrv7DvZ00 _1jTZ8KXRZul60S6czNi XIIs8ZOri3wm8Wnj9N_y OPrb_iG5WDy_7F05BDOX dMTOiA3mf3FTjlHu6DqW">2</a>
-                        </li>
-                        <li>
-                            <a href="#" aria-current="page"
-                                class="QhmQ_v3mmDFIP9VaVOfb YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2 Nm7xMnguzOx6J5Ao7yCU pXhVRBC8yaUNllmIWxln XQGFRdlxLbhbEMzeaRuO OHD_pMp_ehzJj42EmDyF _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j c8dCx6gnV43hTOLV6ks5 OXyBmUnmaFHYN14c7Giu _6MyV8SXoSWq_PQ6KWI6 M7HoUYpjoEdw_y87xeWn YXx9oZ15oLXSCG32YPBT _fGhMnSfYmaGrv7DvZ00 jqg6J89cvxmDiFpnV56r OyABRrnTV_kvHV7dJ0uE">3</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2 Nm7xMnguzOx6J5Ao7yCU pXhVRBC8yaUNllmIWxln vpDN1VEJLu5FmLkr5WCk _Ybd3WwuTVljUT4vEaM3 _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j c8dCx6gnV43hTOLV6ks5 OXyBmUnmaFHYN14c7Giu PeR2JZ9BZHYIH8Ea3F36 _7KA5gD55t2lxf9Jkj20 n2xFO60c4M2k5KjGtElq _fGhMnSfYmaGrv7DvZ00 _1jTZ8KXRZul60S6czNi XIIs8ZOri3wm8Wnj9N_y OPrb_iG5WDy_7F05BDOX dMTOiA3mf3FTjlHu6DqW">...</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2 Nm7xMnguzOx6J5Ao7yCU pXhVRBC8yaUNllmIWxln vpDN1VEJLu5FmLkr5WCk _Ybd3WwuTVljUT4vEaM3 _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j c8dCx6gnV43hTOLV6ks5 OXyBmUnmaFHYN14c7Giu PeR2JZ9BZHYIH8Ea3F36 _7KA5gD55t2lxf9Jkj20 n2xFO60c4M2k5KjGtElq _fGhMnSfYmaGrv7DvZ00 _1jTZ8KXRZul60S6czNi XIIs8ZOri3wm8Wnj9N_y OPrb_iG5WDy_7F05BDOX dMTOiA3mf3FTjlHu6DqW">100</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="YRrCJSr_j5nopfm4duUc uLPch_bqyJDXwe5tynMV Q_jg_EPdNf9eDMn1mLI2 Nm7xMnguzOx6J5Ao7yCU _McrmMbFrEkc_sTK9IC8 pXhVRBC8yaUNllmIWxln vpDN1VEJLu5FmLkr5WCk _Ybd3WwuTVljUT4vEaM3 _Cj_M6jt2eLjDgkBBNgI Qkdk47eO_FsOcXfaC9zb OXyBmUnmaFHYN14c7Giu PeR2JZ9BZHYIH8Ea3F36 _7KA5gD55t2lxf9Jkj20 n2xFO60c4M2k5KjGtElq _fGhMnSfYmaGrv7DvZ00 _1jTZ8KXRZul60S6czNi XIIs8ZOri3wm8Wnj9N_y OPrb_iG5WDy_7F05BDOX dMTOiA3mf3FTjlHu6DqW">
-                                <span class="_DVAfiyo21kM68EUVzEQ">Next</span>
-                                <svg class="E9GV5sZJIbfO_GEQ_moc _o2IXcpM0qnG3JPReKus" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                    viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="m9 5 7 7-7 7"></path>
-                                </svg>
-                            </a>
+                        <li class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2 EU43bH15DCmsqkGyVBGj">
+                            <svg aria-hidden="true"
+                                class="_o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc VQS2tmQ_zFyBOC2tkmto _JmTNv5EiHqK2A1jcQSf qIT6vrYn0Fr1U3wlPXaS"
+                                fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span>Order to ExchangeBTC - 1.33467 BTC</span>
                         </li>
                     </ul>
-                </nav>
-            </div>
-        </div>
-    </div>
+                    <form class="ZhzOGpbwY0R4TKKYr5pG YajDCE_nRj_FDIevNpsd hD0sTTDgbxakubcHVW2X">
+                        <label for="status"
+                            class="_Vb9igHms0hI1PQcvp_S TR_P65x9ie7j6uxFo_Cs c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">Order
+                            status</label>
+                        <select id="status"
+                            class="jtAJHOc7mn7b4IKRO59D pXhVRBC8yaUNllmIWxln vpDN1VEJLu5FmLkr5WCk __9sbu0yrzdhGIkLWNXl c8dCx6gnV43hTOLV6ks5 mveJTCIb2WII7J4sY22F GdTcGtoKP5_bET3syLDl LceKfSImrGKQrtDGkpBV _Vb9igHms0hI1PQcvp_S t6gkcSf0Bt4MLItXvDJ_ _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j jqg6J89cvxmDiFpnV56r Mmx5lX7HVdrWCgh3EpTP H7KQDhgKsqZaTUouEUQL OyABRrnTV_kvHV7dJ0uE KpCMWe32PQyrSFbZVput q6szSHqGtBufkToFe_s5">
+                            <option selected="">In progress</option>
+                            <option value="completed">Completed</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </form>
 
-    <!-- Delete order modal -->
-    <div id="deleteOrderModal" tabindex="-1" aria-hidden="true"
-        class="_LPVUrp9Uina5fcERqWC TYmpscr1PwuC1dpYXDpM ZjE1E_5ejL_PlLNIq3MM uQByIGHtHssL9HoPQXR4 Jq3rRDG6Hsr3eAZ0KJeH _SmdlCf6eUKB_V9S5IDj _dZO1Z7EjPZTzv7NappG D5X3kHheOzrTNzgpkKYX t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 Nm7xMnguzOx6J5Ao7yCU _lTTGxW9MVI40FyDCtmr LQrvJzHhtGuotyv_EF_N k6hbvxXxe_du942IR0vX">
-        <div
-            class="ahOqFrhzLjivRe8a1kX_ D5X3kHheOzrTNzgpkKYX t6gkcSf0Bt4MLItXvDJ_ uv4ZnT9l0TZhdd_Ia_EC _wYiJGbRZyFZeCc8y7Sf">
-            <!-- Modal content -->
-            <div
-                class="ahOqFrhzLjivRe8a1kX_ mveJTCIb2WII7J4sY22F _Ybd3WwuTVljUT4vEaM3 _wYiJGbRZyFZeCc8y7Sf mngKhi_Rv06PF57lblDI _1jTZ8KXRZul60S6czNi _aDtgllJkTzUlILozHgX">
-                <button type="button"
-                    class="pq2JRWtiWcwYnw3xueNl g11v7hv2nftKJig5bsCt tUrUahyB6juka_LhwvrY LAjAGvS_n5tUL9Q_7i85 _k0lTW0vvzboctTxDi2R Q_jg_EPdNf9eDMn1mLI2 mveJTCIb2WII7J4sY22F mW4LfSTbez3WHPeTDguY Z4DH5a4vmjReSFRBpPgz c8dCx6gnV43hTOLV6ks5 _JmTNv5EiHqK2A1jcQSf _7KA5gD55t2lxf9Jkj20 ZnBoTVi7VOJdCLSSU62n RzANcaqunVvlLrO6_tal dMTOiA3mf3FTjlHu6DqW"
-                    data-modal-toggle="deleteOrderModal">
-                    <svg class="ADSeKHR1DvUUA48Chci_ rxe6apEJoEk8r75xaVNG" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                        viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M6 18 17.94 6M18 18 6.06 6"></path>
-                    </svg>
-                    <span class="_DVAfiyo21kM68EUVzEQ">Close modal</span>
-                </button>
-                <h3
-                    class="Z3N7I2IDDsoXK6xJ1cSW y0nOgdpiqOUaFDbjAxwD yM_AorRf2jSON3pDsdrz __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">
-                    Are you sure?</h3>
-                <p class="hD0sTTDgbxakubcHVW2X PeR2JZ9BZHYIH8Ea3F36 XIIs8ZOri3wm8Wnj9N_y">The following order will be
-                    permanently deleted and cannot be restored:</p>
-                <ul role="list"
-                    class="hD0sTTDgbxakubcHVW2X TVHgSaRh3muGJct_epr9 upQp7iWehfaU8VTbfx_w ezMFUVl744lvw6ht0lFe __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE N4SFnsqiVKm1oFHmSTyG">
-                    <li class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2 EU43bH15DCmsqkGyVBGj">
-                        <svg aria-hidden="true"
-                            class="_o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc VQS2tmQ_zFyBOC2tkmto _JmTNv5EiHqK2A1jcQSf qIT6vrYn0Fr1U3wlPXaS"
-                            fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                        <span>Order to Binance - 0.2746593BTC</span>
-                    </li>
-                </ul>
-                <div class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2 d4louhNic5PFgJGRKqn6">
-                    <button data-modal-toggle="deleteTransactionModal" type="button"
-                        class="mveJTCIb2WII7J4sY22F pXhVRBC8yaUNllmIWxln qUWbS_LTZujDB4XCd11V _Ybd3WwuTVljUT4vEaM3 _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe __9sbu0yrzdhGIkLWNXl _7KA5gD55t2lxf9Jkj20 YXx9oZ15oLXSCG32YPBT xKUZEM163cLLvNnDh2ZN BkIbg_JwkgiyRW804Hhu _dylIDxYTN3qgvD4U597 XGQIxPVjm_m7D0aLHB7Y Mmx5lX7HVdrWCgh3EpTP _1jTZ8KXRZul60S6czNi XIIs8ZOri3wm8Wnj9N_y OPrb_iG5WDy_7F05BDOX dMTOiA3mf3FTjlHu6DqW yChACvAr1v8czJ2VO22j">
-                        Cancel
-                    </button>
-                    <button type="submit"
-                        class="_k0lTW0vvzboctTxDi2R Q_jg_EPdNf9eDMn1mLI2 mveJTCIb2WII7J4sY22F SdPDrbResNmgnA0L4Iki _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j ijrOHNoSVGATsWYKl4Id c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe y6GKdvUrd7vp_pxsFb57 w8mVIEFJVQG7skDEVVw8 BkIbg_JwkgiyRW804Hhu _dylIDxYTN3qgvD4U597 wGCv_lBIef6dPW_LgqPQ g0psQAXAFirvUBcDyMSb">
-                        <svg aria-hidden="true"
-                            class="ZEPNZzATe5nPnS0shmrF C_aqJ70iNmOTNL788uQu _o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc"
-                            fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                        Delete
-                    </button>
+                    <div class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2 d4louhNic5PFgJGRKqn6">
+                        <button data-modal-toggle="changeStatusModal" type="button"
+                            class="mveJTCIb2WII7J4sY22F pXhVRBC8yaUNllmIWxln qUWbS_LTZujDB4XCd11V _Ybd3WwuTVljUT4vEaM3 _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe __9sbu0yrzdhGIkLWNXl _7KA5gD55t2lxf9Jkj20 YXx9oZ15oLXSCG32YPBT xKUZEM163cLLvNnDh2ZN BkIbg_JwkgiyRW804Hhu _dylIDxYTN3qgvD4U597 XGQIxPVjm_m7D0aLHB7Y Mmx5lX7HVdrWCgh3EpTP _1jTZ8KXRZul60S6czNi XIIs8ZOri3wm8Wnj9N_y OPrb_iG5WDy_7F05BDOX dMTOiA3mf3FTjlHu6DqW yChACvAr1v8czJ2VO22j">
+                            Cancel
+                        </button>
+                        <button type="submit"
+                            class="_Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j y6GKdvUrd7vp_pxsFb57 _k0lTW0vvzboctTxDi2R Q_jg_EPdNf9eDMn1mLI2 g40_g3BQzYCOX5eZADgY YoPCmQ0E_V5W0GGmSIdm _dylIDxYTN3qgvD4U597 KmgKPWh7pHX4ztLneO0T ezMFUVl744lvw6ht0lFe mveJTCIb2WII7J4sY22F c8dCx6gnV43hTOLV6ks5 d8_fVOcgDmbt7UdpfeLK WuKugQzwTT7o1wwBck2R BkIbg_JwkgiyRW804Hhu _ZsTMX_gz275093orLWM">
+                            Apply
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Change status modal -->
-    <div id="changeStatusModal" tabindex="-1" aria-hidden="true"
-        class="_LPVUrp9Uina5fcERqWC TYmpscr1PwuC1dpYXDpM ZjE1E_5ejL_PlLNIq3MM uQByIGHtHssL9HoPQXR4 Jq3rRDG6Hsr3eAZ0KJeH _SmdlCf6eUKB_V9S5IDj _dZO1Z7EjPZTzv7NappG D5X3kHheOzrTNzgpkKYX t6gkcSf0Bt4MLItXvDJ_ Q_jg_EPdNf9eDMn1mLI2 Nm7xMnguzOx6J5Ao7yCU _lTTGxW9MVI40FyDCtmr LQrvJzHhtGuotyv_EF_N k6hbvxXxe_du942IR0vX">
-        <div
-            class="ahOqFrhzLjivRe8a1kX_ D5X3kHheOzrTNzgpkKYX t6gkcSf0Bt4MLItXvDJ_ uv4ZnT9l0TZhdd_Ia_EC _wYiJGbRZyFZeCc8y7Sf">
-            <!-- Modal content -->
-            <div
-                class="ahOqFrhzLjivRe8a1kX_ mveJTCIb2WII7J4sY22F _Ybd3WwuTVljUT4vEaM3 _wYiJGbRZyFZeCc8y7Sf mngKhi_Rv06PF57lblDI _1jTZ8KXRZul60S6czNi _aDtgllJkTzUlILozHgX">
-                <button type="button"
-                    class="pq2JRWtiWcwYnw3xueNl g11v7hv2nftKJig5bsCt tUrUahyB6juka_LhwvrY LAjAGvS_n5tUL9Q_7i85 _k0lTW0vvzboctTxDi2R Q_jg_EPdNf9eDMn1mLI2 mveJTCIb2WII7J4sY22F mW4LfSTbez3WHPeTDguY Z4DH5a4vmjReSFRBpPgz c8dCx6gnV43hTOLV6ks5 _JmTNv5EiHqK2A1jcQSf _7KA5gD55t2lxf9Jkj20 ZnBoTVi7VOJdCLSSU62n RzANcaqunVvlLrO6_tal dMTOiA3mf3FTjlHu6DqW"
-                    data-modal-toggle="changeStatusModal">
-                    <svg class="ADSeKHR1DvUUA48Chci_ rxe6apEJoEk8r75xaVNG" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                        viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M6 18 17.94 6M18 18 6.06 6"></path>
-                    </svg>
-                    <span class="_DVAfiyo21kM68EUVzEQ">Close modal</span>
-                </button>
-                <h3
-                    class="Z3N7I2IDDsoXK6xJ1cSW y0nOgdpiqOUaFDbjAxwD yM_AorRf2jSON3pDsdrz __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">
-                    Change status</h3>
-                <p class="hD0sTTDgbxakubcHVW2X PeR2JZ9BZHYIH8Ea3F36 XIIs8ZOri3wm8Wnj9N_y">Select a new status and apply
-                    the update to these orders to keep them up to date.</p>
-                <ul role="list"
-                    class="aJF41JQLhtfw_MCGt5Th TVHgSaRh3muGJct_epr9 upQp7iWehfaU8VTbfx_w ezMFUVl744lvw6ht0lFe __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">
-                    <li class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2 EU43bH15DCmsqkGyVBGj">
-                        <svg aria-hidden="true"
-                            class="_o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc VQS2tmQ_zFyBOC2tkmto _JmTNv5EiHqK2A1jcQSf qIT6vrYn0Fr1U3wlPXaS"
-                            fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                        <span>Order to Binance - 0.2746593BTC</span>
-                    </li>
-                    <li class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2 EU43bH15DCmsqkGyVBGj">
-                        <svg aria-hidden="true"
-                            class="_o2IXcpM0qnG3JPReKus E9GV5sZJIbfO_GEQ_moc VQS2tmQ_zFyBOC2tkmto _JmTNv5EiHqK2A1jcQSf qIT6vrYn0Fr1U3wlPXaS"
-                            fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                        <span>Order to ExchangeBTC - 1.33467 BTC</span>
-                    </li>
-                </ul>
-                <form class="ZhzOGpbwY0R4TKKYr5pG YajDCE_nRj_FDIevNpsd hD0sTTDgbxakubcHVW2X">
-                    <label for="status"
-                        class="_Vb9igHms0hI1PQcvp_S TR_P65x9ie7j6uxFo_Cs c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">Order
-                        status</label>
-                    <select id="status"
-                        class="jtAJHOc7mn7b4IKRO59D pXhVRBC8yaUNllmIWxln vpDN1VEJLu5FmLkr5WCk __9sbu0yrzdhGIkLWNXl c8dCx6gnV43hTOLV6ks5 mveJTCIb2WII7J4sY22F GdTcGtoKP5_bET3syLDl LceKfSImrGKQrtDGkpBV _Vb9igHms0hI1PQcvp_S t6gkcSf0Bt4MLItXvDJ_ _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j jqg6J89cvxmDiFpnV56r Mmx5lX7HVdrWCgh3EpTP H7KQDhgKsqZaTUouEUQL OyABRrnTV_kvHV7dJ0uE KpCMWe32PQyrSFbZVput q6szSHqGtBufkToFe_s5">
-                        <option selected="">In progress</option>
-                        <option value="completed">Completed</option>
-                        <option value="cancelled">Cancelled</option>
-                    </select>
-                </form>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const select = document.getElementById('collateral-select');
+                const fromInput = document.getElementById('from-input');
+                const toInput = document.getElementById('to-form');
+                const infoText = document.querySelector('.XJih04pKHf8Cekga6Hj3');
+                const submitbtnLoan = document.getElementById('editKeyButtton');
+                const image = document.getElementById('collateral-image');
+                const coltitle = document.getElementById('previewCollateral');
+                const subtitle = document.getElementById('subTitle');
+                const paragraphforLoan = document.getElementById('paragraphforLoan');
+                const colBalance = document.getElementById('previewAvailable');
+                const previewLocked = document.getElementById('previewLocked');
+                const nextbal = document.getElementById('nextbal');
+                const previewRequested = document.getElementById('previewRequested');
+                const colAssetName = document.getElementById('colAssetName');
+                const loan_amount_input = document.getElementById('loan_amount_input');
+                //const walletColAddress = document.getElementById('walletColAddress');
 
-                <div class="YRrCJSr_j5nopfm4duUc Q_jg_EPdNf9eDMn1mLI2 d4louhNic5PFgJGRKqn6">
-                    <button data-modal-toggle="changeStatusModal" type="button"
-                        class="mveJTCIb2WII7J4sY22F pXhVRBC8yaUNllmIWxln qUWbS_LTZujDB4XCd11V _Ybd3WwuTVljUT4vEaM3 _Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe __9sbu0yrzdhGIkLWNXl _7KA5gD55t2lxf9Jkj20 YXx9oZ15oLXSCG32YPBT xKUZEM163cLLvNnDh2ZN BkIbg_JwkgiyRW804Hhu _dylIDxYTN3qgvD4U597 XGQIxPVjm_m7D0aLHB7Y Mmx5lX7HVdrWCgh3EpTP _1jTZ8KXRZul60S6czNi XIIs8ZOri3wm8Wnj9N_y OPrb_iG5WDy_7F05BDOX dMTOiA3mf3FTjlHu6DqW yChACvAr1v8czJ2VO22j">
-                        Cancel
-                    </button>
-                    <button type="submit"
-                        class="_Cj_M6jt2eLjDgkBBNgI b9aD6g2qw84oyZNsMO8j y6GKdvUrd7vp_pxsFb57 _k0lTW0vvzboctTxDi2R Q_jg_EPdNf9eDMn1mLI2 g40_g3BQzYCOX5eZADgY YoPCmQ0E_V5W0GGmSIdm _dylIDxYTN3qgvD4U597 KmgKPWh7pHX4ztLneO0T ezMFUVl744lvw6ht0lFe mveJTCIb2WII7J4sY22F c8dCx6gnV43hTOLV6ks5 d8_fVOcgDmbt7UdpfeLK WuKugQzwTT7o1wwBck2R BkIbg_JwkgiyRW804Hhu _ZsTMX_gz275093orLWM">
-                        Apply
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+                submitbtnLoan.style.display = "none";
+                // Helper: format number as USD
+                function formatCurrency(value) {
+                    return new Intl.NumberFormat('en-US', {
+                        style: 'currency',
+                        currency: 'USD',
+                        minimumFractionDigits: 2
+                    }).format(value);
+                }
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const select = document.getElementById('collateral-select');
-            const fromInput = document.getElementById('from-input');
-            const toInput = document.getElementById('to-form');
-            const infoText = document.querySelector('.XJih04pKHf8Cekga6Hj3');
-            const submitbtnLoan = document.getElementById('editKeyButtton');
-            const image = document.getElementById('collateral-image');
-            const coltitle = document.getElementById('previewCollateral');
-            const subtitle = document.getElementById('subTitle');
-            const paragraphforLoan = document.getElementById('paragraphforLoan');
-            const colBalance = document.getElementById('previewAvailable');
-            const previewLocked = document.getElementById('previewLocked');
-            const nextbal = document.getElementById('nextbal');
-            const previewRequested = document.getElementById('previewRequested');
-            const colAssetName = document.getElementById('colAssetName');
-            const loan_amount_input = document.getElementById('loan_amount_input');
-            //const walletColAddress = document.getElementById('walletColAddress');
+                // Helper: show error in red
+                function showError(msg) {
+                    infoText.style.color = 'red';
+                    infoText.textContent = msg;
+                }
 
-            submitbtnLoan.style.display = "none";
-            // Helper: format number as USD
-            function formatCurrency(value) {
-                return new Intl.NumberFormat('en-US', {
-                    style: 'currency',
-                    currency: 'USD',
-                    minimumFractionDigits: 2
-                }).format(value);
-            }
+                // Helper: clear error
+                function clearError() {
+                    infoText.style.color = '';
+                    infoText.textContent = '';
+                }
 
-            // Helper: show error in red
-            function showError(msg) {
-                infoText.style.color = 'red';
-                infoText.textContent = msg;
-            }
+                // When user changes asset
+                select.addEventListener('change', () => {
+                    const selected = select.options[select.selectedIndex];
+                    const balance = parseFloat(selected.dataset.balance || 0);
+                    const asset_name = selected.dataset.asset_name;
+                    const collateral_wallet = selected.dataset.wallet_address;
+                    const collateral_id = selected.dataset.id;
+                    const availableFunds = selected.dataset.availableFunds;
 
-            // Helper: clear error
-            function clearError() {
-                infoText.style.color = '';
-                infoText.textContent = '';
-            }
-
-            // When user changes asset
-            select.addEventListener('change', () => {
-                const selected = select.options[select.selectedIndex];
-                const balance = parseFloat(selected.dataset.balance || 0);
-                const asset_name = selected.dataset.asset_name;
-                const collateral_wallet = selected.dataset.wallet_address;
-                const collateral_id = selected.dataset.id;
-                const availableFunds = selected.dataset.availableFunds;
-
-                fromInput.value = '';
-                // image.src = `/assets/images/item/${asset_name}.svg`;
-                // Set placeholder showing available balance
-                fromInput.placeholder = `Available: ${formatCurrency(balance)}`;
-                coltitle.innerHTML = `${asset_name}`;
-                colAssetName.value = `${asset_name}`;
+                    fromInput.value = '';
+                    // image.src = `/assets/images/item/${asset_name}.svg`;
+                    // Set placeholder showing available balance
+                    fromInput.placeholder = `Available: ${formatCurrency(balance)}`;
+                    coltitle.innerHTML = `${asset_name}`;
+                    colAssetName.value = `${asset_name}`;
 
 
-                // subtitle.innerHTML = `${collateral_id}`;
-                //walletColAddress.innerHTML = `${collateral_wallet}`;
-                fromInput.dataset.balance = balance;
+                    // subtitle.innerHTML = `${collateral_id}`;
+                    //walletColAddress.innerHTML = `${collateral_wallet}`;
+                    fromInput.dataset.balance = balance;
 
-                clearError();
-                toInput.value = '';
-                toInput.disabled = true;
+                    clearError();
+                    toInput.value = '';
+                    toInput.disabled = true;
+                });
+
+                // When user types an amount
+                fromInput.addEventListener('input', () => {
+                    const entered = parseFloat(fromInput.value || 0);
+                    const balance = parseFloat(fromInput.dataset.balance || 0);
+
+                    if (!balance) {
+                        showError('Please select a collateral asset first.');
+                        toInput.value = '';
+                        toInput.disabled = true;
+                        submitbtnLoan.style.display = "none";
+                        return;
+                    }
+
+                    // Validate entered amount
+                    if (entered < 5000) {
+                        showError('Error: Minimum collateral is $5,000.');
+                        toInput.value = '';
+                        toInput.disabled = true;
+                        submitbtnLoan.style.display = "none";
+                        return;
+                    }
+
+                    if (entered > balance) {
+                        showError(
+                            `Error: Entered amount exceeds available balance (${formatCurrency(balance)}).`);
+                        toInput.value = '';
+                        toInput.disabled = true;
+                        submitbtnLoan.style.display = "none";
+
+                        return;
+                    }
+
+                    clearError();
+
+                    // Calculate 70% LTV based on entered amount
+                    const ltv = entered * 0.7;
+                    toInput.disabled = true;
+                    submitbtnLoan.style.display = "block";
+                    toInput.value = ltv.toFixed(2);
+                    loan_amount_input.value = ltv.toFixed(2);
+                    infoText.textContent = `LTV (70% of entered amount): ${formatCurrency(ltv)}`;
+                    paragraphforLoan.innerHTML =
+                        `Review your loan request of ${formatCurrency(ltv.toFixed(2))} carefully before submitting your request.`
+                    previewRequested.innerHTML = formatCurrency(ltv.toFixed(2))
+                    colBalance.innerHTML = formatCurrency(balance);
+                    previewLocked.innerHTML = formatCurrency(fromInput.value)
+                    nextbal.innerHTML = formatCurrency(balance - fromInput.value);
+                });
             });
-
-            // When user types an amount
-            fromInput.addEventListener('input', () => {
-                const entered = parseFloat(fromInput.value || 0);
-                const balance = parseFloat(fromInput.dataset.balance || 0);
-
-                if (!balance) {
-                    showError('Please select a collateral asset first.');
-                    toInput.value = '';
-                    toInput.disabled = true;
-                    submitbtnLoan.style.display = "none";
-                    return;
-                }
-
-                // Validate entered amount
-                if (entered < 5000) {
-                    showError('Error: Minimum collateral is $5,000.');
-                    toInput.value = '';
-                    toInput.disabled = true;
-                    submitbtnLoan.style.display = "none";
-                    return;
-                }
-
-                if (entered > balance) {
-                    showError(
-                        `Error: Entered amount exceeds available balance (${formatCurrency(balance)}).`);
-                    toInput.value = '';
-                    toInput.disabled = true;
-                    submitbtnLoan.style.display = "none";
-
-                    return;
-                }
-
-                clearError();
-
-                // Calculate 70% LTV based on entered amount
-                const ltv = entered * 0.7;
-                toInput.disabled = true;
-                submitbtnLoan.style.display = "block";
-                toInput.value = ltv.toFixed(2);
-                loan_amount_input.value = ltv.toFixed(2);
-                infoText.textContent = `LTV (70% of entered amount): ${formatCurrency(ltv)}`;
-                paragraphforLoan.innerHTML =
-                    `Review your loan request of ${formatCurrency(ltv.toFixed(2))} carefully before submitting your request.`
-                previewRequested.innerHTML = formatCurrency(ltv.toFixed(2))
-                colBalance.innerHTML = formatCurrency(balance);
-                previewLocked.innerHTML = formatCurrency(fromInput.value)
-                nextbal.innerHTML = formatCurrency(balance - fromInput.value);
-            });
-        });
-    </script>
+        </script>
 
 
 
 
-@endsection
+    @endsection

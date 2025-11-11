@@ -110,9 +110,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('add.collateral');
     Route::post('collateral/create', [CollateralsController::class, 'storeCollateral'])->name('collateral.create');
     Route::get('user/dashboard/collaterals', [CollateralsController::class, 'viewCollaterals'])->name('collaterals');
-    Route::get('user/dashboard/loans', function () {
-        return view('auth.v3.dashboard.loans');
-    })->name('loans');
+    Route::post('user/dashboard/loans', [LoanController::class, 'create'])->name('loan.request');
+    Route::get('user/dashboard/loans', [LoanController::class, 'index'])->name('loans');
     Route::get('user/dashboard/loan/apply', function () {
         return view('auth.v3.dashboard.apply-loan');
     })->name('loans.apply');

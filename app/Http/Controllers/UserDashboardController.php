@@ -27,6 +27,7 @@ class UserDashboardController extends Controller
         $totalassetcount = $collaterals->count();
         $activeLoans = Loan::getTotalActiveLoans($user->email);
         $eligibleAmount = Loan::calculateEligibility($user->id);
+        $transactions = TransactionsController::all_transactions($user->id);
         
 
         // ✅ Fetch live crypto prices (optimized with one API call)
@@ -58,6 +59,7 @@ class UserDashboardController extends Controller
             'totalLockedAmount',
             'prices',
             'recentTransactions',
+            'transactions',
         ));
     }
 }

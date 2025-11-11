@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Collateral;
+use App\Models\Loan;
 use Illuminate\Support\Facades\DB;
 use App\Models\Transactions;
 
@@ -57,8 +58,17 @@ class CollateralsController extends Controller
     {
         $user = Auth::user();
         $collaterals = Collateral::where('user_id', $user->id)->get();
-
-        return view('auth.v3.dashboard.collaterals', compact('collaterals'));
+        $loans = Loan::where('user_email', $user->email)->get();
+        $balance = Collateral::where('user_id', $user->id)->sum('usd_value');
+        $totalLoanAmount = $loans->where('status', 'Active Loan')->where('user_email', $user->email)->sum('amount_usd');
+        $availableCollateral = $balance - $totalLoanAmount;
+        $lockedCollaterals = Collateral::where('user_id', $user->id)->sum('locked');
+        return view('auth.v3.dashboard.collaterals', compact('collaterals', 
+        'loans',
+         'balance',
+         'lockedCollaterals',
+         'availableCollateral'
+        ));
     }
 
     public function getCollateralBalance($userId, $assetSymbol)
@@ -69,4 +79,5 @@ class CollateralsController extends Controller
 
         return $collateral ? $collateral->locked_usd_value : 0;
     }
+
 }

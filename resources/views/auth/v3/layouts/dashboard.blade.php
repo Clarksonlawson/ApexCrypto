@@ -2,8 +2,9 @@
 <html lang="en" class="v2fLMH8w3xgUEQcl63H9">
 
 <head>
-    <meta charset="utf-8">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
     <meta name="description"
         content=" Get up to USD 2 million in minutes by borrowing against your Bitcoin. Need to buy a house, a car, or something else entirely? Find the cash you need, when you need it, without selling your BTC.">
     <meta name="author" content="ClarksonxDev">
@@ -58,7 +59,7 @@
         }
     </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
+    @livewireStyles
 </head>
 
 <body class="jtAJHOc7mn7b4IKRO59D h8KYXnua2NT4kTVzieom KRANKvs7gs1E_d0fCA0k">
@@ -72,7 +73,9 @@
         <main>
             @yield('content')
         </main>
+        @include('auth.v3.partials.footer')
     </div>
+    @livewireScripts
 </body>
 
 </html>
