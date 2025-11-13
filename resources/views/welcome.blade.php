@@ -14,9 +14,9 @@
              Collateral is held in custody with ApexCrypto or our trusted institutional USD funding partners. Access cash same day, no credit checks required.
             </p>
              @if (Auth::check())
-          <a href="/dashboard" class="btn-action"><span>Dashboard</span></a>
+          <a href="{{route('user.dashboard')}}" class="btn-action"><span>Dashboard</span></a>
         @else
-          <a href="/register" class="btn-action"><span>Get Started</span></a>
+          <a href="{{route('sign-up')}}" class="btn-action"><span>Get Started</span></a>
         @endif
         </div>
         </div>
@@ -223,7 +223,7 @@
                 Military-grade protection and a proven track record sets Xapo apart. Our unique security protocol is unparalleled, so you can manage your bitcoin with peace of mind. Our custody. Your legacy.
             </p>
            @if (Auth::check())
-          <a href="/dashboard" class="btn-action"><span>Dashboard</span></a>
+          <a href="{{route('user.dashboard')}}" class="btn-action"><span>Dashboard</span></a>
         @else
           <a href="/sign-up" class="btn-action"><span>Get Started</span></a>
         @endif
@@ -782,7 +782,7 @@
           <div class="col-md-5">
             <div class="button">
               @if (Auth::check())
-                <a href="/dashboard" class="btn-action"><span>Dashboard</span></a>
+                <a href="{{route('user.dashboard')}}" class="btn-action"><span>Dashboard</span></a>
               @else
                 <a href="/sign-up" class="btn-action"><span>Get Started</span></a>
               @endif

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountVerficiationController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\LoanController;
 use App\Models\User;
@@ -13,6 +14,7 @@ use App\Http\Controllers\UserAccountController;
 use App\Http\Controllers\UserLoginController;
 use App\Http\Controllers\UserRegistrationController;
 use Illuminate\Routing\Route as RoutingRoute;
+use App\Http\Controllers\AccountVerificationController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -120,9 +122,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('auth.v3.dashboard.apply-loan');
     })->name('loans.apply');
     Route::get('user/dashboard/wallets', [WalletsController::class, 'index'])->name('wallets');
-    Route::get('user/dashboard/verfication', function () {
-        return view('auth.v3.dashboard.verification');
-    })->name('verification');
+    Route::get('user/dashboard/verfication', [AccountVerficiationController::class, 'index'])->name('verification');
+    Route::post('user/dashboard/verfication', [AccountVerficiationController::class, 'uploadIDs'])->name('verificaiton.submit');
     Route::get('user/dashboard/transactions', [TransactionsController::class, 'index'])->name('transactions');
     Route::get('user/dashboard/settings', function () {
         return view('auth.v3.dashboard.settings');

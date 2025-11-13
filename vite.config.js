@@ -9,7 +9,9 @@ export default defineConfig({
                  'resources/js/app.js',
                 'resources/js/auth.js',],
             refresh: true,
+            
         }),
         tailwindcss(),
+        
     ],
 });
