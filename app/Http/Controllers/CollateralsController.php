@@ -11,49 +11,60 @@ use App\Models\Transactions;
 
 class CollateralsController extends Controller
 {
-    public function storeCollateral(Request $request)
-    {
-        $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'asset_name' => 'required|string',
-            'usd_value' => 'required|numeric|min:5000|max:2000000',
-            'proof_of_deposit' => 'nullable|file|mimes:jpg,png,pdf|max:5120',
-        ]);
-
-        $proofPath = null;
-        if ($request->hasFile('proof_of_deposit')) {
-            $proofPath = $request->file('proof_of_deposit')->store('proofs', 'public');
-        }
-
-        DB::transaction(function () use ($request, $proofPath) {
-            $collateral = Collateral::where('user_id', $request->user_id)
-                ->where('asset_symbol', $request->asset_name)
-                ->first();
-
-
-            $collateral->increment('pending_usd_value', $request->usd_value);
-
-            if ($proofPath) {
-                $collateral->update([
-                    'proof_of_deposit' => $proofPath,
-
-                ]);
-            }
-        });
-
-        Transactions::create([
-            'user_id' => $request->user_id,
-            'asset_symbol' => $request->asset_name,
-            'network' => $request->network,
-            'usd_value' => $request->usd_value,
-            'transaction_type' => 'collateral_deposit',
-            'proof_of_deposit' => $proofPath,
-            'status' => 'pending',
-            'description' => 'User deposited additional ' . $request->asset_symbol . ' collateral awaiting verification.',
-        ]);
-
-        return back()->with('success', 'Deposit submitted successfully and pending verification.');
+   public function storeCollateral(Request $request)
+{
+    $proofPath = null;
+    if ($request->hasFile('pof')) {
+        $proofPath = $request->file('pof')->store('proofs', 'public');
     }
+
+    DB::transaction(function () use ($request, $proofPath) {
+
+        // Fetch the collateral or create it if it doesn't exist
+        $collateral = Collateral::firstOrCreate(
+            [
+                'user_id' => Auth::user()->id,
+                'asset_symbol' => $request->asset_name,
+            ],
+            [
+                'pending_usd_value' => 0,
+                'usd_value' => $request->usd_value,
+                'asset_name' => $request->asset_name, 
+                'amount' =>$request->crypto_amount,
+                'wallet_address' => $request->wallet_address, // default if you need
+                'collateral_id' => "APX-".rand(1111,9999),
+                'network' => $request->network ?? '',
+                'status' => 'pending',
+            ]
+        );
+
+        // Increment the pending USD value
+        $collateral->increment('pending_usd_value', $request->usd_value);
+
+        // Update proof of deposit if uploaded
+        if ($proofPath) {
+            $collateral->update([
+                'proof_of_deposit' => $proofPath,
+            ]);
+        }
+    });
+
+    // Record the transaction
+    Transactions::create([
+        'user_id' => Auth::user()->id,
+        'asset_symbol' => $request->asset_name,
+        'network' => $request->network,
+        'usd_value' => $request->usd_value,
+        'transaction_type' => 'New Collateral',
+        'crypto_amount' => $request->crypto_amount,
+        'proof_of_deposit' => $proofPath,
+        'status' => 'pending',
+        'description' => 'Your ' . $request->asset_name . ' collateral is currently awaiting verification.',
+    ]);
+
+    return back()->with('success', 'Deposit submitted successfully and pending verification.');
+}
+
     public function viewCollaterals()
     {
         $user = Auth::user();
@@ -63,11 +74,13 @@ class CollateralsController extends Controller
         $totalLoanAmount = $loans->where('status', 'Active Loan')->where('user_email', $user->email)->sum('amount_usd');
         $availableCollateral = $balance - $totalLoanAmount;
         $lockedCollaterals = Collateral::where('user_id', $user->id)->sum('locked');
+        $system_collaterals = DB::table('system_collaterals')->get();
         return view('auth.v3.dashboard.collaterals', compact('collaterals', 
         'loans',
          'balance',
          'lockedCollaterals',
-         'availableCollateral'
+         'availableCollateral',
+         'system_collaterals'
         ));
     }
 

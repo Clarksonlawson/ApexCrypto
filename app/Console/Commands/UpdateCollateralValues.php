@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Collateral;
+use App\Models\SystemCollateral;
 use App\Services\CoinMarketCapService;
 use Illuminate\Support\Facades\Log;
 
@@ -30,10 +31,10 @@ class UpdateCollateralValues extends Command
     {
         $this->info('Updating collateral USD values...');
 
-        $collaterals = Collateral::all();
+        $collaterals = SystemCollateral::all();
 
         foreach ($collaterals as $collateral) {
-            $symbol = strtoupper($collateral->asset_symbol);
+            $symbol = strtoupper($collateral->symbol);
 
             $price = $coinMarketCap->getPrice($symbol, 'USD');
             if ($price <= 0) {
@@ -41,12 +42,14 @@ class UpdateCollateralValues extends Command
                 continue;
             }
 
-            $usdValue = $collateral->amount * $price;
-            $collateral->update(['usd_value' => $usdValue]);
+            //$usdValue = $collateral->amount * $price;
+            $collateral->update(['usd_value' => $price]);
 
-            $this->info("✅ Updated {$symbol}: {$collateral->amount} × $price = $" . number_format($usdValue, 2));
+            $this->info("✅ Updated {$symbol}: $" . number_format($price, 2));
         }
 
         $this->info('All collaterals updated successfully!');
+
+        $this->info('Updating user asset prices');
     }
 }

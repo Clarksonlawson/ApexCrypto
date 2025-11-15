@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Password;
 use App\Http\Controllers\UserVerificationController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\WalletsController;
+use App\Http\Controllers\AssetController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -92,9 +93,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard/loans', [LoanController::class, 'index'])->name('loans.index');
     Route::get('user/dashboard', [UserDashboardController::class, 'index'])->name('user.dashboard');
-    Route::get('dashboard', function () {
-        return view('auth.v2.pages.dashboard.index');
-    })->name('auth.dashboard');
+    Route::get('dashboard', [UserDashboardController::class, 'index'])->name('auth.dashboard');
 
     Route::get('user/dashboard/account', [UserAccountController::class, 'index'])->name('account');
     Route::post('user/dashboard/account/update-user-metadata', [UserAccountController::class, 'updateUserMeta'])->name('update.user.metadata');
@@ -118,6 +117,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('user/dashboard/collaterals', [CollateralsController::class, 'viewCollaterals'])->name('collaterals');
     Route::post('user/dashboard/loans', [LoanController::class, 'create'])->name('loan.request');
     Route::get('user/dashboard/loans', [LoanController::class, 'index'])->name('loans');
+    Route::get('/asset/info/{name}', [AssetController::class, 'fetchInfo'])
+     ->name('asset.info');
     Route::get('user/dashboard/loan/apply', function () {
         return view('auth.v3.dashboard.apply-loan');
     })->name('loans.apply');

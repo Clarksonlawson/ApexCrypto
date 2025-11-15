@@ -22,6 +22,7 @@ class Collateral extends Model
         'wallet_address',
         'network',
         'status',
+        'collateral_id',
     ];
 
     /**
