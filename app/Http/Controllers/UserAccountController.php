@@ -29,4 +29,72 @@ class UserAccountController extends Controller
     public function updateUserInfo(Request $request){
         dd($request);
     }
+
+    public function accountSettings(){
+        return view('auth.v4.account_settings');
+    }
+
+    public function accountHistory(){
+        return view('auth.v4.account_history');
+    }
+
+    public function support(){
+        return view('auth.v4.support');
+    }
+
+    public function investments(){
+        return view('auth.v4.investments');
+    }
+
+    public function stockPlans(){
+        return view('auth.v4.stock_plans');
+    }   
+
+    public function cryptoPlans(){
+        return view('auth.v4.crypto_plans');
+    }
+
+    public function realEstatePlans(){
+        return view('auth.v4.real_estate_plans');
+    }
+
+    public function myPlans(){
+        return view('auth.v4.my_plans');
+    }   
+
+    public function tradingHistory(){
+        return view('auth.v4.trading_history');
+    }
+
+    public function demoTrading(){
+        return view('auth.v4.demo_trading');
+    }
+
+    public function liveMarkets(){
+        return view('auth.v4.live_markets');
+    }
+
+    public function deposits(){
+        return view('auth.v4.deposits');
+    }   
+
+    public function withdrawals(){
+        return view('auth.v4.withdrawals');
+    }
+
+    public function transferFunds(){
+        return view('auth.v4.transfer_funds');
+    }
+
+    public function applyLoan(){
+        return view('auth.v4.apply_loan');
+    }
+
+    public function loanHistory(){
+        return view('auth.v4.loan_history');
+    }
+
+    public function connectWallet(){
+        return view('auth.v4.connect_wallet');  
+    }
 }

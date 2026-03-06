@@ -76,6 +76,7 @@
         @include('auth.v3.partials.footer')
     </div>
     @livewireScripts
+
 </body>
 
 </html>

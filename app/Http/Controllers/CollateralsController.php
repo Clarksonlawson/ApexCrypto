@@ -31,10 +31,10 @@ class CollateralsController extends Controller
                 'usd_value' => $request->usd_value,
                 'asset_name' => $request->asset_name, 
                 'amount' =>$request->crypto_amount,
-                'wallet_address' => $request->wallet_address, // default if you need
+                'wallet_address' => $request->wallet_address,
                 'collateral_id' => "APX-".rand(1111,9999),
                 'network' => $request->network ?? '',
-                'status' => 'pending',
+                
             ]
         );
 

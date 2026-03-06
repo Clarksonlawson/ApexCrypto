@@ -18,7 +18,7 @@
     },
     "dependencies": {
         "@hotwired/turbo": "^8.0.18",
-        "flowbite": "^3.1.2",
+        "flowbite": "^2.5.2",
         "intl-tel-input": "^25.11.3",
         "react-hot-toast": "^2.6.0",
         "toastify-js": "^1.12.0"

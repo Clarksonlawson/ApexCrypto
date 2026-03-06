@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\User;
+use App\Notifications\LoginNotification;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -25,6 +26,15 @@ class UserLoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+            $user = Auth::user();
+            $ip = request()->ip();
+            $device = request()->header('User-Agent');
+           $user->notify(new \App\Notifications\UserNotification(
+                'New Login',
+                'New login detected on your account',
+                'login',
+                request()->ip()
+            ));
             return redirect()->intended('user/dashboard');
         }
 

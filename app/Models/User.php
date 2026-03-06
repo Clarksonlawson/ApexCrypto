@@ -28,6 +28,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'code',
         'expires_at',
         'email_verified_at',
+        
     ];
 
     /**
@@ -53,4 +54,8 @@ class User extends Authenticatable implements MustVerifyEmail
             'expires_at' => 'datetime',
         ];
     }
+    public function trades()
+{
+    return $this->hasMany(Trade::class);
+}
 }

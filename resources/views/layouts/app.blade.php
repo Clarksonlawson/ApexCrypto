@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     {{-- <title>{{ config('app.name') }} | Crypto Loan Exchange</title> --}}
-    <title>@yield('title', config('app.name')) | Borrow against your Bitcoin</title>
+    <title>@yield('title', config('app.name')) | CFD Trading — Trading on Stocks, Gold, Oil, Indices</title>
     <!-- Style CSS -->
     <link rel="stylesheet" href="{{ asset('app/dist/app.css') }}">
     <link rel="stylesheet" href="{{ asset('app/dist/magnific-popup.css') }}">
@@ -17,6 +17,34 @@
 
     <link rel="shortcut icon" href="{{ asset('assets/images/logo/favicon.png') }}">
     <link rel="apple-touch-icon-precomposed" href="{{ asset('assets/images/logo/favicon.png') }}">
+        <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com/"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        accent: '#6366F1',
+                        warning: '#F59E0B',
+                        danger: '#EF4444',
+                        dark: {
+                            100: '#374151',
+                            200: '#1F2937',
+                            300: '#111827',
+                            400: '#0F172A',
+                            500: '#0B1120',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
 </head>
 
 <body class="body header-fixed home-2">

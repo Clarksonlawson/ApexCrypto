@@ -25,6 +25,8 @@ use App\Http\Controllers\UserVerificationController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\WalletsController;
 use App\Http\Controllers\AssetController;
+use App\Http\Controllers\TradingController;
+use App\Http\Controllers\DepositController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -93,8 +95,32 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard/loans', [LoanController::class, 'index'])->name('loans.index');
     Route::get('user/dashboard', [UserDashboardController::class, 'index'])->name('user.dashboard');
+    Route::get('user/dashboard/deposits', [UserDashboardController::class, 'deposits'])->name('user.deposits');
+    Route::get('user/dashboard/withdrawals', [UserDashboardController::class, 'withdrawals'])->name('user.withdrawals');    
     Route::get('dashboard', [UserDashboardController::class, 'index'])->name('auth.dashboard');
-
+    Route::get('user/dashboard/notifications', [UserDashboardController::class, 'notifications'])->name('user.notifications');
+    Route::get('user/dashboard/account-settings', [UserAccountController::class, 'accountSettings'])->name('auth.profile');
+    Route::get('user/dashboard/account-history', [UserAccountController::class, 'accountHistory'])->name('auth.account.history');
+    Route::get('user/dashboard/support', [UserAccountController::class, 'support'])->name('auth.support');
+    Route::get('user/dasboard/investments', [UserAccountController::class, 'investments'])->name('auth.investments');
+    Route::get('user/dashboard/my-plans', [UserAccountController::class, 'myPlans'])->name('auth.my.plans');   
+    Route::get('user/dashboard/trading-history', [UserAccountController::class, 'tradingHistory'])->name('auth.trading.history');
+    Route::get('user/dashboard/demo-trading', [UserAccountController::class, 'demoTrading'])->name('demo.trading');     
+    Route::get('user/dashboard/stock-plans', [UserAccountController::class, 'stockPlans'])->name('auth.stock.plans'); 
+    Route::get('user/dashboard/crypto-plans', [UserAccountController::class, 'cryptoPlans'])->name('auth.crypto.plans'); 
+    Route::get('user/dashboard/real-estate-plans', [UserAccountController::class, 'realEstatePlans'])->name('auth.real.estate.plans');  
+    Route::get('user/dashboard/live-markets', [UserAccountController::class, 'liveMarkets'])->name('live.markets');
+    Route::get('user/dashboard/fund-account', [UserDashboardController::class, 'deposits'])->name('auth.deposits');
+    Route::get('user/dashboard/withdraw-funds', [UserAccountController::class, 'withdrawals'])->name('auth.withdrawals');
+    Route::get('user/dashboard/transfer-funds', [UserAccountController::class, 'transferFunds'])->name('auth.transfer-funds');  
+    Route::get('user/dashboard/apply-loan', [UserAccountController::class, 'applyLoan'])->name('auth.apply.loan');
+    Route::get('user/dashboard/loan-history', [UserAccountController::class, 'loanHistory'])->name('auth.loan-history');
+    Route::get('user/dashboard/connect-wallet', [UserAccountController::class, 'connectWallet'])->name('connect-wallet');    
+    Route::get('user/dash', [UserDashboardController::class, 'dash'])->name('auth.dash');
+    Route::post('/trading/create', [TradingController::class, 'createTrade'])->name('auth.trading.create');
+    Route::post('/deposits/payments', [DepositController::class, 'showPaymentPage'])->name('deposits.payments');
+    Route::post('/deposits/store', [DepositController::class, 'store'])->name('deposit.store');
+    Route::get('/payment-confirmation/{id}', [DepositController::class, 'confirmation'])->name('payment-confirmation');
     Route::get('user/dashboard/account', [UserAccountController::class, 'index'])->name('account');
     Route::post('user/dashboard/account/update-user-metadata', [UserAccountController::class, 'updateUserMeta'])->name('update.user.metadata');
     Route::post('user/dashboard/account/update-user-info', [UserAccountController::class, 'updateUserInfo'])->name('update.user.info');
