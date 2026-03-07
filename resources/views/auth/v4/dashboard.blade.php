@@ -58,7 +58,7 @@
                     overview</p>
             </div>
             <div class="hidden sm:flex flex-col sm:flex-row gap-2 sm:gap-3">
-                <a href="{{ route('connect-wallet') }}"
+                <a href="{{ route('connect.wallet') }}"
                     class="inline-flex items-center justify-center gap-2 px-4 py-2 sm:py-3 bg-gradient-to-r from-indigo-600 to-blue-500 text-white rounded-lg shadow hover:from-indigo-700 transition animate-pulse text-sm sm:text-base">
                     <i data-lucide="link" class="w-4 h-4 sm:w-5 sm:h-5"></i> Connect Wallet
                 </a>
@@ -423,7 +423,7 @@
                             Connect your cryptocurrency wallet to unlock daily earning opportunities of up to
                             <span class="font-semibold">$3000</span> per day.
                         </p>
-                        <a href="{{ route('connect-wallet') }}"
+                        <a href="{{ route('connect.wallet') }}"
                             class="inline-flex items-center gap-2 px-4 py-2 sm:py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-all duration-200 transform hover:scale-[1.02] text-sm sm:text-base">
                             <i data-lucide="plus" class="w-4 h-4"></i>
                             Connect Wallet Now

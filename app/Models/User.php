@@ -28,7 +28,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'code',
         'expires_at',
         'email_verified_at',
-        
+
     ];
 
     /**
@@ -46,6 +46,16 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @return array<string, string>
      */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            if (!$user->referral_code) {
+                $user->referral_code = strtoupper(substr(md5(uniqid()), 0, 6));
+            }
+        });
+    }
     protected function casts(): array
     {
         return [
@@ -55,7 +65,17 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
     public function trades()
-{
-    return $this->hasMany(Trade::class);
-}
+    {
+        return $this->hasMany(Trade::class);
+    }
+
+    public function referrals()
+    {
+        return $this->hasMany(User::class, 'referred_by');
+    }
+
+    public function referrer()
+    {
+        return $this->belongsTo(User::class, 'referred_by');
+    }
 }

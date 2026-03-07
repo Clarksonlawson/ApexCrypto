@@ -23,6 +23,32 @@
                 {{ session('status') }}
             </div>
         @endif
+        @if(session('error'))
+              <div class="mb-4 sm:mb-6">
+                <div class="bg-red-50 dark:bg-red-900/20 border-l-4 border-red-400 p-3 sm:p-4 rounded-lg shadow-sm"
+                    x-data="{ show: true }" x-show="show">
+                    <div class="flex items-start sm:items-center">
+                        <div class="flex-shrink-0">
+                            <i data-lucide="alert-circle" class="h-4 w-4 sm:h-5 sm:w-5 text-red-400 mt-0.5 sm:mt-0"></i>
+                        </div>
+                        <div class="ml-2 sm:ml-3 flex-1 min-w-0">
+                           
+                                <p class="text-xs sm:text-sm text-red-700 dark:text-red-300 leading-relaxed">
+                                    {{ session('error') }}</p>
+                          
+
+                        </div>
+                        <div class="ml-2 sm:ml-3 flex-shrink-0">
+                            <button @click="show = false"
+                                class="inline-flex text-red-400 hover:text-red-600 transition-colors">
+                                <i data-lucide="x" class="h-3 w-3 sm:h-4 sm:w-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        @endif
         @if (session('notify'))
             <div class="mb-4 text-sm text-blue-600 dark:text-blue-400">
                 {{ session('notify') }}
@@ -31,18 +57,29 @@
         <!-- Validation Errors -->
         {{-- Display validation errors (including balance errors) --}}
         @if ($errors->any())
-            <div class="space-y-4 mb-6 max-w-3xl mx-auto px-4">
-                @foreach ($errors->all() as $error)
-                    <div class="flex items-start p-4 rounded-xl bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100 shadow-md relative"
-                        role="alert">
-                        <div class="flex-1">
-                            <p class="text-sm font-medium">{{ $error }}</p>
+            <div class="mb-4 sm:mb-6">
+                <div class="bg-red-50 dark:bg-red-900/20 border-l-4 border-red-400 p-3 sm:p-4 rounded-lg shadow-sm"
+                    x-data="{ show: true }" x-show="show">
+                    <div class="flex items-start sm:items-center">
+                        <div class="flex-shrink-0">
+                            <i data-lucide="alert-circle" class="h-4 w-4 sm:h-5 sm:w-5 text-red-400 mt-0.5 sm:mt-0"></i>
                         </div>
-                        <button type="button"
-                            class="ml-4 text-red-700 hover:text-red-900 dark:text-red-300 dark:hover:text-white transition"
-                            onclick="this.parentElement.remove();">&times;</button>
+                        <div class="ml-2 sm:ml-3 flex-1 min-w-0">
+                            @foreach ($errors->all() as $error)
+                                <p class="text-xs sm:text-sm text-red-700 dark:text-red-300 leading-relaxed">
+                                    {{ $error }}</p>
+                            @endforeach
+
+                        </div>
+                        <div class="ml-2 sm:ml-3 flex-shrink-0">
+                            <button @click="show = false"
+                                class="inline-flex text-red-400 hover:text-red-600 transition-colors">
+                                <i data-lucide="x" class="h-3 w-3 sm:h-4 sm:w-4"></i>
+                            </button>
+                        </div>
                     </div>
-                @endforeach
+                </div>
+
             </div>
         @endif
         <!-- Notify Alert -->
@@ -63,6 +100,7 @@
                 {{ session('plan') }}
             </div>
         @endif
+        
 
         <!-- Quick Amount Selector -->
         <div class="mb-8 text-center">

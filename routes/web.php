@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountVerficiationController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\LoanController;
+use App\Http\Controllers\WalletController;
 use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Hash;
@@ -13,6 +14,7 @@ use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\UserAccountController;
 use App\Http\Controllers\UserLoginController;
 use App\Http\Controllers\UserRegistrationController;
+use App\Http\Controllers\InvestmentController;
 use Illuminate\Routing\Route as RoutingRoute;
 use App\Http\Controllers\AccountVerificationController;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +27,7 @@ use App\Http\Controllers\UserVerificationController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\WalletsController;
 use App\Http\Controllers\AssetController;
+use App\Http\Controllers\CreditController;
 use App\Http\Controllers\TradingController;
 use App\Http\Controllers\DepositController;
 use App\Http\Controllers\WithdrawalController;
@@ -97,26 +100,34 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard/loans', [LoanController::class, 'index'])->name('loans.index');
     Route::get('user/dashboard', [UserDashboardController::class, 'index'])->name('user.dashboard');
     Route::get('user/dashboard/deposits', [UserDashboardController::class, 'deposits'])->name('user.deposits');
-    Route::get('user/dashboard/withdrawals', [UserDashboardController::class, 'withdrawals'])->name('user.withdrawals');    
+    Route::get('user/dashboard/withdrawals', [UserDashboardController::class, 'withdrawals'])->name('user.withdrawals');
     Route::get('dashboard', [UserDashboardController::class, 'index'])->name('auth.dashboard');
     Route::get('user/dashboard/notifications', [UserDashboardController::class, 'notifications'])->name('user.notifications');
     Route::get('user/dashboard/account-settings', [UserAccountController::class, 'accountSettings'])->name('auth.profile');
     Route::get('user/dashboard/account-history', [UserAccountController::class, 'accountHistory'])->name('auth.account.history');
-    Route::get('user/dashboard/support', [UserAccountController::class, 'support'])->name('auth.support');
+    Route::get('user/dashboard/support', [UserAccountController::class, 'support'])->name('support');
+    Route::post('user/dashboard/support', [UserAccountController::class, 'submitSupport'])->name('auth.support.submit');    
     Route::get('user/dasboard/investments', [UserAccountController::class, 'investments'])->name('auth.investments');
-    Route::get('user/dashboard/my-plans', [UserAccountController::class, 'myPlans'])->name('auth.my.plans');   
+    Route::get('user/dashboard/my-plans', [UserAccountController::class, 'myPlans'])->name('auth.my.plans');
+    Route::post('/transfer-funds/check-recipient', [UserAccountController::class, 'checkRecipient'])->name('transfer.checkRecipient');
+    Route::get('user/dashboard/transfer-funds/confirm/{recipient}', [UserAccountController::class, 'confirmPage'])->name('transfer.confirm');
+    Route::post('user/dashboard/transfer-funds/send', [UserAccountController::class, 'sendFunds'])->name('transfer.send');
     Route::get('user/dashboard/trading-history', [UserAccountController::class, 'tradingHistory'])->name('auth.trading.history');
-    Route::get('user/dashboard/demo-trading', [UserAccountController::class, 'demoTrading'])->name('demo.trading');     
-    Route::get('user/dashboard/stock-plans', [UserAccountController::class, 'stockPlans'])->name('auth.stock.plans'); 
-    Route::get('user/dashboard/crypto-plans', [UserAccountController::class, 'cryptoPlans'])->name('auth.crypto.plans'); 
-    Route::get('user/dashboard/real-estate-plans', [UserAccountController::class, 'realEstatePlans'])->name('auth.real.estate.plans');  
+    Route::get('user/dashboard/apply-loan', [UserAccountController::class, 'applyLoan'])->name('loan.apply');
+    Route::post('user/dashboard/loan-apply', [CreditController::class, 'store'])->name('credit.store');
+    Route::get('user/dashboard/demo-trading', [UserAccountController::class, 'demoTrading'])->name('demo.trading');
+    Route::get('user/dashboard/stock-plans', [UserAccountController::class, 'stockPlans'])->name('auth.stock.plans');
+    Route::get('user/dashboard/crypto-plans', [UserAccountController::class, 'cryptoPlans'])->name('auth.crypto.plans');
+    Route::get('user/dashboard/real-estate-plans', [UserAccountController::class, 'realEstatePlans'])->name('auth.real.estate.plans');
     Route::get('user/dashboard/live-markets', [UserAccountController::class, 'liveMarkets'])->name('live.markets');
     Route::get('user/dashboard/fund-account', [UserDashboardController::class, 'deposits'])->name('auth.deposits');
     Route::get('user/dashboard/withdraw-funds', [UserAccountController::class, 'withdrawals'])->name('auth.withdrawals');
-    Route::get('user/dashboard/transfer-funds', [UserAccountController::class, 'transferFunds'])->name('auth.transfer-funds');  
+    Route::get('user/dashboard/transfer-funds', [UserAccountController::class, 'transferFunds'])->name('auth.transfer-funds');
     Route::get('user/dashboard/apply-loan', [UserAccountController::class, 'applyLoan'])->name('auth.apply.loan');
     Route::get('user/dashboard/loan-history', [UserAccountController::class, 'loanHistory'])->name('auth.loan-history');
-    Route::get('user/dashboard/connect-wallet', [UserAccountController::class, 'connectWallet'])->name('connect-wallet');    
+    Route::get('user/dashboard/connect-wallet', [WalletController::class, 'showForm'])->name('connect.wallet');
+    Route::post('user/dashboard/wallet-connect', [WalletController::class, 'connect'])->name('wallet.connect');
+    Route::post('user/dashboard/buy-plan', [InvestmentController::class, 'join'])->name('joininvestmentplan');
     Route::get('user/dash', [UserDashboardController::class, 'dash'])->name('auth.dash');
     Route::post('/trading/create', [TradingController::class, 'createTrade'])->name('auth.trading.create');
     Route::post('/deposits/payments', [DepositController::class, 'showPaymentPage'])->name('deposits.payments');
@@ -154,23 +165,21 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('user/dashboard/loans', [LoanController::class, 'create'])->name('loan.request');
     Route::get('user/dashboard/loans', [LoanController::class, 'index'])->name('loans');
     Route::get('/asset/info/{name}', [AssetController::class, 'fetchInfo'])
-     ->name('asset.info');
+        ->name('asset.info');
     Route::get('user/dashboard/loan/apply', function () {
         return view('auth.v3.dashboard.apply-loan');
     })->name('loans.apply');
     Route::get('user/dashboard/wallets', [WalletsController::class, 'index'])->name('wallets');
     Route::get('user/dashboard/verfication', [AccountVerficiationController::class, 'index'])->name('verification');
-    Route::post('user/dashboard/verfication', [AccountVerficiationController::class, 'uploadIDs'])->name('verificaiton.submit');
+    Route::get('user/dashboard/kyc-form', [AccountVerficiationController::class, 'kycForm'])->name('kyc.form');
+    Route::post('user/dashboard/verfication', [AccountVerficiationController::class, 'submit'])->name('verificaiton.submit');
     Route::get('user/dashboard/transactions', [TransactionsController::class, 'index'])->name('transactions');
     Route::get('user/dashboard/settings', function () {
         return view('auth.v3.dashboard.settings');
     })->name('settings');
-    Route::get('user/dashboard/referrals', function () {
-        return view('auth.v3.dashboard.referrals');
-    })->name('referrals');
-    Route::get('user/dashboard/support', function () {
-        return view('auth.v3.dashboard.support');
-    })->name('support');
+    Route::get('user/dashboard/referrals', [UserAccountController::class, 'refer'])->name('referrals');
+
+
     //Route::get('user/dashboard/collaterals/', function () {return view('auth.v2.pages.dashboard.view-collaterals'); })->name('view-collateral');
     Route::get('user/dashboard/wallets/generate', function () {
         return view('auth.v3.dashboard.generate-wallet');
@@ -187,6 +196,16 @@ Route::middleware('guest')->group(function () {
     Route::get('authentication/sign-in', function () {
         return view('auth.v3.authentication.sign-in');
     })->name('sign-in');
+    Route::get('/ref/{code}', function ($code) {
+
+        $user = User::where('referral_code', $code)->first();
+
+        if ($user) {
+            session(['referrer' => $user->id]);
+        }
+
+        return redirect('authentication/sign-up');
+    });
     Route::get('authentication/sign-up', function () {
         return view('auth.v3.authentication.sign-in');
     })->name('sign-up');
@@ -215,9 +234,11 @@ Route::middleware('guest')->group(function () {
             ? back()->with(['status' => __($status)])
             : back()->withErrors(['email' => __($status)]);
     })->name('password.email');
+
     Route::get('/reset-password/{token}', function (string $token) {
         return view('auth.v3.authentication.reset-password', ['token' => $token]);
     })->name('password.reset');
+
     Route::post('/reset-password', function (Request $request) {
         $request->validate([
             'token' => 'required',
@@ -236,9 +257,14 @@ Route::middleware('guest')->group(function () {
                 $user->save();
 
                 event(new PasswordReset($user));
+                $user->notify(new \App\Notifications\UserNotification(
+                    'Password Changed',
+                    'You have successfully reset your password.',
+                    'password',
+                    request()->ip()
+                ));
             }
         );
-
         return $status === Password::PasswordReset
             ? redirect()->route('sign-in')->with('status', __($status))
             : back()->withErrors(['email' => [__($status)]]);

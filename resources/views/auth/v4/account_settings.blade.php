@@ -1009,39 +1009,25 @@
                             </div>
                         </div>
 
-                        <div class="space-y-4">
+                      @foreach($notifications as $notification)
+                          <div class="space-y-4">
                             <div
                                 class="flex items-center gap-4 p-4 rounded-xl bg-gray-800 dark:bg-gray-700/50 border border-gray-700 dark:border-gray-600">
                                 <div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-full">
-                                    <i data-lucide="log-in" class="w-5 h-5 text-blue-600 dark:text-blue-400"></i>
+                                    <i data-lucide="info" class="w-5 h-5 text-blue-600 dark:text-blue-400"></i>
                                 </div>
                                 <div class="flex-1">
-                                    <p class="text-sm font-medium text-white dark:text-white">Account Login</p>
-                                    <p class="text-xs text-gray-300 dark:text-gray-400">Last login from
-                                        2001:43fd:600e:824:f541:a613:60b3:deed</p>
+                                    <p class="text-sm font-medium text-white dark:text-white">{{ $notification->data['title'] ?? 'Notification' }}</p>
+                                    <p class="text-xs text-gray-300 dark:text-gray-400">{{ $notification->data['message'] ?? '' }}</p>
                                 </div>
                                 <div class="text-right">
-                                    <p class="text-xs font-medium text-gray-300 dark:text-gray-400">1 hour ago</p>
+                                    <p class="text-xs font-medium text-gray-300 dark:text-gray-400">{{ $notification->created_at->diffForHumans() }}</p>
                                 </div>
                             </div>
 
-                            <div
-                                class="flex items-center gap-4 p-4 rounded-xl bg-gray-800 dark:bg-gray-700/50 border border-gray-700 dark:border-gray-600">
-                                <div class="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-full">
-                                    <i data-lucide="settings" class="w-5 h-5 text-indigo-600 dark:text-indigo-400"></i>
-                                </div>
-                                <div class="flex-1">
-                                    <p class="text-sm font-medium text-white dark:text-white">Profile Updated</p>
-                                    <p class="text-xs text-gray-300 dark:text-gray-400">You updated your profile
-                                        information</p>
-                                </div>
-                                <div class="text-right">
-                                    <p class="text-xs font-medium text-gray-300 dark:text-gray-400">
-                                        Fri, Mar 6, 2026 2:46 PM
-                                    </p>
-                                </div>
-                            </div>
+                            
                         </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

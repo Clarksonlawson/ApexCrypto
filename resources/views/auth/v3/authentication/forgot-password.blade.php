@@ -10,18 +10,28 @@
     <h1 class="TR_P65x9ie7j6uxFo_Cs q1oXbofRCOhVhOSB8tiU RB_um5eBnoFmJV2qT7_S OXyBmUnmaFHYN14c7Giu AX9fWk_1GRI2Pnhm8wfX __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">Reset your Password</h1>
        <form class="XJih04pKHf8Cekga6Hj3 UYOSZJ1_pv3B5nt1ujCP r5KuxJZQn7b3JA3UD_k_ CH8t8DqOvljTiy3xWnXb" action="{{route('password.email')}}" method="POST">
        @csrf
-        @error('email')
+        @if(session('status'))
+        <div class="flex items-center p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+            <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm1 15l-5-5 1.414-1.414L11 12.172l4.586-4.586L17 9Z"/>
+            </svg>
+            <div>
+                <span class="font-medium">Success!</span> {{ session('status') }}
+            </div>
+        </div>
+    @endif
+
+    <!-- Display Error Message -->
+    @error('email')
         <div class="flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
             <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
             </svg>
-            
             <div>
                 <span class="font-medium">Error!</span> {{ $message }}
             </div>
         </div>
-            
-        @enderror
+    @enderror
         <div class="xCPtuxM4_gihvpPwv9bX iHPddplqYvrN6qWgvntn AqVNvLG_H6VHhym2yKMp i22Nyzy1wKMZsQ3sIMsx">
             <div>
                 <label for="email" class="TR_P65x9ie7j6uxFo_Cs _Vb9igHms0hI1PQcvp_S c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">Email</label>

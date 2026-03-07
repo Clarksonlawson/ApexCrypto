@@ -9,17 +9,21 @@ class Verifications extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
+     protected $fillable = [
         'user_id',
         'first_name',
         'last_name',
         'email',
-        'occupation',
-        'job_title',
-        'languages',
-        'government_id',
-        'utility_bill',
-        'proof_of_address',
+        'phone_number',
+        'dob',
+        'social_media',
+        'address',
+        'city',
+        'state',
+        'country',
+        'document_type',
+        'document_front',
+        'document_back',
         'status',
     ];
 
