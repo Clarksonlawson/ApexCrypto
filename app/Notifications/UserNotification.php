@@ -49,7 +49,7 @@ class UserNotification extends Notification
             ->subject($this->title)
             ->line($this->message)
             ->line('Time: ' . now())
-            ->action('View Dashboard', url('/dashboard'));
+            ->action('View Dashboard', url('/user/dashboard'));
 
         if ($this->ip) {
             $mail->line('IP Address: ' . $this->ip);

@@ -27,6 +27,7 @@ use App\Http\Controllers\WalletsController;
 use App\Http\Controllers\AssetController;
 use App\Http\Controllers\TradingController;
 use App\Http\Controllers\DepositController;
+use App\Http\Controllers\WithdrawalController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -124,6 +125,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('user/dashboard/account', [UserAccountController::class, 'index'])->name('account');
     Route::post('user/dashboard/account/update-user-metadata', [UserAccountController::class, 'updateUserMeta'])->name('update.user.metadata');
     Route::post('user/dashboard/account/update-user-info', [UserAccountController::class, 'updateUserInfo'])->name('update.user.info');
+    Route::post('/withdrawal/verify-code', [WithdrawalController::class, 'verifyCode'])->name('withdraw.verify');
+    Route::get('/withdrawal/amount', [WithdrawalController::class, 'amountPage'])->name('withdraw.amount');
+    Route::post('/withdrawal/amount', [WithdrawalController::class, 'submitAmount'])->name('withdraw.amount.submit');
+    Route::get('/withdrawal/confirm', [WithdrawalController::class, 'confirmPage'])->name('withdraw.confirm');
+    Route::post('/withdrawal/process', [WithdrawalController::class, 'processWithdrawal'])->name('withdraw.process');
+    Route::put('/update-password', [UserAccountController::class, 'updatePassword'])->name('update.pass');
+    Route::post('user/dashboard/profileinfo', [UserAccountController::class, 'updateProfile'])->name('profile.update');
+    Route::get('/withdrawal/fail', [WithdrawalController::class, 'failPage'])->name('withdraw.fail');
+    Route::get('/withdrawal/success', [WithdrawalController::class, 'successPage'])->name('withdraw.success');
     Route::get('inbox', function () {
         return view('auth.v2.pages.dashboard.inbox');
     })->name('inbox');
@@ -206,7 +216,7 @@ Route::middleware('guest')->group(function () {
             : back()->withErrors(['email' => __($status)]);
     })->name('password.email');
     Route::get('/reset-password/{token}', function (string $token) {
-        return view('auth.v2.pages.reset-password', ['token' => $token]);
+        return view('auth.v3.authentication.reset-password', ['token' => $token]);
     })->name('password.reset');
     Route::post('/reset-password', function (Request $request) {
         $request->validate([
